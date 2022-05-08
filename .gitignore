@@ -1,3 +1,6 @@
+#Files
+.env
+
 # Database Files
 Database/data
 
