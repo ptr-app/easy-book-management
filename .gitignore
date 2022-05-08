@@ -1,0 +1,5 @@
+# Database Files
+Database/data
+
+# Dependency directories
+node_modules/
