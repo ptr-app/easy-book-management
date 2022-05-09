@@ -1,6 +1,8 @@
 require('dotenv/config')
 
 const mongoose = require('mongoose')
+const express = require('express')
+const routes = require('./routes')
 
 //DATABASE Connection Beginn
 mongoose.connect(process.env.MONGOCONNECTIONSTRING)
@@ -14,3 +16,10 @@ mongoose.connection.on('error', (error) => {
 })
 //DATABASE Connection End
 
+const app = express()
+
+app.use('/api', routes)
+
+app.listen(process.env.PORT, function() {
+    console.log("Server started on Port ", process.env.PORT)
+})
