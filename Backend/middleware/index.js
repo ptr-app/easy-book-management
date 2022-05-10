@@ -44,7 +44,7 @@ exports.checkStudent = [
   async (req, res, next) => {
     log('Middleware.index.checkStudent - Start: ', 'debug')
     let studentID = res.headers['x-studentID']
-    let student = await studentModel.findOne({ _id: studentID })
+    let student = await studentModel.findById(studentID)
     if (student !== undefined) {
       log('Middleware.index.checkStudent - End: ', 'debug')
       next()
@@ -63,7 +63,7 @@ exports.checkTeacher = [
   async (req, res, next) => {
     log('Middleware.index.checkTeacher - Start: ', 'debug')
     let employeeID = res.headers['x-employeeID']
-    let employee = await employeeModel.findOne({ _id: employeeID })
+    let employee = await employeeModel.findById(employeeID)
     if (employee === undefined) {
       log(
         'Middleware.index.checkTeacher - Could not find Employee with that EmployeeID: ' +
