@@ -46,6 +46,35 @@ exports.editBook = [
   },
 ]
 
+exports.updateStudentID = [
+  async (req, res) => {
+    log('Controller.bookController.updateStudentID - Start', 'debug')
+    let studentID
+    if (req.body.studentID !== undefined) {
+      studentID = req.body.studentID
+    } else {
+      studentID = null
+    }
+    let book = await bookModel
+      .findByIdAndUpdate(req.body._id, { studentID: newStudentID })
+      .catch((err) => {
+        log(
+          'Controller.bookController.updateStudentID - Failed to update Student ' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      })
+
+    log('Controller.bookController.updateStudentID - End', 'debug')
+    return apiResponse.successResponseWithData(
+      res,
+      'Book assigned to a new Student',
+      book
+    )
+  },
+]
+
 exports.deleteBook = [
   async (req, res) => {
     log('Controller.bookController.deleteBook - Start ', 'debug')

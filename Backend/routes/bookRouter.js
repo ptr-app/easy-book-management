@@ -10,6 +10,8 @@ bookRouter.post('/addBook', middleware.checkTeacher, bookController.addBook)
 
 bookRouter.post('/editBook', middleware.checkTeacher, bookController.editBook)
 
+bookRouter.post('/updateStudentID', middleware.checkLogged, bookController.updateStudentID)
+
 bookRouter.delete(
   '/deleteBook',
   middleware.checkTeacher,
