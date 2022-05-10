@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
-const { log } = require('../helpers/logger')
+const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const studentModel = require('../models/DatabaseModel')
+const { studentModel, employeeModel } = require('../models/DatabaseModel')
 
 exports.checkLogged = [
   (req, res, next) => {
