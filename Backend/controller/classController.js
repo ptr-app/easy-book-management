@@ -102,6 +102,21 @@ exports.updateEmployeeID = [
 exports.deleteClass = [
   async (req, res) => {
     log('Controller.classController.deleteClass - Start ', 'debug')
+    let Class = classModel.findById(req.body.id).catch((err) => {
+      log(
+        'Controller.classController.deleteClass - Failed to find class: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    if (Class.studentsID.length > 1) {
+      log(
+        'Controller.classController.deleteClass - Failed to delete class with Students in it: ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, "CLASS_HAS_STUDENTS")
+    }
     await classModel.findByIdAndDelete(req.body.id).catch((err) => {
       log(
         'Controller.classController.deleteClass - Failed to delete class: ' +
