@@ -7,10 +7,12 @@ const roleModel = require('../models/DatabaseModel')
 exports.addEmployee = [
   async (req, res) => {
     log('Controller.employeeController.addEmployee - Start', 'debug')
-    const { name, password, birthdate, classID, roleID } = req.body
+    const { name, birthdate, classID, roleID } = req.body
+    let passwordHash = await bcrypt.hash(req.body.password, 10)
+    delete req.body.password
     let empoloyee = new employeeModel({
       name,
-      password,
+      passwordHash,
       birthdate,
       classID,
       roleID,
