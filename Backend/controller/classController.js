@@ -57,7 +57,7 @@ exports.updateEmployeeID = [
         .findById(req.body.employeeID)
         .catch((err) => {
           log(
-            'Controller.classController.updateEmployeeID - Failed to find Class ' +
+            'Controller.classController.updateEmployeeID - Failed to find Employee ' +
               err.message,
             'error'
           )
