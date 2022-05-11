@@ -70,7 +70,7 @@ exports.checkTeacher = [
           employeeID,
         'error'
       )
-      return apiResponse.unathorizedResponse(res, 'UNKNOWN_TEACHER')
+      return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
     } else {
       let roleID = employee.roleID
       if (roleID === env.process.TEACHER_ID) {
@@ -83,6 +83,35 @@ exports.checkTeacher = [
           'error'
         )
         return apiResponse.unathorizedResponse(res, 'NOT_A_TEACHER')
+      }
+    }
+  },
+]
+
+exports.checkDean = [
+  async (req, res, next) => {
+    log('Middleware.index.checkDean - Start: ', 'debug')
+    let employeeID = res.headers['x-employeeID']
+    let employee = await employeeModel.findById(employeeID)
+    if (employee === undefined) {
+      log(
+        'Middleware.index.checkDean - Could not find Employee with that EmployeeID: ' +
+          employeeID,
+        'error'
+      )
+      return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
+    } else {
+      let roleID = employee.roleID
+      if (roleID === env.process.DEAN_ID) {
+        log('Middleware.index.checkDean - End: ', 'debug')
+        next()
+      } else {
+        log(
+          'Middleware.index.checkDean - The Employee had not an Dean ID. The ID was: ' +
+            roleID,
+          'error'
+        )
+        return apiResponse.unathorizedResponse(res, 'NOT_A_DEAN')
       }
     }
   },
