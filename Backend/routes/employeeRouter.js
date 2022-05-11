@@ -45,7 +45,7 @@ employeeRouter.get(
 employeeRouter.get(
   '/getEmployeeByID',
   middleware.checkDean,
-  employeeController.getClassByID
+  employeeController.getEmployeeByID
 )
 
 employeeRouter.get(

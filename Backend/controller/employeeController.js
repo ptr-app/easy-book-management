@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const employeeModel = require('../models/DatabaseModel')
-const employeeModel = require('../models/DatabaseModel')
+const roleModel = require('../models/DatabaseModel')
 
 exports.addEmployee = [
   async (req, res) => {
