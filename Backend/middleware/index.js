@@ -116,3 +116,32 @@ exports.checkDean = [
     }
   },
 ]
+
+exports.checkAdmin = [
+  async (req, res, next) => {
+    log('Middleware.index.checkAdmin - Start: ', 'debug')
+    let employeeID = res.headers['x-employeeID']
+    let employee = await employeeModel.findById(employeeID)
+    if (employee === undefined) {
+      log(
+        'Middleware.index.checkAdmin - Could not find Employee with that EmployeeID: ' +
+          employeeID,
+        'error'
+      )
+      return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
+    } else {
+      let roleID = employee.roleID
+      if (roleID === env.process.DEAN_ID) {
+        log('Middleware.index.checkAdmin - End: ', 'debug')
+        next()
+      } else {
+        log(
+          'Middleware.index.checkAdmin - The Employee had not an Admin ID. The ID was: ' +
+            roleID,
+          'error'
+        )
+        return apiResponse.unathorizedResponse(res, 'NOT_A_ADMIN')
+      }
+    }
+  },
+]
