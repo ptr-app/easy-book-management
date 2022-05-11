@@ -1,3 +1,5 @@
+require('dotenv/config')
+
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const classModel = require('../models/DatabaseModel')
