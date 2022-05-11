@@ -30,6 +30,7 @@ exports.addBook = [
 exports.editBook = [
   async (req, res) => {
     log('Controller.bookController.editBook - Start', 'debug')
+    delete req.body.studentID
     let book = await bookModel
       .findByIdAndUpdate(req.body._id, req.body)
       .catch((err) => {
