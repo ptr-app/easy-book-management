@@ -1,6 +1,7 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const bookModel = require('../models/DatabaseModel')
+const studentModel = require('../models/DatabaseModel')
 
 exports.addBook = [
   async (req, res) => {
@@ -52,6 +53,14 @@ exports.updateStudentID = [
     log('Controller.bookController.updateStudentID - Start', 'debug')
     let studentID
     if (req.body.studentID !== undefined) {
+      studentModel.findById(req.body.studentID).catch((err) => {
+        log(
+          'Controller.employeeController.updateStudentID - Failed to find Student ' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      })
       studentID = req.body.studentID
     } else {
       studentID = null
