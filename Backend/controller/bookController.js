@@ -56,7 +56,7 @@ exports.updateStudentID = [
       studentID = null
     }
     let book = await bookModel
-      .findByIdAndUpdate(req.body._id, { studentID: newStudentID })
+      .findByIdAndUpdate(req.body._id, { studentID: studentID })
       .catch((err) => {
         log(
           'Controller.bookController.updateStudentID - Failed to update Student ' +
