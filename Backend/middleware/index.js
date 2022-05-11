@@ -73,12 +73,12 @@ exports.checkTeacher = [
       return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
     } else {
       let roleID = employee.roleID
-      if (roleID === env.process.TEACHER_ID) {
+      if (roleID === env.process.TEACHER_ID || roleID === env.process.DEAN_ID) {
         log('Middleware.index.checkTeacher - End: ', 'debug')
         next()
       } else {
         log(
-          'Middleware.index.checkTeacher - The Employee had not an Teacher ID. The ID was: ' +
+          'Middleware.index.checkTeacher - The Employee had not an Teacher ID or an Dean ID. The ID was: ' +
             roleID,
           'error'
         )
