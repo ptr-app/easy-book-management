@@ -29,7 +29,7 @@ classRouter.delete(
 classRouter.get(
   '/getAllClass',
   middleware.checkTeacher,
-  classController.getClassByTeacher
+  classController.getAllClass
 )
 
 classRouter.get(
@@ -41,7 +41,7 @@ classRouter.get(
 classRouter.get(
   '/getClassByEmployee',
   middleware.checkTeacher,
-  classController.getClassByTeacher
+  classController.getClassByEmployee
 )
 
 module.exports.default = classRouter

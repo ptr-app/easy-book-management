@@ -115,7 +115,7 @@ exports.deleteClass = [
         'Controller.classController.deleteClass - Failed to delete class with Students in it: ',
         'error'
       )
-      return apiResponse.errorResponse(res, "CLASS_HAS_STUDENTS")
+      return apiResponse.errorResponse(res, 'CLASS_HAS_STUDENTS')
     }
     await classModel.findByIdAndDelete(req.body.id).catch((err) => {
       log(
@@ -181,6 +181,10 @@ exports.getClassByEmployee = [
         return apiResponse.errorResponse(res, err.message)
       })
     log('Controller.classController.getClassByEmployee - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'CLASS_FOUND_EMPLOYEE', Class)
+    return apiResponse.successResponseWithData(
+      res,
+      'CLASS_FOUND_EMPLOYEE',
+      Class
+    )
   },
 ]
