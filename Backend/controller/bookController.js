@@ -88,7 +88,7 @@ exports.updateStudentID = [
 exports.deleteBook = [
   async (req, res) => {
     log('Controller.bookController.deleteBook - Start ', 'debug')
-    let book = bookModel.findById(req.body.id).catch((err) => {
+    let book = bookModel.findById(req.body._id).catch((err) => {
       log(
         'Controller.bookController.deleteBook - Failed to find book: ' +
           err.message,
@@ -101,9 +101,9 @@ exports.deleteBook = [
         'Controller.bookController.deleteBook - Failed to delete book with Student attached to it: ',
         'error'
       )
-      return apiResponse.errorResponse(res, "BOOK_HAS_STUDENT")
+      return apiResponse.errorResponse(res, 'BOOK_HAS_STUDENT')
     }
-    await bookModel.findByIdAndDelete(req.body.id).catch((err) => {
+    await bookModel.findByIdAndDelete(req.body._id).catch((err) => {
       log(
         'Controller.bookController.deleteBook - Failed to delete book: ' +
           err.message,
