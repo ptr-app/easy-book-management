@@ -6,27 +6,27 @@ const genreRouter = express.Router({
   mergeParams: true,
 })
 
-classRouter.post('/addGenre', middleware.checkTeacher, genreController.addGenre)
+genreRouter.post('/addGenre', middleware.checkTeacher, genreController.addGenre)
 
-classRouter.post(
+genreRouter.post(
   '/editGenre',
   middleware.checkTeacher,
   genreController.editGenre
 )
 
-classRouter.delete(
+genreRouter.delete(
   '/deleteGenre',
   middleware.checkTeacher,
   genreController.deleteGenre
 )
 
-classRouter.get(
+genreRouter.get(
   '/getAllGenres',
   middleware.checkTeacher,
   genreController.getAllGenres
 )
 
-classRouter.get(
+genreRouter.get(
   '/getGenreByID',
   middleware.checkTeacher,
   genreController.getGenreByID

@@ -1,101 +1,101 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const genreModel = require('../models/DatabaseModel')
-const bookModel = require('../models/DatabaseModel')
+const roleModel = require('../models/DatabaseModel')
+const employeeModel = require('../models/DatabaseModel')
 
-exports.addGenre = [
+exports.addRole = [
   async (req, res) => {
-    log('Controller.genreController.addGenre - Start', 'debug')
+    log('Controller.roleController.addRole - Start', 'debug')
     const { name } = req.body
-    let genre = new genreModel({
+    let role = new roleModel({
       name,
     })
-    let newGenre = await genre.save().catch((err) => {
+    let newRole = await role.save().catch((err) => {
       log(
-        'Controller.genreController.addGenre - Failed to add genre: ' +
+        'Controller.roleController.addRole - Failed to add role: ' +
           err.message,
         'error'
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    log('Controller.genreController.addGenre - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'GENRE_CREATED', newGenre)
+    log('Controller.roleController.addRole - End', 'debug')
+    return apiResponse.successResponseWithData(res, 'ROLE_CREATED', newRole)
   },
 ]
 
-exports.editGenre = [
+exports.editRole = [
   async (req, res) => {
-    log('Controller.genreController.editGenre - Start', 'debug')
-    let genre = await genreModel
+    log('Controller.roleController.editRole - Start', 'debug')
+    let role = await roleModel
       .findByIdAndUpdate(req.body._id, req.body)
       .catch((err) => {
         log(
-          'Controller.genreController.editGenre - Failed to edit Genre ' +
+          'Controller.roleController.editRole - Failed to edit Role ' +
             err.message,
           'error'
         )
         return apiResponse.errorResponse(res, err.message)
       })
 
-    log('Controller.genreController.editGenre - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'GENRE_EDITED', genre)
+    log('Controller.roleController.editRole - End', 'debug')
+    return apiResponse.successResponseWithData(res, 'ROLE_EDITED', role)
   },
 ]
 
-exports.deleteGenre = [
+exports.deleteRole = [
   async (req, res) => {
-    log('Controller.genreController.deleteGenre - Start ', 'debug')
-    let book = bookModel.find({ genreID: req.body._id }).catch((err) => {
+    log('Controller.roleController.deleteRole - Start ', 'debug')
+    let employee = employeeModel.find({ roleID: req.body._id }).catch((err) => {
       log(
-        'Controller.genreController.deleteGenre - Failed to find book: ' +
+        'Controller.roleController.deleteRole - Failed to find employee: ' +
           err.message,
         'error'
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    if (book.length > 0) {
+    if (employee.length > 0) {
       log(
-        'Controller.genreController.deleteGenre - Failed to delete genre with Books attached to it: ',
+        'Controller.roleController.deleteRole - Failed to delete role with Employee attached to it: ',
         'error'
       )
-      return apiResponse.errorResponse(res, 'GENRE_HAS_BOOKS')
+      return apiResponse.errorResponse(res, 'ROLE_HAS_EMPLOYEE')
     }
-    await genreModel.findByIdAndDelete(req.body._id).catch((err) => {
+    await roleModel.findByIdAndDelete(req.body._id).catch((err) => {
       log(
-        'Controller.genreController.deleteGenre - Failed to delete genre: ' +
+        'Controller.roleController.deleteRole - Failed to delete role: ' +
           err.message,
         'error'
       )
       return apiResponse.errorResponse(res, err.message)
     })
 
-    log('Controller.genreController.deleteGenre - End', 'debug')
-    return apiResponse.successResponse(res, 'GENRE_DELETED')
+    log('Controller.roleController.deleteRole - End', 'debug')
+    return apiResponse.successResponse(res, 'ROLE_DELETED')
   },
 ]
 
-exports.getAllGenres = [
+exports.getAllRoles = [
   async (req, res) => {
-    log('Controller.genreController.getAllGenres - Start', 'debug')
-    let allGenres = await genreModel.find().catch((err) => {
+    log('Controller.roleController.getAllRoles - Start', 'debug')
+    let allRoles = await roleModel.find().catch((err) => {
       log(
-        'Controller.genreController.getAllGenres - Failed while searching for Genres' +
+        'Controller.roleController.getAllRoles - Failed while searching for Roles' +
           err.message,
         'error'
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    log('Controller.genreController.getAllGenres - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'GENRES_FOUND', allGenres)
+    log('Controller.roleController.getAllRoles - End', 'debug')
+    return apiResponse.successResponseWithData(res, 'ROLES_FOUND', allRoles)
   },
 ]
 
-exports.getGenreByID = [
+exports.getRoleByID = [
   async (req, res) => {
-    log('Controller.genreController.getGenreByID - Start', 'debug')
-    let genre = await genreModel.findById(req.body._id).catch((err) => {
+    log('Controller.roleController.getRoleByID - Start', 'debug')
+    let role = await roleModel.findById(req.body._id).catch((err) => {
       log(
-        'Controller.genreController.getGenreByID - Failed while searching for the genre with the id: ' +
+        'Controller.roleController.getRoleByID - Failed while searching for the role with the id: ' +
           req.body._id +
           '. Error Message is' +
           err.message,
@@ -103,7 +103,7 @@ exports.getGenreByID = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    log('Controller.genreController.getGenreByID - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'GENRE_FOUND', genre)
+    log('Controller.roleController.getRoleByID - END ', 'debug')
+    return apiResponse.successResponseWithData(res, 'ROLE_FOUND', role)
   },
 ]

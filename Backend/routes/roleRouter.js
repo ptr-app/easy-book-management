@@ -6,23 +6,23 @@ const roleRouter = express.Router({
   mergeParams: true,
 })
 
-classRouter.post('/addRole', middleware.checkDean, roleController.addRole)
+roleRouter.post('/addRole', middleware.checkDean, roleController.addRole)
 
-classRouter.post('/editRole', middleware.checkDean, roleController.editRole)
+roleRouter.post('/editRole', middleware.checkDean, roleController.editRole)
 
-classRouter.delete(
+roleRouter.delete(
   '/deleteRole',
   middleware.checkDean,
   roleController.deleteRole
 )
 
-classRouter.get(
+roleRouter.get(
   '/getAllRoles',
   middleware.checkTeacher,
   roleController.getAllRoles
 )
 
-classRouter.get(
+roleRouter.get(
   '/getRoleByID',
   middleware.checkTeacher,
   roleController.getRoleByID
