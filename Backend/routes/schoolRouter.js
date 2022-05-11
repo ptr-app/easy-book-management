@@ -8,7 +8,7 @@ const schoolRouter = express.Router({
 
 schoolRouter.post(
   '/addSchool',
-  middleware.checkNotLogged,
+  middleware.checkDean,
   schoolController.addSchool
 )
 
