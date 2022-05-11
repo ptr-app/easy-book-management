@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt')
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const genreModel = require('../models/DatabaseModel')
