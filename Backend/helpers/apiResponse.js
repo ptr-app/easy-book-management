@@ -7,11 +7,11 @@ exports.successResponse = function (res, message) {
 }
 
 exports.successResponseWithData = function (res, message, data) {
-  let data = {
+  let resData = {
     code: message,
     data: data,
   }
-  return res.status(200).json(data)
+  return res.status(200).json(resData)
 }
 
 exports.errorResponse = function (res, message) {
@@ -19,9 +19,9 @@ exports.errorResponse = function (res, message) {
 }
 
 exports.errorResponseWithData = function (res, message, data) {
-  let data = {
+  let resData = {
     code: message,
     data: data,
   }
-  return res.status(500).json(data)
+  return res.status(500).json(resData)
 }

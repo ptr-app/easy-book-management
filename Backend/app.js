@@ -8,10 +8,10 @@ const routes = require('./routes')
 mongoose.connect(process.env.MONGOCONNECTIONSTRING)
 
 mongoose.connection.on('open', () => {
-  log('App.Start - Connection to Database establlished ', 'info')
+  console.log('App.Start - Connection to Database establlished ')
 })
 mongoose.connection.on('error', (error) => {
-  log('App.Start - Failed to Connect to Database: ' + error.message, 'error')
+  console.log('App.Start - Failed to Connect to Database: ' + error.message)
 })
 //DATABASE Connection End
 
@@ -20,5 +20,5 @@ const app = express()
 app.use('/api', routes)
 
 app.listen(process.env.PORT, function () {
-  log('App.Start - Server started on Port: ' + process.env.PORT, 'info')
+  console.log('App.Start - Server started on Port: ' + process.env.PORT)
 })
