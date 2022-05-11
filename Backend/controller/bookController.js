@@ -23,7 +23,7 @@ exports.addBook = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.bookController.addBook - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'Book created', newBook)
+    return apiResponse.successResponseWithData(res, 'BOOK_CREATED', newBook)
   },
 ]
 
@@ -43,7 +43,7 @@ exports.editBook = [
       })
 
     log('Controller.bookController.editBook - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'Book edited', book)
+    return apiResponse.successResponseWithData(res, 'BOOK_EDITED', book)
   },
 ]
 
@@ -70,7 +70,7 @@ exports.updateStudentID = [
     log('Controller.bookController.updateStudentID - End', 'debug')
     return apiResponse.successResponseWithData(
       res,
-      'Book assigned to a new Student',
+      'BOOK_ASSIGNED_STUDENT',
       book
     )
   },
@@ -89,7 +89,7 @@ exports.deleteBook = [
     })
 
     log('Controller.bookController.editBook - End', 'debug')
-    return apiResponse.successResponse(res, 'Book edited')
+    return apiResponse.successResponse(res, 'BOOK_DELETED')
   },
 ]
 
@@ -105,7 +105,7 @@ exports.getAllBooks = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.bookController.getAllBooks - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'Books found', allBooks)
+    return apiResponse.successResponseWithData(res, 'BOOKS_FOUND', allBooks)
   },
 ]
 
@@ -123,7 +123,7 @@ exports.getBookByID = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.bookController.getBookByID - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'Book found', book)
+    return apiResponse.successResponseWithData(res, 'BOOK_FOUND', book)
   },
 ]
 
@@ -141,7 +141,7 @@ exports.getBookByName = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.bookController.getBookByName - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'Book found', book)
+    return apiResponse.successResponseWithData(res, 'BOOK_FOUND_NAME', book)
   },
 ]
 
@@ -161,6 +161,6 @@ exports.getAllBooksOfOneGenre = [
         return apiResponse.errorResponse(res, err.message)
       })
     log('Controller.bookController.getAllBooksOfOneGenre - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'Books found', books)
+    return apiResponse.successResponseWithData(res, 'BOOKS_FOUND_GENRE', books)
   },
 ]
