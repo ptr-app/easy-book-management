@@ -143,7 +143,7 @@ exports.getAllClass = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.classController.getAllClass - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'CLASS_FOUND', allClass)
+    return apiResponse.successResponseWithData(res, 'CLASS_FOUND_ALL', allClass)
   },
 ]
 
@@ -161,18 +161,18 @@ exports.getClassByID = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.classController.getClassByID - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'CLASS_FOUND', Class)
+    return apiResponse.successResponseWithData(res, 'CLASS_FOUND_ID', Class)
   },
 ]
 
-exports.getClassByTeacher = [
+exports.getClassByEmployee = [
   async (req, res) => {
-    log('Controller.classController.getClassByTeacher - Start', 'debug')
+    log('Controller.classController.getClassByEmployee - Start', 'debug')
     let Class = await classModel
       .find({ employeeID: req.body.employeeID })
       .catch((err) => {
         log(
-          'Controller.classController.getClassByTeacher - Failed while searching for Class with the Employee id: ' +
+          'Controller.classController.getClassByEmployee - Failed while searching for Class with the Employee id: ' +
             req.body.employeeID +
             '. Error Message is' +
             err.message,
@@ -180,7 +180,7 @@ exports.getClassByTeacher = [
         )
         return apiResponse.errorResponse(res, err.message)
       })
-    log('Controller.classController.getClassByTeacher - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'Class found', Class)
+    log('Controller.classController.getClassByEmployee - END ', 'debug')
+    return apiResponse.successResponseWithData(res, 'CLASS_FOUND_EMPLOYEE', Class)
   },
 ]

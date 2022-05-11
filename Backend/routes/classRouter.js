@@ -15,10 +15,10 @@ classRouter.post(
 )
 
 classRouter.post(
-    '/updateEmployeeID',
-    middleware.checkTeacher,
-    classController.updateEmployeeID
-  )
+  '/updateEmployeeID',
+  middleware.checkTeacher,
+  classController.updateEmployeeID
+)
 
 classRouter.delete(
   '/deleteClass',
@@ -39,7 +39,7 @@ classRouter.get(
 )
 
 classRouter.get(
-  '/getClassByTeacher',
+  '/getClassByEmployee',
   middleware.checkTeacher,
   classController.getClassByTeacher
 )
