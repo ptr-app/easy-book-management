@@ -54,4 +54,10 @@ employeeRouter.get(
   employeeController.getEmployeeByRole
 )
 
+employeeRouter.get(
+  '/getEmployeeBySchool',
+  middleware.checkDean,
+  employeeController.getEmployeeBySchool
+)
+
 module.exports.default = employeeRouter
