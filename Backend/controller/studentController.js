@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt')
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const studentModel = require('../models/DatabaseModel')
@@ -7,11 +6,9 @@ exports.addStudent = [
   async (req, res) => {
     log('Controller.studentController.addStudent - Start', 'debug')
     const { name, birthdate, classID, bookID } = req.body
-    let passwordHash = await bcrypt.hash(req.body.password, 10)
-    delete req.body.password
     let student = new studentModel({
       name,
-      passwordHash,
+      birthdate,
       classID,
       bookID,
     })
@@ -35,11 +32,8 @@ exports.addStudent = [
 exports.editStudent = [
   async (req, res) => {
     log('Controller.studentController.editStudent - Start', 'debug')
-    let passwordHash = await bcrypt.hash(req.body.password, 10)
-    delete req.body.password
     delete req.body.classID
     delete req.body.bookID
-    req.body.passwordHash = passwordHash
     let student = await studentModel
       .findByIdAndUpdate(req.body._id, req.body)
       .catch((err) => {

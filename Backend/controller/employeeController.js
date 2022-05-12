@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt')
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const employeeModel = require('../models/DatabaseModel')
@@ -8,11 +7,8 @@ exports.addEmployee = [
   async (req, res) => {
     log('Controller.employeeController.addEmployee - Start', 'debug')
     const { name, birthdate, classID, roleID } = req.body
-    let passwordHash = await bcrypt.hash(req.body.password, 10)
-    delete req.body.password
     let empoloyee = new employeeModel({
       name,
-      passwordHash,
       birthdate,
       classID,
       roleID,
@@ -37,11 +33,8 @@ exports.addEmployee = [
 exports.editEmployee = [
   async (req, res) => {
     log('Controller.employeeController.editEmployee - Start', 'debug')
-    let passwordHash = await bcrypt.hash(req.body.password, 10)
-    delete req.body.password
     delete req.body.classID
     delete req.body.roleID
-    req.body.passwordHash = passwordHash
     let employee = await employeeModel
       .findByIdAndUpdate(req.body._id, req.body)
       .catch((err) => {
