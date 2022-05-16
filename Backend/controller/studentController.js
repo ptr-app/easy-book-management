@@ -177,7 +177,7 @@ exports.getAllStudents = [
     log('Controller.studentController.getAllStudents - End', 'debug')
     return apiResponse.successResponseWithData(
       res,
-      'SCHOOLES_FOUND',
+      'STUDENTS_FOUND',
       allStudents
     )
   },
@@ -197,6 +197,30 @@ exports.getStudentByID = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.studentController.getStudentByID - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'SCHOOL_FOUND', student)
+    return apiResponse.successResponseWithData(res, 'STUDENT_FOUND', student)
+  },
+]
+
+exports.getStudentsByClass = [
+  async (req, res) => {
+    log('Controller.studentController.getStudentsByClass - Start', 'debug')
+    let students = await studentModel
+      .find({ classID: req.body._id })
+      .catch((err) => {
+        log(
+          'Controller.studentController.getStudentsByClass - Failed while searching for the students with the classID: ' +
+            req.body._id +
+            '. Error Message is' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      })
+    log('Controller.studentController.getStudentsByClass - END ', 'debug')
+    return apiResponse.successResponseWithData(
+      res,
+      'STUDENT_FOUND_CLASS',
+      students
+    )
   },
 ]

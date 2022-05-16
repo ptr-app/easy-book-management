@@ -48,4 +48,10 @@ studentRouter.get(
   studentController.getStudentByID
 )
 
+studentRouter.get(
+  '/getStudentsByClass',
+  middleware.checkTeacher,
+  studentController.getStudentsByClass
+)
+
 module.exports.default = studentRouter
