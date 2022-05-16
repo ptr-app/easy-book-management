@@ -3,7 +3,6 @@ const { Schema } = mongoose
 
 const studentModel = new Schema({
   name: { type: String, trim: true },
-  passwordHash: { type: String, trim: true },
   birthdate: { type: Date },
   classID: { type: String },
   bookID: { type: [String] },
@@ -11,9 +10,9 @@ const studentModel = new Schema({
 
 const employeeModel = new Schema({
   name: { type: String, trim: true },
-  passwordHash: { type: String, trim: true },
   birthdate: { type: Date },
   classID: { type: String },
+  schoolID: { type: String },
   roleID: { type: String },
 })
 
@@ -46,6 +45,12 @@ const roleModel = new Schema({
   name: { type: String, trim: true },
 })
 
+const userModel = new Schema({
+  loginName: { type: String, trim: true },
+  passwordHash: { type: String, trim: true },
+  userID: { type: String, trime: true },
+})
+
 const Student = mongoose.model('Student', studentModel)
 const Employee = mongoose.model('Employee', employeeModel)
 const Class = mongoose.model('Class', classModel)
@@ -53,5 +58,6 @@ const Book = mongoose.model('Book', bookModel)
 const School = mongoose.model('School', schoolModel)
 const Genre = mongoose.model('Genre', genreModel)
 const Role = mongoose.model('Role', roleModel)
+const User = mongoose.model('User', userModel)
 
-;(module.exports = Student), Employee, Class, Book, School, Genre, Role
+;(module.exports = Student), Employee, Class, Book, School, Genre, Role, User
