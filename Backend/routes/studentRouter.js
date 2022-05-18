@@ -38,7 +38,7 @@ studentRouter.delete(
 
 studentRouter.get(
   '/getAllStudents',
-  middleware.checkTeacher,
+  middleware.checkAdmin,
   studentController.getAllStudents
 )
 

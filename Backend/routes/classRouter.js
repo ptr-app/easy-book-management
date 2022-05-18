@@ -28,7 +28,7 @@ classRouter.delete(
 
 classRouter.get(
   '/getAllClass',
-  middleware.checkTeacher,
+  middleware.checkAdmin,
   classController.getAllClass
 )
 
