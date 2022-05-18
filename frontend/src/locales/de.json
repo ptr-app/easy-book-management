@@ -1,4 +1,14 @@
 {
+  "Generall": {
+    "ProjectName": "EasyBookManagement"
+  },
+  "TabHeader": {
+    "home": "Startseite",
+    "books": "Bücher",
+    "class": "Klassen",
+    "students": "Schüler",
+    "employees": "Angestellte"
+  },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",
     "UNKNOWN_STUDENT": "Der angegebene Schüler wurde nicht gefunden",
