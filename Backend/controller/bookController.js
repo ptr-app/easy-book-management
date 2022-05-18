@@ -1,13 +1,13 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const bookModel = require('../models/DatabaseModel')
-const studentModel = require('../models/DatabaseModel')
+const Book = require('../models/bookModel')
+const Student = require('../models/studentModel')
 
 exports.addBook = [
   async (req, res) => {
     log('Controller.bookController.addBook - Start', 'debug')
     const { name, author, releaseDate, comment, genreID, studentID } = req.body
-    let book = new bookModel({
+    let book = new Book({
       name,
       author,
       releaseDate,
@@ -32,16 +32,16 @@ exports.editBook = [
   async (req, res) => {
     log('Controller.bookController.editBook - Start', 'debug')
     delete req.body.studentID
-    let book = await bookModel
-      .findByIdAndUpdate(req.body._id, req.body)
-      .catch((err) => {
+    let book = await Book.findByIdAndUpdate(req.body._id, req.body).catch(
+      (err) => {
         log(
           'Controller.bookController.editBook - Failed to edit Book ' +
             err.message,
           'error'
         )
         return apiResponse.errorResponse(res, err.message)
-      })
+      }
+    )
 
     log('Controller.bookController.editBook - End', 'debug')
     return apiResponse.successResponseWithData(res, 'BOOK_EDITED', book)
@@ -53,7 +53,7 @@ exports.updateStudentID = [
     log('Controller.bookController.updateStudentID - Start', 'debug')
     let studentID
     if (req.body.studentID !== undefined) {
-      studentModel.findById(req.body.studentID).catch((err) => {
+      Student.findById(req.body.studentID).catch((err) => {
         log(
           'Controller.employeeController.updateStudentID - Failed to find Student ' +
             err.message,
@@ -65,16 +65,16 @@ exports.updateStudentID = [
     } else {
       studentID = null
     }
-    let book = await bookModel
-      .findByIdAndUpdate(req.body._id, { studentID: studentID })
-      .catch((err) => {
-        log(
-          'Controller.bookController.updateStudentID - Failed to update Student ' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      })
+    let book = await Book.findByIdAndUpdate(req.body._id, {
+      studentID: studentID,
+    }).catch((err) => {
+      log(
+        'Controller.bookController.updateStudentID - Failed to update Student ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
 
     log('Controller.bookController.updateStudentID - End', 'debug')
     return apiResponse.successResponseWithData(
@@ -88,7 +88,7 @@ exports.updateStudentID = [
 exports.deleteBook = [
   async (req, res) => {
     log('Controller.bookController.deleteBook - Start ', 'debug')
-    let book = bookModel.findById(req.body._id).catch((err) => {
+    let book = Book.findById(req.body._id).catch((err) => {
       log(
         'Controller.bookController.deleteBook - Failed to find book: ' +
           err.message,
@@ -103,7 +103,7 @@ exports.deleteBook = [
       )
       return apiResponse.errorResponse(res, 'BOOK_HAS_STUDENT')
     }
-    await bookModel.findByIdAndDelete(req.body._id).catch((err) => {
+    await Book.findByIdAndDelete(req.body._id).catch((err) => {
       log(
         'Controller.bookController.deleteBook - Failed to delete book: ' +
           err.message,
@@ -120,7 +120,7 @@ exports.deleteBook = [
 exports.getAllBooks = [
   async (req, res) => {
     log('Controller.bookController.getAllBooks - Start', 'debug')
-    let allBooks = await bookModel.find().catch((err) => {
+    let allBooks = await Book.find().catch((err) => {
       log(
         'Controller.bookController.getAllBooks - Failed while searching for books' +
           err.message,
@@ -136,7 +136,7 @@ exports.getAllBooks = [
 exports.getBookByID = [
   async (req, res) => {
     log('Controller.bookController.getBookByID - Start', 'debug')
-    let book = await bookModel.findById(req.body._id).catch((err) => {
+    let book = await Book.findById(req.body._id).catch((err) => {
       log(
         'Controller.bookController.getBookByID - Failed while searching for the book with the id: ' +
           req.body._id +
@@ -154,7 +154,7 @@ exports.getBookByID = [
 exports.getBookByName = [
   async (req, res) => {
     log('Controller.bookController.getBookByName - Start', 'debug')
-    let book = await bookModel.find({ name: req.body.name }).catch((err) => {
+    let book = await Book.find({ name: req.body.name }).catch((err) => {
       log(
         'Controller.bookController.getBookByName - Failed while searching for the book with the name: ' +
           req.body.name +
@@ -172,18 +172,16 @@ exports.getBookByName = [
 exports.getAllBooksOfOneGenre = [
   async (req, res) => {
     log('Controller.bookController.getAllBooksOfOneGenre - Start', 'debug')
-    let books = await bookModel
-      .find({ genreID: req.body.genreID })
-      .catch((err) => {
-        log(
-          'Controller.bookController.getAllBooksOfOneGenre - Failed while searching for books with the Genre id: ' +
-            req.body.genreID +
-            '. Error Message is' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      })
+    let books = await Book.find({ genreID: req.body.genreID }).catch((err) => {
+      log(
+        'Controller.bookController.getAllBooksOfOneGenre - Failed while searching for books with the Genre id: ' +
+          req.body.genreID +
+          '. Error Message is' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
     log('Controller.bookController.getAllBooksOfOneGenre - END ', 'debug')
     return apiResponse.successResponseWithData(res, 'BOOKS_FOUND_GENRE', books)
   },

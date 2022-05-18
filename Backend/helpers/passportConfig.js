@@ -2,15 +2,15 @@ require('dotenv/config')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
-const userModel = require('../models/DatabaseModel')
-const employeeModel = require('../models/DatabaseModel')
+const User = require('../models/userModel')
+const Employee = require('../models/employeeModel')
 
 passport.use(
   'local',
   new LocalStrategy(
     { usernameField: 'loginName' },
     async (loginName, password, done) => {
-      const user = userModel.find({ loginName: loginName }).catch((err) => {
+      const user = User.find({ loginName: loginName }).catch((err) => {
         log(
           'Helpers.passportConfig.local - Failed to find user: ' + err.message,
           'error'

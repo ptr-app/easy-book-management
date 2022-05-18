@@ -2,22 +2,22 @@ require('dotenv/config')
 
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const classModel = require('../models/DatabaseModel')
-const employeeModel = require('../models/DatabaseModel')
+const Class = require('../models/classModel')
+const Employee = require('../models/employeeModel')
 
 exports.addClass = [
   async (req, res) => {
     log('Controller.classController.addClass - Start', 'debug')
     const { name, studentID, employeeID, schoolID } = req.body
-    let Class = new classModel({
+    let ClassObject = new Class({
       name,
       studentID,
       employeeID,
       schoolID,
     })
-    let newClass = await Class.save().catch((err) => {
+    let newClass = await ClassObject.save().catch((err) => {
       log(
-        'Controller.classController.addClass - Failed to add Class: ' +
+        'Controller.classController.addClass - Failed to add ClassObject: ' +
           err.message,
         'error'
       )
@@ -32,11 +32,11 @@ exports.editClass = [
   async (req, res) => {
     log('Controller.classController.editClass - Start', 'debug')
     delete req.body.employeeID
-    let Class = await classModel
+    let ClassObject = await Class
       .findByIdAndUpdate(req.body._id, req.body)
       .catch((err) => {
         log(
-          'Controller.classController.editClass - Failed to edit Class ' +
+          'Controller.classController.editClass - Failed to edit ClassObject ' +
             err.message,
           'error'
         )
@@ -44,7 +44,7 @@ exports.editClass = [
       })
 
     log('Controller.classController.editClass - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'CLASS_EDITED', Class)
+    return apiResponse.successResponseWithData(res, 'CLASS_EDITED', ClassObject)
   },
 ]
 
@@ -53,7 +53,7 @@ exports.updateEmployeeID = [
     log('Controller.classController.updateEmployeeID - Start', 'debug')
     let employeeID
     if (req.body.employeeID !== undefined) {
-      let employee = employeeModel
+      let employee = Employee
         .findById(req.body.employeeID)
         .catch((err) => {
           log(
@@ -74,12 +74,12 @@ exports.updateEmployeeID = [
       }
     } else {
       log(
-        'Controller.classController.updateEmployeeID - A Class needs an attached Employee ',
+        'Controller.classController.updateEmployeeID - A ClassObject needs an attached Employee ',
         'error'
       )
       return apiResponse.errorResponse(res, 'CLASS_NEED_EMPLOYEE')
     }
-    let Class = await classModel
+    let ClassObject = await Class
       .findByIdAndUpdate(req.body._id, { employeeID: employeeID })
       .catch((err) => {
         log(
@@ -94,7 +94,7 @@ exports.updateEmployeeID = [
     return apiResponse.successResponseWithData(
       res,
       'CLASS_ASSIGNED_EMPLOYEE',
-      Class
+      ClassObject
     )
   },
 ]
@@ -102,7 +102,7 @@ exports.updateEmployeeID = [
 exports.deleteClass = [
   async (req, res) => {
     log('Controller.classController.deleteClass - Start ', 'debug')
-    let Class = classModel.findById(req.body._id).catch((err) => {
+    let ClassObject = Class.findById(req.body._id).catch((err) => {
       log(
         'Controller.classController.deleteClass - Failed to find class: ' +
           err.message,
@@ -110,14 +110,14 @@ exports.deleteClass = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    if (Class.studentsID.length > 1) {
+    if (ClassObject.studentsID.length > 1) {
       log(
         'Controller.classController.deleteClass - Failed to delete class with Students in it: ',
         'error'
       )
       return apiResponse.errorResponse(res, 'CLASS_HAS_STUDENTS')
     }
-    await classModel.findByIdAndDelete(req.body._id).catch((err) => {
+    await Class.findByIdAndDelete(req.body._id).catch((err) => {
       log(
         'Controller.classController.deleteClass - Failed to delete class: ' +
           err.message,
@@ -134,7 +134,7 @@ exports.deleteClass = [
 exports.getAllClass = [
   async (req, res) => {
     log('Controller.classController.getAllClass - Start', 'debug')
-    let allClass = await classModel.find().catch((err) => {
+    let allClass = await Class.find().catch((err) => {
       log(
         'Controller.classController.getAllClass - Failed while searching for class' +
           err.message,
@@ -150,7 +150,7 @@ exports.getAllClass = [
 exports.getClassByID = [
   async (req, res) => {
     log('Controller.classController.getClassByID - Start', 'debug')
-    let Class = await classModel.findById(req.body._id).catch((err) => {
+    let ClassObject = await Class.findById(req.body._id).catch((err) => {
       log(
         'Controller.classController.getClassByID - Failed while searching for the class with the id: ' +
           req.body._id +
@@ -161,18 +161,18 @@ exports.getClassByID = [
       return apiResponse.errorResponse(res, err.message)
     })
     log('Controller.classController.getClassByID - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'CLASS_FOUND_ID', Class)
+    return apiResponse.successResponseWithData(res, 'CLASS_FOUND_ID', ClassObject)
   },
 ]
 
 exports.getClassByEmployee = [
   async (req, res) => {
     log('Controller.classController.getClassByEmployee - Start', 'debug')
-    let Class = await classModel
+    let ClassObject = await Class
       .find({ employeeID: req.body.employeeID })
       .catch((err) => {
         log(
-          'Controller.classController.getClassByEmployee - Failed while searching for Class with the Employee id: ' +
+          'Controller.classController.getClassByEmployee - Failed while searching for ClassObject with the Employee id: ' +
             req.body.employeeID +
             '. Error Message is' +
             err.message,
@@ -184,7 +184,7 @@ exports.getClassByEmployee = [
     return apiResponse.successResponseWithData(
       res,
       'CLASS_FOUND_EMPLOYEE',
-      Class
+      ClassObject
     )
   },
 ]

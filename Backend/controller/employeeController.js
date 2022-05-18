@@ -1,14 +1,14 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const employeeModel = require('../models/DatabaseModel')
-const roleModel = require('../models/DatabaseModel')
-const schoolModel = require('../models/DatabaseModel')
+const Employee = require('../models/employeeModel')
+const Role = require('../models/roleModel')
+const School = require('../models/schoolModel')
 
 exports.addEmployee = [
   async (req, res) => {
     log('Controller.employeeController.addEmployee - Start', 'debug')
     const { name, birthdate, classID, schoolID, roleID } = req.body
-    let empoloyee = new employeeModel({
+    let empoloyee = new Employee({
       name,
       birthdate,
       classID,
@@ -36,7 +36,7 @@ exports.editEmployee = [
   async (req, res) => {
     log('Controller.employeeController.editEmployee - Start', 'debug')
     const { name, birthdate } = req.body
-    let employee = await employeeModel
+    let employee = await Employee
       .findByIdAndUpdate(req.body._id, { name: name, birthdate: birthdate })
       .catch((err) => {
         log(
@@ -61,7 +61,7 @@ exports.updateClassID = [
     } else {
       classID = null
     }
-    let employee = await employeeModel
+    let employee = await Employee
       .findByIdAndUpdate(req.body._id, { classID: classID })
       .catch((err) => {
         log(
@@ -86,7 +86,7 @@ exports.updateRoleID = [
     log('Controller.employeeController.updateRoleID - Start', 'debug')
     let roleID
     if (req.body.roleID !== undefined) {
-      roleModel.findById(req.body.roleID).catch((err) => {
+      Role.findById(req.body.roleID).catch((err) => {
         log(
           'Controller.employeeController.updateRoleID - Failed to find Role ' +
             err.message,
@@ -98,7 +98,7 @@ exports.updateRoleID = [
     } else {
       roleID = null
     }
-    let employee = await employeeModel
+    let employee = await Employee
       .findByIdAndUpdate(req.body._id, { roleID: roleID })
       .catch((err) => {
         log(
@@ -121,7 +121,7 @@ exports.updateRoleID = [
 exports.deleteEmployee = [
   async (req, res) => {
     log('Controller.employeeController.deleteEmployee - Start ', 'debug')
-    let employee = employeeModel.findById(req.body._id).catch((err) => {
+    let employee = Employee.findById(req.body._id).catch((err) => {
       log(
         'Controller.employeeController.deleteEmployee - Failed to find employee: ' +
           err.message,
@@ -136,7 +136,7 @@ exports.deleteEmployee = [
       )
       return apiResponse.errorResponse(res, 'EMPLOYEE_HAS_CLASS')
     }
-    await employeeModel.findByIdAndDelete(req.body._id).catch((err) => {
+    await Employee.findByIdAndDelete(req.body._id).catch((err) => {
       log(
         'Controller.employeeController.deleteEmployee - Failed to delete class: ' +
           err.message,
@@ -153,7 +153,7 @@ exports.deleteEmployee = [
 exports.getAllEmployee = [
   async (req, res) => {
     log('Controller.employeeController.getAllEmployee - Start', 'debug')
-    let allEmployee = await employeeModel.find().catch((err) => {
+    let allEmployee = await Employee.find().catch((err) => {
       log(
         'Controller.employeeController.getAllEmployee - Failed while searching for Employees' +
           err.message,
@@ -173,7 +173,7 @@ exports.getAllEmployee = [
 exports.getEmployeeByID = [
   async (req, res) => {
     log('Controller.employeeController.getEmployeeByID - Start', 'debug')
-    let employee = await employeeModel.findById(req.body._id).catch((err) => {
+    let employee = await Employee.findById(req.body._id).catch((err) => {
       log(
         'Controller.employeeController.getEmployeeByID - Failed while searching for the employee with the id: ' +
           req.body._id +
@@ -192,7 +192,7 @@ exports.getEmployeeByRole = [
   async (req, res) => {
     log('Controller.employeeController.getEmployeeByRole - Start', 'debug')
     let roleID
-    let role = roleModel.findById(req.body.roleID).catch((err) => {
+    let role = Role.findById(req.body.roleID).catch((err) => {
       log(
         'Controller.employeeController.getEmployeeByRole - Failed to find Role ' +
           err.message,
@@ -211,7 +211,7 @@ exports.getEmployeeByRole = [
       roleID = req.body.roleID
     }
 
-    let employee = await employeeModel
+    let employee = await Employee
       .find({ roleID: req.body.roleID })
       .catch((err) => {
         log(
@@ -236,7 +236,7 @@ exports.getEmployeeBySchool = [
   async (req, res) => {
     log('Controller.employeeController.getEmployeeBySchool - Start', 'debug')
     let schoolID
-    let school = schoolModel.findById(req.body.schoolID).catch((err) => {
+    let school = School.findById(req.body.schoolID).catch((err) => {
       log(
         'Controller.employeeController.getEmployeeBySchool - Failed to find School ' +
           err.message,
@@ -255,7 +255,7 @@ exports.getEmployeeBySchool = [
       schoolID = req.body.schoolID
     }
 
-    let employee = await employeeModel
+    let employee = await Employee
       .find({ schoolID: schoolID })
       .catch((err) => {
         log(

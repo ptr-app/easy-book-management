@@ -1,13 +1,13 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const roleModel = require('../models/DatabaseModel')
-const employeeModel = require('../models/DatabaseModel')
+const Role = require('../models/roleModel')
+const Employee = require('../models/employeeModel')
 
 exports.addRole = [
   async (req, res) => {
     log('Controller.roleController.addRole - Start', 'debug')
     const { name } = req.body
-    let role = new roleModel({
+    let role = new Role({
       name,
     })
     let newRole = await role.save().catch((err) => {
@@ -26,7 +26,7 @@ exports.addRole = [
 exports.editRole = [
   async (req, res) => {
     log('Controller.roleController.editRole - Start', 'debug')
-    let role = await roleModel
+    let role = await Role
       .findByIdAndUpdate(req.body._id, req.body)
       .catch((err) => {
         log(
@@ -45,7 +45,7 @@ exports.editRole = [
 exports.deleteRole = [
   async (req, res) => {
     log('Controller.roleController.deleteRole - Start ', 'debug')
-    let employee = employeeModel.find({ roleID: req.body._id }).catch((err) => {
+    let employee = Employee.find({ roleID: req.body._id }).catch((err) => {
       log(
         'Controller.roleController.deleteRole - Failed to find employee: ' +
           err.message,
@@ -60,7 +60,7 @@ exports.deleteRole = [
       )
       return apiResponse.errorResponse(res, 'ROLE_HAS_EMPLOYEE')
     }
-    await roleModel.findByIdAndDelete(req.body._id).catch((err) => {
+    await Role.findByIdAndDelete(req.body._id).catch((err) => {
       log(
         'Controller.roleController.deleteRole - Failed to delete role: ' +
           err.message,
@@ -77,7 +77,7 @@ exports.deleteRole = [
 exports.getAllRoles = [
   async (req, res) => {
     log('Controller.roleController.getAllRoles - Start', 'debug')
-    let allRoles = await roleModel.find().catch((err) => {
+    let allRoles = await Role.find().catch((err) => {
       log(
         'Controller.roleController.getAllRoles - Failed while searching for Roles' +
           err.message,
@@ -93,7 +93,7 @@ exports.getAllRoles = [
 exports.getRoleByID = [
   async (req, res) => {
     log('Controller.roleController.getRoleByID - Start', 'debug')
-    let role = await roleModel.findById(req.body._id).catch((err) => {
+    let role = await Role.findById(req.body._id).catch((err) => {
       log(
         'Controller.roleController.getRoleByID - Failed while searching for the role with the id: ' +
           req.body._id +

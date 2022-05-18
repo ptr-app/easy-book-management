@@ -1,8 +1,8 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const passport = require('passport')
-const studentModel = require('../models/DatabaseModel')
-const userModel = require('../models/DatabaseModel')
+const Student = require('../models/studentModel')
+const User = require('../models/userModel')
 
 exports.login = [
   async (req, res, next) => {
@@ -37,7 +37,7 @@ exports.registerStudent = [
       )
       return apiResponse.errorResponse(res, "CLASS_NOT_FOUND")
     }
-    let newStudentModel = new studentModel(name, birthdate, classID, null)
+    let newStudentModel = new Student(name, birthdate, classID, null)
     let newStudent = await newStudentModel.save().catch((err) => {
       log(
         'Controller.authController.registerStudent - Failed to add student: ' +
@@ -47,7 +47,7 @@ exports.registerStudent = [
       return apiResponse.errorResponse(res, err.message)
     })
     let passwordHash = bcrypt.hash(password, 10)
-    let newUserModel = new userModel(loginName, passwordHash, newStudent._id)
+    let newUserModel = new User(loginName, passwordHash, newStudent._id)
     let newUser = newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerStudent - Failed to add user: ' +
@@ -69,7 +69,7 @@ exports.registerEmployee = [
   async (req, res) => {
     log('Controller.authController.registerEmployee - Start', 'debug')
     const { loginName, name, password, birthdate, schoolID, roleID } = req.body
-    let newEmployeeModel = new employeeModel(
+    let newEmployeeModel = new Employee(
       name,
       birthdate,
       null,
@@ -92,7 +92,7 @@ exports.registerEmployee = [
       return apiResponse.errorResponse(res, err.message)
     })
     let passwordHash = bcrypt.hash(password, 10)
-    let newUserModel = new userModel(loginName, passwordHash, newEmployee._id)
+    let newUserModel = new User(loginName, passwordHash, newEmployee._id)
     let newUser = newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerEmployee - Failed to add user: ' +
@@ -114,7 +114,7 @@ exports.registerSchool = [
   async (req, res) => {
     log('Controller.authController.registerSchool - Start', 'debug')
     const { loginName, name, password, birthdate } = req.body
-    let newSchoolModel = new schoolModel(name, null)
+    let newSchoolModel = new School(name, null)
     let newSchool = newSchoolModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to create School: ' +
@@ -123,7 +123,7 @@ exports.registerSchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    let newEmployeeModel = new employeeModel(
+    let newEmployeeModel = new Employee(
       name,
       birthdate,
       null,
@@ -139,7 +139,7 @@ exports.registerSchool = [
       return apiResponse.errorResponse(res, err.message)
     })
     let passwordHash = bcrypt.hash(password, 10)
-    let newUserModel = new userModel(loginName, passwordHash, newEmployee._id)
+    let newUserModel = new User(loginName, passwordHash, newEmployee._id)
     let newUser = newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to add user: ' +
@@ -191,15 +191,15 @@ async function userData(user) {
 },
 
 async function checkClassID(classID){
-  let Class = classModel.findById(req.body.classID).catch((err) => {
+  let ClassObject = Class.findById(req.body.classID).catch((err) => {
     log(
-      'Controller.employeeController.getEmployeeByRole - Failed to find Class ' +
+      'Controller.employeeController.getEmployeeByRole - Failed to find ClassObject ' +
         err.message,
       'error'
     )
     return flase
   })
-  if (Class === undefined) {
+  if (ClassObject === undefined) {
     log(
       'Controller.employeeController.getEmployeeByRole - Role not Found ',
       'error'
@@ -215,7 +215,7 @@ async function checkClassID(classID){
 }
 
 async function checkSchoolID(schoolID){
-  let school = schoolModel.findById(req.body.schoolID).catch((err) => {
+  let school = School.findById(req.body.schoolID).catch((err) => {
     log(
       'Controller.employeeController.getEmployeeByRole - Failed to find School ' +
         err.message,

@@ -1,7 +1,7 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const classModel = require('../models/DatabaseModel')
-const studentModel = require('../models/DatabaseModel')
+const classModel = require('../models/classModel')
+const Student = require('../models/studentModel')
 
 exports.advanceAllStudentsFromClass = [
   async (req, res) => {

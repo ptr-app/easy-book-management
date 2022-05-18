@@ -1,13 +1,13 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const schoolModel = require('../models/DatabaseModel')
-const classModel = require('../models/DatabaseModel')
+const School = require('../models/schoolModel')
+const Class = require('../models/classModel')
 
 exports.addSchool = [
   async (req, res) => {
     log('Controller.schoolController.addSchool - Start', 'debug')
     const { name, classID } = req.body
-    let school = new schoolModel({
+    let school = new School({
       name,
       classID,
     })
@@ -27,16 +27,16 @@ exports.addSchool = [
 exports.editSchool = [
   async (req, res) => {
     log('Controller.schoolController.editSchool - Start', 'debug')
-    let school = await schoolModel
-      .findByIdAndUpdate(req.body._id, req.body)
-      .catch((err) => {
+    let school = await School.findByIdAndUpdate(req.body._id, req.body).catch(
+      (err) => {
         log(
           'Controller.schoolController.editSchool - Failed to edit School ' +
             err.message,
           'error'
         )
         return apiResponse.errorResponse(res, err.message)
-      })
+      }
+    )
 
     log('Controller.schoolController.editSchool - End', 'debug')
     return apiResponse.successResponseWithData(res, 'SCHOOL_EDITED', school)
@@ -46,7 +46,7 @@ exports.editSchool = [
 exports.deleteSchool = [
   async (req, res) => {
     log('Controller.schoolController.deleteSchool - Start ', 'debug')
-    let Class = classModel.find({ schoolID: req.body._id }).catch((err) => {
+    let ClassObject = Class.find({ schoolID: req.body._id }).catch((err) => {
       log(
         'Controller.schoolController.deleteSchool - Failed to find class: ' +
           err.message,
@@ -54,14 +54,14 @@ exports.deleteSchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    if (Class.length > 0) {
+    if (ClassObject.length > 0) {
       log(
-        'Controller.schoolController.deleteSchool - Failed to delete school with Class attached to it: ',
+        'Controller.schoolController.deleteSchool - Failed to delete school with ClassObject attached to it: ',
         'error'
       )
       return apiResponse.errorResponse(res, 'SCHOOL_HAS_CLASS')
     }
-    await schoolModel.findByIdAndDelete(req.body._id).catch((err) => {
+    await School.findByIdAndDelete(req.body._id).catch((err) => {
       log(
         'Controller.schoolController.deleteSchool - Failed to delete school: ' +
           err.message,
@@ -78,7 +78,7 @@ exports.deleteSchool = [
 exports.getAllSchools = [
   async (req, res) => {
     log('Controller.schoolController.getAllSchools - Start', 'debug')
-    let allSchools = await schoolModel.find().catch((err) => {
+    let allSchools = await School.find().catch((err) => {
       log(
         'Controller.schoolController.getAllSchools - Failed while searching for Schools' +
           err.message,
@@ -98,7 +98,7 @@ exports.getAllSchools = [
 exports.getSchoolByID = [
   async (req, res) => {
     log('Controller.schoolController.getSchoolByID - Start', 'debug')
-    let school = await schoolModel.findById(req.body._id).catch((err) => {
+    let school = await School.findById(req.body._id).catch((err) => {
       log(
         'Controller.schoolController.getSchoolByID - Failed while searching for the school with the id: ' +
           req.body._id +

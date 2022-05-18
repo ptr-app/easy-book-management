@@ -1,13 +1,13 @@
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const genreModel = require('../models/DatabaseModel')
-const bookModel = require('../models/DatabaseModel')
+const Genre = require('../models/genreModel')
+const Book = require('../models/bookModel')
 
 exports.addGenre = [
   async (req, res) => {
     log('Controller.genreController.addGenre - Start', 'debug')
     const { name } = req.body
-    let genre = new genreModel({
+    let genre = new Genre({
       name,
     })
     let newGenre = await genre.save().catch((err) => {
@@ -26,7 +26,7 @@ exports.addGenre = [
 exports.editGenre = [
   async (req, res) => {
     log('Controller.genreController.editGenre - Start', 'debug')
-    let genre = await genreModel
+    let genre = await Genre
       .findByIdAndUpdate(req.body._id, req.body)
       .catch((err) => {
         log(
@@ -45,7 +45,7 @@ exports.editGenre = [
 exports.deleteGenre = [
   async (req, res) => {
     log('Controller.genreController.deleteGenre - Start ', 'debug')
-    let book = bookModel.find({ genreID: req.body._id }).catch((err) => {
+    let book = Book.find({ genreID: req.body._id }).catch((err) => {
       log(
         'Controller.genreController.deleteGenre - Failed to find book: ' +
           err.message,
@@ -60,7 +60,7 @@ exports.deleteGenre = [
       )
       return apiResponse.errorResponse(res, 'GENRE_HAS_BOOKS')
     }
-    await genreModel.findByIdAndDelete(req.body._id).catch((err) => {
+    await Genre.findByIdAndDelete(req.body._id).catch((err) => {
       log(
         'Controller.genreController.deleteGenre - Failed to delete genre: ' +
           err.message,
@@ -77,7 +77,7 @@ exports.deleteGenre = [
 exports.getAllGenres = [
   async (req, res) => {
     log('Controller.genreController.getAllGenres - Start', 'debug')
-    let allGenres = await genreModel.find().catch((err) => {
+    let allGenres = await Genre.find().catch((err) => {
       log(
         'Controller.genreController.getAllGenres - Failed while searching for Genres' +
           err.message,
@@ -93,7 +93,7 @@ exports.getAllGenres = [
 exports.getGenreByID = [
   async (req, res) => {
     log('Controller.genreController.getGenreByID - Start', 'debug')
-    let genre = await genreModel.findById(req.body._id).catch((err) => {
+    let genre = await Genre.findById(req.body._id).catch((err) => {
       log(
         'Controller.genreController.getGenreByID - Failed while searching for the genre with the id: ' +
           req.body._id +

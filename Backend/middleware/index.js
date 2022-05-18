@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const log = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const { studentModel, employeeModel } = require('../models/DatabaseModel')
+const { Student, Employee } = require('../models/employeeModel')
 
 exports.checkLogged = [
   (req, res, next) => {
@@ -44,7 +44,7 @@ exports.checkStudent = [
   async (req, res, next) => {
     log('Middleware.index.checkStudent - Start: ', 'debug')
     let studentID = res.headers['x-studentID']
-    let student = await studentModel.findById(studentID)
+    let student = await Student.findById(studentID)
     if (student !== undefined) {
       log('Middleware.index.checkStudent - End: ', 'debug')
       next()
@@ -63,7 +63,7 @@ exports.checkTeacher = [
   async (req, res, next) => {
     log('Middleware.index.checkTeacher - Start: ', 'debug')
     let employeeID = res.headers['x-employeeID']
-    let employee = await employeeModel.findById(employeeID)
+    let employee = await Employee.findById(employeeID)
     if (employee === undefined) {
       log(
         'Middleware.index.checkTeacher - Could not find Employee with that EmployeeID: ' +
@@ -92,7 +92,7 @@ exports.checkDean = [
   async (req, res, next) => {
     log('Middleware.index.checkDean - Start: ', 'debug')
     let employeeID = res.headers['x-employeeID']
-    let employee = await employeeModel.findById(employeeID)
+    let employee = await Employee.findById(employeeID)
     if (employee === undefined) {
       log(
         'Middleware.index.checkDean - Could not find Employee with that EmployeeID: ' +
@@ -121,7 +121,7 @@ exports.checkAdmin = [
   async (req, res, next) => {
     log('Middleware.index.checkAdmin - Start: ', 'debug')
     let employeeID = res.headers['x-employeeID']
-    let employee = await employeeModel.findById(employeeID)
+    let employee = await Employee.findById(employeeID)
     if (employee === undefined) {
       log(
         'Middleware.index.checkAdmin - Could not find Employee with that EmployeeID: ' +
