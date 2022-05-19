@@ -30,12 +30,12 @@ exports.registerStudent = [
   async (req, res) => {
     log('Controller.authController.registerStudent - Start', 'debug')
     const { loginName, name, password, birthdate, classID } = req.body
-    if(!checkClassID(classID)) {
+    if (!checkClassID(classID)) {
       log(
         'Controller.authController.registerStudent - Failed to find class: ',
         'error'
       )
-      return apiResponse.errorResponse(res, "CLASS_NOT_FOUND")
+      return apiResponse.errorResponse(res, 'CLASS_NOT_FOUND')
     }
     let newStudentModel = new Student(name, birthdate, classID, null)
     let newStudent = await newStudentModel.save().catch((err) => {
@@ -69,19 +69,13 @@ exports.registerEmployee = [
   async (req, res) => {
     log('Controller.authController.registerEmployee - Start', 'debug')
     const { loginName, name, password, birthdate, schoolID, roleID } = req.body
-    let newEmployeeModel = new Employee(
-      name,
-      birthdate,
-      null,
-      schoolID,
-      roleID
-    )
-    if(!checkSchoolID(schoolID)) {
+    let newEmployeeModel = new Employee(name, birthdate, null, schoolID, roleID)
+    if (!checkSchoolID(schoolID)) {
       log(
         'Controller.authController.registerEmployee - Failed to find School: ',
         'error'
       )
-      return apiResponse.errorResponse(res, "SCHOOL_NOT_FOUND")
+      return apiResponse.errorResponse(res, 'SCHOOL_NOT_FOUND')
     }
     let newEmployee = await newEmployeeModel.save().catch((err) => {
       log(
@@ -160,19 +154,22 @@ exports.registerSchool = [
 exports.forgotPassword = [
   async (req, res) => {
     log('Controller.authController.forgotPassword - Start', 'debug')
-
   },
 ]
 
 exports.logout = [
   async (req, res) => {
-    log('Controller.authController.logout - Start', 'debug')    
+    log('Controller.authController.logout - Start', 'debug')
     try {
       req.logout()
       log('Controller.authController.logout - END', 'debug')
-      return apiResponse.successResponse(res, "USER_LOGGED_OUT")
-    } catch (err){
-      log('Controller.authController.logout - Failed to logout user' + err.message, 'error')
+      return apiResponse.successResponse(res, 'USER_LOGGED_OUT')
+    } catch (err) {
+      log(
+        'Controller.authController.logout - Failed to logout user' +
+          err.message,
+        'error'
+      )
       return apiResponse.errorResponse(res, err.message)
     }
   },
@@ -188,9 +185,9 @@ async function userData(user) {
   }
   loggedUser.accessToken = jwtForUser(loggedUser)
   return loggedUser
-},
+}
 
-async function checkClassID(classID){
+async function checkClassID(classID) {
   let ClassObject = Class.findById(req.body.classID).catch((err) => {
     log(
       'Controller.employeeController.getEmployeeByRole - Failed to find ClassObject ' +
@@ -206,15 +203,12 @@ async function checkClassID(classID){
     )
     return false
   } else {
-    log(
-      'Controller.employeeController.getEmployeeByRole - Role Found' ,
-      'debug'
-    )
+    log('Controller.employeeController.getEmployeeByRole - Role Found', 'debug')
     return true
   }
 }
 
-async function checkSchoolID(schoolID){
+async function checkSchoolID(schoolID) {
   let school = School.findById(req.body.schoolID).catch((err) => {
     log(
       'Controller.employeeController.getEmployeeByRole - Failed to find School ' +
@@ -231,7 +225,7 @@ async function checkSchoolID(schoolID){
     return false
   } else {
     log(
-      'Controller.employeeController.getEmployeeByRole - School Found' ,
+      'Controller.employeeController.getEmployeeByRole - School Found',
       'debug'
     )
     return true

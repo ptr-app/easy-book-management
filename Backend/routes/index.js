@@ -6,7 +6,7 @@ const employeeRouter = require('./employeeRouter')
 const schoolRouter = require('./schoolRouter')
 const genreRouter = require('./genreRouter')
 const roleRouter = require('./roleRouter')
-const roleRouter = require('./authRouter')
+const authRouter = require('./authRouter')
 const { model } = require('mongoose')
 
 const router = express.Router({

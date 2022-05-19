@@ -26,14 +26,15 @@ let sess = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000, secure: false },
+  cookie: { maxAge: 24 * 60 * 60 * 1000, secure: true },
 }
 
-app.use(session(sess))
+app.set('trust proxy', true)
 
 app.use('/api', routes)
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(session(sess))
 
 app.listen(process.env.PORT, function () {
   console.log('App.Start - Server started on Port: ' + process.env.PORT)
