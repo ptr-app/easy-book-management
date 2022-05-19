@@ -3,6 +3,7 @@ require('./helpers/passportConfig')
 
 const mongoose = require('mongoose')
 const express = require('express')
+const session = require('express-session')
 const routes = require('./routes')
 const passport = require('passport')
 const initalizeDatabase = require('./helpers/initalizeDatabase')
@@ -20,6 +21,15 @@ mongoose.connection.on('error', (error) => {
 //DATABASE Connection End
 
 const app = express()
+
+let sess = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 24 * 60 * 60 * 1000, secure: false },
+}
+
+app.use(session(sess))
 
 app.use('/api', routes)
 app.use(passport.initialize())
