@@ -1,4 +1,4 @@
-const {log} = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const passport = require('passport')
 const Student = require('../models/studentModel')
@@ -7,22 +7,44 @@ const User = require('../models/userModel')
 exports.login = [
   async (req, res, next) => {
     log('Controller.authController.login - Start', 'debug')
-    passport.authenticate('local', function (err, user, info) {
-      if (err) {
-        return next(err)
-      }
-      if (!user) {
-        return apiResponse.errorResponse(res, info.message)
-      }
-      req.logIn(user, async (err) => {
+    try {
+      passport.authenticate('local', function (err, user, info) {
         if (err) {
+          log(
+            'Controller.authController-login - Error while login' + err.message,
+            'error'
+          )
           return next(err)
         }
-        let user = await userData(req.user)
-        log('Controller.authController.login - End', 'debug')
-        return apiResponse.successResponseWithData(res, 'USER_LOGGED_IN', user)
-      })
-    })
+        if (!user) {
+          log('Controller.authController-login - No User', 'error')
+          return apiResponse.errorResponse(res, info.message)
+        }
+        req.logIn(user, async (err) => {
+          if (err) {
+            log(
+              'Controller.authController-login - Error' + err.message,
+              'error'
+            )
+            return next(err)
+          }
+          let user = await userData(req.user)
+          log('Controller.authController.login - End', 'debug')
+          return apiResponse.successResponseWithData(
+            res,
+            'USER_LOGGED_IN',
+            user
+          )
+        })
+      })(req, res, next)
+    } catch (err) {
+      log(
+        'Controller.authController.login - Error while Authenticate: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    }
   },
 ]
 
