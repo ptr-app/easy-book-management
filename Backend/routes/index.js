@@ -6,10 +6,11 @@ const employeeRouter = require('./employeeRouter')
 const schoolRouter = require('./schoolRouter')
 const genreRouter = require('./genreRouter')
 const roleRouter = require('./roleRouter')
+const roleRouter = require('./authRouter')
 const { model } = require('mongoose')
 
 const router = express.Router({
-    mergeParams: true
+  mergeParams: true,
 })
 
 router.use('/book', bookRouter.default)
@@ -19,5 +20,6 @@ router.use('/employee', employeeRouter.default)
 router.use('/school', schoolRouter.default)
 router.use('/genre', genreRouter.default)
 router.use('/role', roleRouter.default)
+router.use('/auth', authRouter.default)
 
 module.exports = router
