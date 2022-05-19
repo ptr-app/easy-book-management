@@ -1,4 +1,5 @@
 require('dotenv/config')
+const {log} = require('../helpers/logger')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')

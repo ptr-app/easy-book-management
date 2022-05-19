@@ -1,4 +1,4 @@
-const log = require('../helpers/logger')
+const {log} = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Book = require('../models/bookModel')
 const Student = require('../models/studentModel')

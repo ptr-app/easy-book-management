@@ -1,11 +1,12 @@
 require('dotenv/config')
+const { log } = require('../helpers/logger')
 
 const { ObjectId } = require('mongodb')
 const Role = require('../models/roleModel')
 
 module.exports = {
   createStandardRoles: async function () {
-    console.log('Helpers.initalizeDatabase.createStandardRoles - Start ')
+    log('Helpers.initalizeDatabase.createStandardRoles - Start ', 'debug')
     let allRoles = await Role.find()
     if (allRoles.length === 0) {
       let teacherRole = new Role({
@@ -18,8 +19,9 @@ module.exports = {
             err.message
         )
       })
-      console.log(
-        'Helpers.initalizeDatabase.createStandardRoles - Created Teacher Role'
+      log(
+        'Helpers.initalizeDatabase.createStandardRoles - Created Teacher Role',
+        'info'
       )
 
       let deanRole = new Role({
@@ -32,14 +34,16 @@ module.exports = {
             err.message
         )
       })
-      console.log(
-        'Helpers.initalizeDatabase.createStandardRoles - Created Dean Role'
+      log(
+        'Helpers.initalizeDatabase.createStandardRoles - Created Dean Role',
+        'info'
       )
     } else {
-      console.log(
-        'Helpers.initalizeDatabase.createStandardRoles - Roles already exist'
+      log(
+        'Helpers.initalizeDatabase.createStandardRoles - Roles already exist',
+        'info'
       )
     }
-    console.log('Helpers.initalizeDatabase.createStandardRoles - End ')
+    log('Helpers.initalizeDatabase.createStandardRoles - End ', 'debug')
   },
 }

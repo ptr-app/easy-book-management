@@ -1,17 +1,19 @@
+require('dotenv/config')
+
 function log(message, level) {
   if (process.env.ENABLE_LOGGING) {
     switch (level) {
       case 'error':
-        console.log(Date.now() + ' - ERROR - ' + message)
+        console.log(Date.now() + ' - ERROR  - ' + message)
         break
       case 'warn':
-        console.log(Date.now() + ' - WARN - ' + message)
+        console.log(Date.now() + ' - WARN   - ' + message)
         break
       case 'info':
-        console.log(Date.now() + ' - INFO - ' + message)
+        console.log(Date.now() + ' - INFO   - ' + message)
         break
-      case 'debugg':
-        if (process.env.ENAGLE_DEBUGGING) {
+      case 'debug':
+        if (process.env.ENABLE_DEBUGGING) {
           console.log(Date.now() + ' - DEBUGG - ' + message)
         }
         break
@@ -21,3 +23,5 @@ function log(message, level) {
     }
   }
 }
+
+exports.log = log

@@ -1,6 +1,6 @@
 require('dotenv/config')
 
-const log = require('../helpers/logger')
+const {log} = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Class = require('../models/classModel')
 const Employee = require('../models/employeeModel')
