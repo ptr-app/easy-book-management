@@ -11,6 +11,11 @@
         />
       </v-tabs>
     </template>
+    <v-spacer />
+    <v-btn icon @click="toggleDarkMode">
+      <v-icon v-if="darkMode">mdi-weather-sunny</v-icon>
+      <v-icon v-if="!darkMode">mdi-weather-night</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
@@ -21,11 +26,15 @@ export default {
   data() {
     return {
       tabs: [{ text: i18n.t('TabHeader.home'), link: '/home' }],
+      darkMode: false,
     }
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user
+    },
+    switchLabel: function () {
+      return this.darkMode ? 'light' : 'dark'
     },
   },
   created() {
@@ -49,6 +58,10 @@ export default {
           link: '/employee',
         })
       }
+    },
+    toggleDarkMode: function () {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+      this.darkMode = !this.darkMode
     },
   },
 }
