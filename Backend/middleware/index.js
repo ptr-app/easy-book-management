@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {log} = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const { Student, Employee } = require('../models/employeeModel')
 

@@ -4,8 +4,9 @@ require('./helpers/passportConfig')
 const mongoose = require('mongoose')
 const express = require('express')
 const session = require('express-session')
-const routes = require('./routes')
 const passport = require('passport')
+const bodyParser = require('body-parser')
+const routes = require('./routes')
 const initalizeDatabase = require('./helpers/initalizeDatabase')
 const { log } = require('./helpers/logger')
 
@@ -32,6 +33,8 @@ let sess = {
 
 app.set('trust proxy', true)
 
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 app.use(session(sess))
 app.use(passport.initialize())
 app.use(passport.session())
