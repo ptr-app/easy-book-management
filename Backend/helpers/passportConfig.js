@@ -1,5 +1,5 @@
 require('dotenv/config')
-const {log} = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
@@ -47,3 +47,12 @@ passport.use(
     }
   )
 )
+
+passport.serializeUser(async (user, done) => {
+  done(null, user._id)
+})
+
+passport.deserializeUser(async (_id, done) => {
+  let user = User.findById(_id)
+  return done(null, user[0])
+})
