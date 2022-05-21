@@ -32,7 +32,7 @@ export default {
         return this.$store.getters['ui/notification'].display
       },
       set() {
-        this.$store.commit('ui/set_notification', {
+        this.$store.commit('ui/setNotification', {
           display: false,
         })
       },

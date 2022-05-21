@@ -9,6 +9,12 @@
     "students": "Schüler",
     "employees": "Angestellte"
   },
+  "LoginPage": {
+    "header": "EasyBookManagement",
+    "login": "Einloggen",
+    "register": "Registrieren",
+    "passwordForgotten": "Passwort vergessen"
+  },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",
     "UNKNOWN_STUDENT": "Der angegebene Schüler wurde nicht gefunden",

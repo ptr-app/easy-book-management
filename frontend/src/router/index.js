@@ -1,27 +1,93 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import axios from 'axios'
+
+import { notLogged } from './middleware'
+import Login from '../pages/login'
+import store from '../store/index'
+import middlewarePipeline from './middlewarePipeline'
 
 Vue.use(VueRouter)
+axios.defaults.baseURL = window.location.origin + '/api/'
+axios.defaults.withCredentials = true
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: { middleware: [notLogged] },
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
 ]
 
+axios.interceptors.response.use(
+  (res) => {
+    store.commit('ui/setNotification', { display: false })
+    if (res.data.code) {
+      console.log(res.data.code)
+      store.commit('ui/setNotification', {
+        display: true,
+        code: res.data.code,
+        alertClass: 'sucess',
+      })
+    }
+    return res
+  },
+  (err) => {
+    const {
+      response: { status, data },
+    } = err
+    store.commit('ui/setNotification', { display: false })
+    if (data.code) {
+      if (data.data) {
+        store.commit('ui/setNotification', {
+          display: true,
+          code: data.data[0].msg,
+          alertClass: 'error',
+        })
+      } else {
+        store.commit('ui/setNotification', {
+          display: true,
+          code: data.code,
+          alertClass: 'error',
+        })
+      }
+    }
+    if (status === 401) {
+      store.dispatch('auth/logout').then(() => {
+        router.push('/')
+      })
+    }
+    if (status === 405) {
+      console.log('Forbidden')
+      router.push('/')
+    }
+  }
+)
+
 const router = new VueRouter({
-  routes
+  mode: 'history',
+  bnase: '/',
+  routes,
+  duplicateNavigationPolicy: 'ignore',
+})
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.middleware) {
+    return next()
+  }
+  const middleware = to.meta.middleware
+
+  const context = {
+    to,
+    from,
+    next,
+    store,
+  }
+  return middleware[0]({
+    ...context,
+    next: middlewarePipeline(context, middleware, 1),
+  })
 })
 
 export default router

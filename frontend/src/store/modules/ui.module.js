@@ -29,7 +29,7 @@ export const ui = {
     },
   },
   mutations: {
-    set_notification: (state, { display, code, alertClass }) => {
+    setNotification: (state, { display, code, alertClass }) => {
       ;(state.notification.display = display),
         (state.notification.text = /[a-z]/.test(code)
           ? code
