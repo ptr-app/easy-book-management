@@ -5,7 +5,7 @@
         <v-tabs-slider color="red" />
         <v-tab
           v-for="tab in tabs"
-          :key="tab"
+          :key="tab.text"
           :to="tab.link"
           v-text="tab.text"
         />
@@ -46,9 +46,7 @@ export default {
   },
   methods: {
     initializeTabs() {
-      console.log(this.currentUser)
       let role = this.currentUser.role
-      console.log(role)
       if (role === 'teacher' || role === 'dean') {
         this.tabs.push({ text: i18n.t('TabHeader.books'), link: '/books' })
         this.tabs.push({ text: i18n.t('TabHeader.class'), link: '/class' })
