@@ -11,7 +11,7 @@ module.exports = {
     if (allRoles.length === 0) {
       let teacherRole = new Role({
         _id: ObjectId(process.env.TEACHER_ID),
-        name: 'Teacher',
+        name: 'teacher',
       })
       await teacherRole.save().catch((err) => {
         console.error(
@@ -26,7 +26,7 @@ module.exports = {
 
       let deanRole = new Role({
         _id: ObjectId(process.env.DEAN_ID),
-        name: 'Dean',
+        name: 'dean',
       })
       await deanRole.save().catch((err) => {
         console.error(

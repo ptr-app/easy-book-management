@@ -1,12 +1,13 @@
 const bcrypt = require('bcrypt')
 const { log } = require('../helpers/logger')
-const {jwtForUser} = require('../helpers/utility')
+const { jwtForUser } = require('../helpers/utility')
 const apiResponse = require('../helpers/apiResponse')
 const passport = require('passport')
 const Student = require('../models/studentModel')
 const User = require('../models/userModel')
 const School = require('../models/schoolModel')
 const Employee = require('../models/employeeModel')
+const Role = require('../models/roleModel')
 
 exports.login = [
   async (req, res, next) => {
@@ -82,6 +83,7 @@ exports.registerStudent = [
       loginName: loginName,
       passwordHash: passwordHash,
       userID: newStudent._id,
+      isStudent: true,
     })
     let newUser = newUserModel.save().catch((err) => {
       log(
@@ -132,6 +134,7 @@ exports.registerEmployee = [
       loginName: loginName,
       passwordHash: passwordHash,
       userID: newEmployee._id,
+      isStudent: false,
     })
     let newUser = newUserModel.save().catch((err) => {
       log(
@@ -185,6 +188,7 @@ exports.registerSchool = [
       loginName: loginName,
       passwordHash: passwordHash,
       userID: newEmployee._id,
+      isStudent: false,
     })
     let newUser = newUserModel.save().catch((err) => {
       log(
@@ -232,11 +236,51 @@ exports.logout = [
 
 async function userData(user) {
   let loggedUser = {
-    _id: user._id,
+    _id: user.userID,
     loginName: user.loginName,
     passwordHash: user.passwordHash,
   }
   loggedUser.accessToken = jwtForUser(loggedUser)
+  if (user.isStudent) {
+    student = await Student.findById(user.userID).catch((err) => {
+      log(
+        'Controller.employeeController.userData - Student not Found ',
+        'error'
+      )
+      throw new Error()
+    })
+    if (!student) {
+      log(
+        'Controller.employeeController.userData - Student not Found ',
+        'error'
+      )
+      throw new Error()
+    }
+    loggedUser.role = 'student'
+  } else {
+    employee = await Employee.findById(user.userID).catch((err) => {
+      log(
+        'Controller.employeeController.userData - Employee not Found ',
+        'error'
+      )
+      throw new Error()
+    })
+    if (!employee) {
+      log(
+        'Controller.employeeController.userData - Employee not Found ',
+        'error'
+      )
+      throw new Error()
+    }
+    loggedUser.role = await Role.findById(employee.roleID)
+      .then((resp) => {
+        return resp.name
+      })
+      .catch((err) => {
+        log('Controller.employeeController.userData - Role not Found ', 'error')
+        throw new Error()
+      })
+  }
   return loggedUser
 }
 
@@ -247,7 +291,7 @@ async function checkClassID(classID) {
         err.message,
       'error'
     )
-    return flase
+    return false
   })
   if (ClassObject === undefined) {
     log(
