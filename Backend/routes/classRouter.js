@@ -44,4 +44,10 @@ classRouter.get(
   classController.getClassByEmployee
 )
 
+classRouter.get(
+  '/getClassBySchool',
+  middleware.checkDean,
+  classController.getClassBySchool
+)
+
 module.exports.default = classRouter
