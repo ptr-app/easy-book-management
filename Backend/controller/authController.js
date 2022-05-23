@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const { log } = require('../helpers/logger')
+const {jwtForUser} = require('../helpers/utility')
 const apiResponse = require('../helpers/apiResponse')
 const passport = require('passport')
 const Student = require('../models/studentModel')

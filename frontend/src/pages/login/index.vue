@@ -17,7 +17,7 @@
                     name="login"
                     label="Login"
                     type="text"
-                    v-model="user.username"
+                    v-model="user.loginName"
                   />
                   <v-text-field
                     id="password"
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       user: {
-        username: '',
+        loginName: '',
         password: '',
       },
       loading: false,

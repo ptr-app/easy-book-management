@@ -8,3 +8,12 @@ export function notLogged({ next, store }) {
     return next()
   }
 }
+
+export function logged({ next }) {
+  const loggedIn = localStorage.getItem('user')
+  if (loggedIn) {
+    return next()
+  } else {
+    return next('/login')
+  }
+}

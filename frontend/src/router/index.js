@@ -2,11 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 
-import { notLogged } from './middleware'
+import { notLogged, logged } from './middleware'
 import store from '../store/index'
 import middlewarePipeline from './middlewarePipeline'
 import Login from '../pages/login'
 import Register from '../pages/register'
+import Home from '../pages/home'
 
 Vue.use(VueRouter)
 axios.defaults.baseURL = window.location.origin + '/api/'
@@ -24,6 +25,12 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: { middleware: [notLogged] },
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    meta: { middleware: [logged] },
   },
 ]
 

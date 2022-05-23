@@ -11,7 +11,8 @@ passport.use(
   new LocalStrategy(
     { usernameField: 'loginName' },
     async (loginName, password, done) => {
-      const user = User.find({ loginName: loginName }).catch((err) => {
+      log('Helpers.passportConfig.local - Start ', 'debug')
+      const user = await User.findOne({ loginName: loginName }).catch((err) => {
         log(
           'Helpers.passportConfig.local - Failed to find user: ' + err.message,
           'error'
@@ -21,9 +22,11 @@ passport.use(
       if (user === undefined) {
         log('Helpers.passportConfig.local - Cannot find user ', 'error')
         return done(null, false, { message: 'USER_NOT_FOUND' })
+      } else {
+        log('Helpers.passportConfig.local - Found User ', 'debug')
       }
       try {
-        if (await bcrypt.compare(password, user.password)) {
+        if (await bcrypt.compare(password, user.passwordHash)) {
           log(
             'Helpers.passportConfig.local - User Password was correct ',
             'debug'
@@ -42,7 +45,7 @@ passport.use(
             err.message,
           'error'
         )
-        return done(error)
+        return done(err)
       }
     }
   )
