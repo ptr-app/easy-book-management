@@ -7,13 +7,41 @@
     "books": "Bücher",
     "class": "Klassen",
     "students": "Schüler",
-    "employees": "Angestellte"
+    "employees": "Angestellte",
+    "school": "Schule"
   },
   "LoginPage": {
     "header": "EasyBookManagement",
     "login": "Einloggen",
     "register": "Registrieren",
     "passwordForgotten": "Passwort vergessen"
+  },
+  "RegisterPage": {
+    "header": "Registrieren",
+    "generall": "Generelles",
+    "typeSpecific": "Typ spezifisch",
+    "teacherRole": "Lehrer",
+    "deanRole": "Schulleiter"
+  },
+  "Buttons": {
+    "cancel": "Abbrechen",
+    "register": "Registrieren",
+    "confirm": "Bestätigen"
+  },
+  "Validation": {
+    "required": "Benötigt",
+    "loginName": "Login Name",
+    "name": "Vollständiger Name",
+    "schoolName": "Schulname",
+    "birthdate": "Geburtsdatum",
+    "type": "Benutzerart",
+    "password": "Passwort",
+    "confirmPassword": "Passwort wiederholen",
+    "classID": "Klassen ID",
+    "role": "Rollen ID",
+    "schoolID": "Schule ID",
+    "validateName": "",
+    "validatePassword": ""
   },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",

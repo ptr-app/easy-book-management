@@ -1,8 +1,11 @@
+const bcrypt = require('bcrypt')
 const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const passport = require('passport')
 const Student = require('../models/studentModel')
 const User = require('../models/userModel')
+const School = require('../models/schoolModel')
+const Employee = require('../models/employeeModel')
 
 exports.login = [
   async (req, res, next) => {
@@ -59,7 +62,12 @@ exports.registerStudent = [
       )
       return apiResponse.errorResponse(res, 'CLASS_NOT_FOUND')
     }
-    let newStudentModel = new Student(name, birthdate, classID, null)
+    let newStudentModel = new Student({
+      name: name,
+      birthdate: birthdate,
+      classID: classID,
+      bookID: null,
+    })
     let newStudent = await newStudentModel.save().catch((err) => {
       log(
         'Controller.authController.registerStudent - Failed to add student: ' +
@@ -69,7 +77,11 @@ exports.registerStudent = [
       return apiResponse.errorResponse(res, err.message)
     })
     let passwordHash = bcrypt.hash(password, 10)
-    let newUserModel = new User(loginName, passwordHash, newStudent._id)
+    let newUserModel = new User({
+      loginName: loginName,
+      passwordHash: passwordHash,
+      userID: newStudent._id,
+    })
     let newUser = newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerStudent - Failed to add user: ' +
@@ -90,8 +102,15 @@ exports.registerStudent = [
 exports.registerEmployee = [
   async (req, res) => {
     log('Controller.authController.registerEmployee - Start', 'debug')
-    const { loginName, name, password, birthdate, schoolID, roleID } = req.body
-    let newEmployeeModel = new Employee(name, birthdate, null, schoolID, roleID)
+    const { loginName, name, password, birthdate, schoolID, roleID, classID } =
+      req.body
+    let newEmployeeModel = new Employee({
+      name: name,
+      birthdate: birthdate,
+      classID: classID,
+      schoolID: schoolID,
+      roleID: roleID,
+    })
     if (!checkSchoolID(schoolID)) {
       log(
         'Controller.authController.registerEmployee - Failed to find School: ',
@@ -108,7 +127,11 @@ exports.registerEmployee = [
       return apiResponse.errorResponse(res, err.message)
     })
     let passwordHash = bcrypt.hash(password, 10)
-    let newUserModel = new User(loginName, passwordHash, newEmployee._id)
+    let newUserModel = new User({
+      loginName: loginName,
+      passwordHash: passwordHash,
+      userID: newEmployee._id,
+    })
     let newUser = newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerEmployee - Failed to add user: ' +
@@ -129,8 +152,8 @@ exports.registerEmployee = [
 exports.registerSchool = [
   async (req, res) => {
     log('Controller.authController.registerSchool - Start', 'debug')
-    const { loginName, name, password, birthdate } = req.body
-    let newSchoolModel = new School(name, null)
+    const { loginName, name, password, birthdate, schoolName } = req.body
+    let newSchoolModel = new School({ name: schoolName, classID: null })
     let newSchool = newSchoolModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to create School: ' +
@@ -139,13 +162,14 @@ exports.registerSchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    let newEmployeeModel = new Employee(
-      name,
-      birthdate,
-      null,
-      newSchool._id,
-      process.env.DEAN_ID
-    )
+    log('Controller.authController.registerSchool - Added School', 'debug')
+    let newEmployeeModel = new Employee({
+      name: name,
+      birthdate: birthdate,
+      classID: null,
+      schoolID: newSchool._id,
+      roleID: process.env.DEAN_ID,
+    })
     let newEmployee = await newEmployeeModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to add Employee: ' +
@@ -154,8 +178,13 @@ exports.registerSchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    let passwordHash = bcrypt.hash(password, 10)
-    let newUserModel = new User(loginName, passwordHash, newEmployee._id)
+    log('Controller.authController.registerSchool - Added Employee', 'debug')
+    let passwordHash = await bcrypt.hash(password, 10)
+    let newUserModel = new User({
+      loginName: loginName,
+      passwordHash: passwordHash,
+      userID: newEmployee._id,
+    })
     let newUser = newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to add user: ' +
@@ -164,6 +193,7 @@ exports.registerSchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    log('Controller.authController.registerSchool - Added User', 'debug')
     log('Controller.authController.registerSchool - End ', 'debug')
     return apiResponse.successResponseWithData(
       res,

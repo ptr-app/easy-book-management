@@ -27,6 +27,36 @@ export const auth = {
         }
       )
     },
+    registerStudent: async ({ commit }, user) => {
+      return requests.postService('auth/registerStudent', user).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    registerEmployee: async ({ commit }, user) => {
+      return requests.postService('auth/registerEmployee', user).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    registerSchool: async ({ commit }, user) => {
+      return requests.postService('auth/registerSchool', user).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
   },
   getters: {
     loggedIn: (state) => {
