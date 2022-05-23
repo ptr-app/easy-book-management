@@ -21,5 +21,5 @@ export default new Vuex.Store({
       state.loading = loading
     },
   },
-  modules: { ui, auth },
+  modules: { ui, auth, data },
 })

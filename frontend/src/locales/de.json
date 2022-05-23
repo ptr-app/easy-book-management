@@ -23,6 +23,10 @@
     "teacherRole": "Lehrer",
     "deanRole": "Schulleiter"
   },
+  "HomeDean": {
+    "header": "Willkommen Schulleiter ",
+    "headerTeacher": "Ihre Mitarbeiter"
+  },
   "Buttons": {
     "cancel": "Abbrechen",
     "register": "Registrieren",
@@ -42,6 +46,12 @@
     "schoolID": "Schule ID",
     "validateName": "",
     "validatePassword": ""
+  },
+  "TableHeaders": {
+    "name": "Name",
+    "role": "Rolle",
+    "class": "Klassen",
+    "search": "Suchen"
   },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",
