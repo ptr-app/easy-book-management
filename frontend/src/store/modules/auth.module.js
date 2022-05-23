@@ -57,10 +57,36 @@ export const auth = {
         }
       )
     },
+    logout: async ({ commit }) => {
+      return (
+        requests.postService('auth/logout').then(() => {
+          localStorage.removeItem('user')
+          sessionStorage.clear()
+          commit('setLoggedIn', false)
+        }),
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
   },
   getters: {
+    user(state) {
+      return state.user
+    },
+    status(state) {
+      return state.status
+    },
     loggedIn: (state) => {
       return state.status.loggedIn
+    },
+  },
+  mutations: {
+    setUser(state, user) {
+      state.user = user
+    },
+    setLoggedIn(state, loggedIn) {
+      state.status.loggedIn = loggedIn
     },
   },
 }

@@ -12,6 +12,9 @@
       </v-tabs>
     </template>
     <v-spacer />
+    <v-btn icon @click="logout">
+      <v-icon>mdi-logout</v-icon>
+    </v-btn>
     <v-btn icon @click="toggleDarkMode">
       <v-icon v-if="darkMode">mdi-weather-sunny</v-icon>
       <v-icon v-if="!darkMode">mdi-weather-night</v-icon>
@@ -43,7 +46,9 @@ export default {
   },
   methods: {
     initializeTabs() {
-      let role = 'teacher'
+      console.log(this.currentUser)
+      let role = this.currentUser.role
+      console.log(role)
       if (role === 'teacher' || role === 'dean') {
         this.tabs.push({ text: i18n.t('TabHeader.books'), link: '/books' })
         this.tabs.push({ text: i18n.t('TabHeader.class'), link: '/class' })
@@ -54,7 +59,7 @@ export default {
           link: '/students',
         })
         this.tabs.push({
-          text: i18n.t('TabHeader.employee'),
+          text: i18n.t('TabHeader.employees'),
           link: '/employee',
         })
       }
@@ -62,6 +67,16 @@ export default {
     toggleDarkMode: function () {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
       this.darkMode = !this.darkMode
+    },
+    logout() {
+      this.$store
+        .dispatch('auth/logout')
+        .then(() => {
+          this.$router.push('/login')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
   },
 }
