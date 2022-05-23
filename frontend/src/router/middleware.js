@@ -10,10 +10,19 @@ export function notLogged({ next, store }) {
 }
 
 export function logged({ next }) {
-  const loggedIn = localStorage.getItem('user')
-  if (loggedIn) {
+  const user = localStorage.getItem('user')
+  if (user) {
     return next()
   } else {
     return next('/login')
+  }
+}
+
+export function dean({ next }) {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (user.role === 'dean') {
+    return next()
+  } else {
+    return next('/home')
   }
 }
