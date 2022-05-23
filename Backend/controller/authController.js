@@ -242,7 +242,7 @@ async function userData(user) {
   }
   loggedUser.accessToken = jwtForUser(loggedUser)
   if (user.isStudent) {
-    student = await Student.findById(user.userID).catch((err) => {
+    let student = await Student.findById(user.userID).catch((err) => {
       log(
         'Controller.employeeController.userData - Student not Found ',
         'error'
@@ -257,8 +257,9 @@ async function userData(user) {
       throw new Error()
     }
     loggedUser.role = 'student'
+    loggedUser.name = student.name
   } else {
-    employee = await Employee.findById(user.userID).catch((err) => {
+    let employee = await Employee.findById(user.userID).catch((err) => {
       log(
         'Controller.employeeController.userData - Employee not Found ',
         'error'
@@ -272,6 +273,7 @@ async function userData(user) {
       )
       throw new Error()
     }
+    loggedUser.name = employee.name
     loggedUser.role = await Role.findById(employee.roleID)
       .then((resp) => {
         return resp.name
