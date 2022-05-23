@@ -237,8 +237,9 @@ exports.getEmployeeByRole = [
 exports.getEmployeeBySchool = [
   async (req, res) => {
     log('Controller.employeeController.getEmployeeBySchool - Start', 'debug')
-    let schoolID
-    let school = School.findById(req.body.schoolID).catch((err) => {
+    let employee = await Employee.findById(req.headers['x-employeeid'])
+    let schoolID = employee.schoolID
+    let school = School.findById(employee.schoolID).catch((err) => {
       log(
         'Controller.employeeController.getEmployeeBySchool - Failed to find School ' +
           err.message,
@@ -253,8 +254,6 @@ exports.getEmployeeBySchool = [
         'error'
       )
       return apiResponse.errorResponse(res, 'SCHOOL_NOT_FOUND')
-    } else {
-      schoolID = req.body.schoolID
     }
 
     let employees = await Employee.find({ schoolID: schoolID }).catch((err) => {
@@ -268,6 +267,7 @@ exports.getEmployeeBySchool = [
       return apiResponse.errorResponse(res, err.message)
     })
 
+    console.log(schoolID)
     //TODO Convert RoleID and ClassID to Names
 
     log('Controller.employeeController.getEmployeeBySchool - END ', 'debug')
