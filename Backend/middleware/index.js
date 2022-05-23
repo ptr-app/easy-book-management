@@ -1,7 +1,10 @@
+require('dotenv/config')
+
 const jwt = require('jsonwebtoken')
 const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const { Student, Employee } = require('../models/employeeModel')
+const Student = require('../models/studentModel')
+const Employee = require('../models/employeeModel')
 
 exports.checkLogged = [
   (req, res, next) => {
@@ -43,7 +46,7 @@ exports.checkNotLogged = [
 exports.checkStudent = [
   async (req, res, next) => {
     log('Middleware.index.checkStudent - Start: ', 'debug')
-    let studentID = res.headers['x-studentID']
+    let studentID = req.headers['x-studentid']
     let student = await Student.findById(studentID)
     if (student !== undefined) {
       log('Middleware.index.checkStudent - End: ', 'debug')
@@ -62,7 +65,7 @@ exports.checkStudent = [
 exports.checkTeacher = [
   async (req, res, next) => {
     log('Middleware.index.checkTeacher - Start: ', 'debug')
-    let employeeID = res.headers['x-employeeID']
+    let employeeID = req.headers['x-employeeid']
     let employee = await Employee.findById(employeeID)
     if (employee === undefined) {
       log(
@@ -73,7 +76,7 @@ exports.checkTeacher = [
       return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
     } else {
       let roleID = employee.roleID
-      if (roleID === env.process.TEACHER_ID || roleID === env.process.DEAN_ID) {
+      if (roleID === process.env.TEACHER_ID || roleID === process.env.DEAN_ID) {
         log('Middleware.index.checkTeacher - End: ', 'debug')
         next()
       } else {
@@ -91,7 +94,7 @@ exports.checkTeacher = [
 exports.checkDean = [
   async (req, res, next) => {
     log('Middleware.index.checkDean - Start: ', 'debug')
-    let employeeID = res.headers['x-employeeID']
+    let employeeID = req.headers['x-employeeid']
     let employee = await Employee.findById(employeeID)
     if (employee === undefined) {
       log(
@@ -102,7 +105,7 @@ exports.checkDean = [
       return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
     } else {
       let roleID = employee.roleID
-      if (roleID === env.process.DEAN_ID) {
+      if (roleID === process.env.DEAN_ID) {
         log('Middleware.index.checkDean - End: ', 'debug')
         next()
       } else {
@@ -120,7 +123,7 @@ exports.checkDean = [
 exports.checkAdmin = [
   async (req, res, next) => {
     log('Middleware.index.checkAdmin - Start: ', 'debug')
-    let employeeID = res.headers['x-employeeID']
+    let employeeID = req.headers['x-employeeid']
     let employee = await Employee.findById(employeeID)
     if (employee === undefined) {
       log(
@@ -131,7 +134,7 @@ exports.checkAdmin = [
       return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
     } else {
       let roleID = employee.roleID
-      if (roleID === env.process.DEAN_ID) {
+      if (roleID === process.env.DEAN_ID) {
         log('Middleware.index.checkAdmin - End: ', 'debug')
         next()
       } else {
