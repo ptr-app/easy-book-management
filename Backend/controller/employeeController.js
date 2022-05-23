@@ -1,8 +1,9 @@
-const {log} = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Employee = require('../models/employeeModel')
 const Role = require('../models/roleModel')
 const School = require('../models/schoolModel')
+const Class = require('../models/classModel')
 
 exports.addEmployee = [
   async (req, res) => {
@@ -36,16 +37,17 @@ exports.editEmployee = [
   async (req, res) => {
     log('Controller.employeeController.editEmployee - Start', 'debug')
     const { name, birthdate } = req.body
-    let employee = await Employee
-      .findByIdAndUpdate(req.body._id, { name: name, birthdate: birthdate })
-      .catch((err) => {
-        log(
-          'Controller.employeeController.editEmployee - Failed to edit Employee ' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      })
+    let employee = await Employee.findByIdAndUpdate(req.body._id, {
+      name: name,
+      birthdate: birthdate,
+    }).catch((err) => {
+      log(
+        'Controller.employeeController.editEmployee - Failed to edit Employee ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
 
     log('Controller.employeeController.editEmployee - End', 'debug')
     return apiResponse.successResponseWithData(res, 'EMPLOYEE_EDITED', employee)
@@ -61,16 +63,16 @@ exports.updateClassID = [
     } else {
       classID = null
     }
-    let employee = await Employee
-      .findByIdAndUpdate(req.body._id, { classID: classID })
-      .catch((err) => {
-        log(
-          'Controller.employeeController.updateClassID - Failed to update Employee ' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      })
+    let employee = await Employee.findByIdAndUpdate(req.body._id, {
+      classID: classID,
+    }).catch((err) => {
+      log(
+        'Controller.employeeController.updateClassID - Failed to update Employee ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
 
     log('Controller.employeeController.updateClassID - End', 'debug')
     return apiResponse.successResponseWithData(
@@ -98,16 +100,16 @@ exports.updateRoleID = [
     } else {
       roleID = null
     }
-    let employee = await Employee
-      .findByIdAndUpdate(req.body._id, { roleID: roleID })
-      .catch((err) => {
-        log(
-          'Controller.employeeController.updateRoleID - Failed to update Employee ' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      })
+    let employee = await Employee.findByIdAndUpdate(req.body._id, {
+      roleID: roleID,
+    }).catch((err) => {
+      log(
+        'Controller.employeeController.updateRoleID - Failed to update Employee ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
 
     log('Controller.employeeController.updateRoleID - End', 'debug')
     return apiResponse.successResponseWithData(
@@ -211,9 +213,8 @@ exports.getEmployeeByRole = [
       roleID = req.body.roleID
     }
 
-    let employee = await Employee
-      .find({ roleID: req.body.roleID })
-      .catch((err) => {
+    let employee = await Employee.find({ roleID: req.body.roleID }).catch(
+      (err) => {
         log(
           'Controller.employeeController.getEmployeeByRole - Failed while searching for employee with the role id: ' +
             req.body.employeeID +
@@ -222,7 +223,8 @@ exports.getEmployeeByRole = [
           'error'
         )
         return apiResponse.errorResponse(res, err.message)
-      })
+      }
+    )
     log('Controller.employeeController.getEmployeeByRole - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,
@@ -255,23 +257,24 @@ exports.getEmployeeBySchool = [
       schoolID = req.body.schoolID
     }
 
-    let employee = await Employee
-      .find({ schoolID: schoolID })
-      .catch((err) => {
-        log(
-          'Controller.employeeController.getEmployeeBySchool - Failed while searching for employee with the school id: ' +
-            schoolID +
-            '. Error Message is' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      })
+    let employees = await Employee.find({ schoolID: schoolID }).catch((err) => {
+      log(
+        'Controller.employeeController.getEmployeeBySchool - Failed while searching for employee with the school id: ' +
+          schoolID +
+          '. Error Message is' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+
+    //TODO Convert RoleID and ClassID to Names
+
     log('Controller.employeeController.getEmployeeBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,
       'EMPLOYEE_FOUND_SCHOOL',
-      employee
+      employees
     )
   },
 ]
