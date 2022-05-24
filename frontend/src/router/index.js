@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 
-import { notLogged, logged, dean } from './middleware'
+import { notLogged, logged, dean, teacher } from './middleware'
 import store from '../store/index'
 import middlewarePipeline from './middlewarePipeline'
 import Login from '../pages/login'
@@ -44,7 +44,7 @@ const routes = [
     path: '/books',
     name: 'Book',
     component: Book,
-    meta: { middleware: [logged, dean] },
+    meta: { middleware: [logged, teacher] },
   },
 ]
 

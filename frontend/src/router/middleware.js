@@ -26,3 +26,12 @@ export function dean({ next }) {
     return next('/home')
   }
 }
+
+export function teacher({ next }) {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (user.role === 'teacher' || user.role === 'dean') {
+    return next()
+  } else {
+    return next('/home')
+  }
+}
