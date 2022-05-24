@@ -24,20 +24,6 @@
                       />
                     </validation-provider>
                   </v-col>
-                  <v-col cols="12" sm="6">
-                    <validation-provider
-                      v-slot="{ error }"
-                      :name="$t('Validation.employeeID')"
-                    >
-                      <v-text-field
-                        filles
-                        v-model="editClass.employeeID"
-                        data-cy="registerEmployeeID"
-                        :label="$t('Validation.employeeID')"
-                        :error-messages="error"
-                      />
-                    </validation-provider>
-                  </v-col>
                 </v-row>
               </div>
               <div class="mt-6 mr-4 ml-n3">
@@ -93,7 +79,6 @@ export default {
       loading: false,
       editClass: {
         name: this.selectedClass.name,
-        employeeID: this.selectedClass.employeeID,
         _id: this.selectedClass._id,
       },
     }
