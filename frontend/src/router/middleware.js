@@ -1,7 +1,7 @@
 export function notLogged({ next, store }) {
   const loggedIn = store.state.auth.status.loggedIn
   if (loggedIn) {
-    localStoreage.clear()
+    localStorage.clear()
     sesstionStoreage.clear()
     return next()
   } else {

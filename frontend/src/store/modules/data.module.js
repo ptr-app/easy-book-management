@@ -73,6 +73,16 @@ export const data = {
         }
       )
     },
+    getBooksByStudent: async ({ commit }, id) => {
+      return requests.getService('book/getBooksByStudent/' + id).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
   },
   getters: {},
   mutations: {},

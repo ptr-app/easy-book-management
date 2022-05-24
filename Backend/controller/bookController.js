@@ -1,4 +1,4 @@
-const {log} = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Book = require('../models/bookModel')
 const Student = require('../models/studentModel')
@@ -184,5 +184,24 @@ exports.getAllBooksOfOneGenre = [
     })
     log('Controller.bookController.getAllBooksOfOneGenre - END ', 'debug')
     return apiResponse.successResponseWithData(res, 'BOOKS_FOUND_GENRE', books)
+  },
+]
+
+exports.getBooksByStudent = [
+  async (req, res) => {
+    log('Controller.bookController.getBooksByStudent - Start', 'debug')
+    let book = await Book.find({ studentID: req.params.id }).catch((err) => {
+      log(
+        'Controller.bookController.getBooksByStudent - Failed while searching for the book with the name: ' +
+          req.body.name +
+          '. Error Message is' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    //CONVERT GENRE ID TO NAME
+    log('Controller.bookController.getBooksByStudent - END ', 'debug')
+    return apiResponse.successResponseWithData(res, 'BOOK_FOUND_STUDENT', book)
   },
 ]

@@ -10,7 +10,11 @@ bookRouter.post('/addBook', middleware.checkTeacher, bookController.addBook)
 
 bookRouter.post('/editBook', middleware.checkTeacher, bookController.editBook)
 
-bookRouter.post('/updateStudentID', middleware.checkLogged, bookController.updateStudentID)
+bookRouter.post(
+  '/updateStudentID',
+  middleware.checkLogged,
+  bookController.updateStudentID
+)
 
 bookRouter.delete(
   '/deleteBook',
@@ -32,6 +36,11 @@ bookRouter.get(
   '/getBookByName',
   middleware.checkStudent,
   bookController.getBookByName
+)
+bookRouter.get(
+  '/getBooksByStudent/:id',
+  middleware.checkStudent,
+  bookController.getBooksByStudent
 )
 bookRouter.get(
   '/getBoogetAllBooksOfOneGenreByID',

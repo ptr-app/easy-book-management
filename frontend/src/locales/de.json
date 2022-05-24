@@ -32,6 +32,10 @@
       "header": "Willkommen Lehrer ",
       "headerClass": "Ihre Klassen",
       "headerClassSpezific": "Ihre Klasse "
+    },
+    "Student": {
+      "header": "Willkommen Schüler ",
+      "headerBooks": "Ihre ausgeliehenen Bücher"
     }
   },
   "ClassPage": {
@@ -66,7 +70,11 @@
     "search": "Suchen",
     "classID": "Klassen ID",
     "birthdate": "Geburtsdatum",
-    "amountBooks": "Anzahl Bücher"
+    "amountBooks": "Anzahl Bücher",
+    "author": "Author",
+    "releaseDate": "Erscheinungsdatum",
+    "comment": "Bemerkung",
+    "genre": "Genre"
   },
   "Validation": {
     "required": "Benötigt",
@@ -107,6 +115,7 @@
     "BOOKS_FOUND": "Alle Bücher gefunden",
     "BOOK_FOUND_GENRE": "Bücher mit dem Genre gefunden",
     "BOOK_FOUND_NAME": "Bücher mit dem Namen gefunden",
+    "BOOK_FOUND_STUDENT": "Bücher von dem Schüler gefunden",
     "BOOK_HAS_STUDENT": "Buch wurde schon von einem Schüler ausgeliehen",
     "CLASS_NEED_EMPLOYEE": "Eine Klasse braucht einen zugewiesenen Angestellten",
     "CLASS_DELETED": "Die Klasse wurde gelöscht",
