@@ -82,6 +82,10 @@ export default {
           value: 'teacherName',
         },
         {
+          text: i18n.t('TableHeaders.classID'),
+          value: '_id',
+        },
+        {
           value: 'actions',
           sortable: false,
         },

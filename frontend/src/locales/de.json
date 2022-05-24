@@ -72,7 +72,8 @@
     "class": "Klassen",
     "amountStudents": "Anzahl Schüler",
     "teacher": "Lehrer",
-    "search": "Suchen"
+    "search": "Suchen",
+    "classID": "Klassen ID"
   },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",
