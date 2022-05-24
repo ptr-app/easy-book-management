@@ -8,6 +8,7 @@ const User = require('../models/userModel')
 const School = require('../models/schoolModel')
 const Employee = require('../models/employeeModel')
 const Role = require('../models/roleModel')
+const Class = require('../models/classModel')
 
 exports.login = [
   async (req, res, next) => {
@@ -78,14 +79,14 @@ exports.registerStudent = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    let passwordHash = bcrypt.hash(password, 10)
+    let passwordHash = await bcrypt.hash(password, 10)
     let newUserModel = new User({
       loginName: loginName,
       passwordHash: passwordHash,
       userID: newStudent._id,
       isStudent: true,
     })
-    let newUser = newUserModel.save().catch((err) => {
+    let newUser = await newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerStudent - Failed to add user: ' +
           err.message,
@@ -295,7 +296,7 @@ async function userData(user) {
 }
 
 async function checkClassID(classID) {
-  let ClassObject = Class.findById(req.body.classID).catch((err) => {
+  let ClassObject = Class.findById(classID).catch((err) => {
     log(
       'Controller.employeeController.getEmployeeByRole - Failed to find ClassObject ' +
         err.message,
