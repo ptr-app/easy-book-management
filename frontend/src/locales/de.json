@@ -31,13 +31,18 @@
     "header": "Klassenübersicht",
     "addClass": {
       "header": "Neue Klasse erstellen"
+    },
+    "deleteClass": {
+      "header": "Klasse löschen",
+      "content": "Wollen Sie die Klasse wirklich löschen?"
     }
   },
   "Buttons": {
     "cancel": "Abbrechen",
     "register": "Registrieren",
     "confirm": "Bestätigen",
-    "addClass": "Klasse hinzufügen"
+    "addClass": "Klasse hinzufügen",
+    "delete": "Löschen"
   },
   "Validation": {
     "required": "Benötigt",

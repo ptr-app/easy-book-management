@@ -3,8 +3,8 @@ import requests from '../../helpers/requests'
 export const data = {
   namespaced: true,
   actions: {
-    getEmployeeBySchool: async ({ commit }, user) => {
-      return requests.getService('employee/getEmployeeBySchool', user).then(
+    getEmployeeBySchool: async ({ commit }) => {
+      return requests.getService('employee/getEmployeeBySchool').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
         },
@@ -13,8 +13,8 @@ export const data = {
         }
       )
     },
-    getClassBySchool: async ({ commit }, user) => {
-      return requests.getService('class/getClassBySchool', user).then(
+    getClassBySchool: async ({ commit }) => {
+      return requests.getService('class/getClassBySchool').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
         },
@@ -23,8 +23,18 @@ export const data = {
         }
       )
     },
-    addClass: async ({ commit }, user) => {
-      return requests.postService('class/addClass', user).then(
+    addClass: async ({ commit }, Class) => {
+      return requests.postService('class/addClass', Class).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    deleteClass: async ({ commit }, Class) => {
+      return requests.deleteService('class/deleteClass', Class).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
         },

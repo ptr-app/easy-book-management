@@ -51,7 +51,7 @@
           <template v-slot:item.actions="{ item }">
             <v-tooltip
               top
-              v-for="action in item.dropdown_items"
+              v-for="action in item.dropdownItems"
               :key="action.key"
             >
               <template v-slot:activator="{ on, attrs }">
@@ -61,16 +61,9 @@
                   class="custom-icon2"
                   v-bind="attrs"
                   v-on="on"
-                  v-if="!action.textButton"
                 >
                   {{ action.icon }}
                 </v-icon>
-                <v-btn
-                  :text="action.text"
-                  :disabled="action.disabled"
-                  v-if="action.textButton"
-                  @click="$emit(action.function, item)"
-                />
               </template>
               <span v-text="action.title" />
             </v-tooltip>
@@ -119,12 +112,14 @@ export default {
     }
   },
   watch: {
-    items() {},
+    items() {
+      console.log('items')
+      console.log(this.items)
+    },
   },
   created() {
     this.textColor = this.isText ? 'brown--text' : 'white--text'
     this.color = this.$vuetify.theme.themes.light.primary
-
     this.mobile = this.$vuetify.breakpoint.mdAndDown
   },
   methods: {
