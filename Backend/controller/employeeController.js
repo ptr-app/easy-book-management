@@ -267,7 +267,6 @@ exports.getEmployeeBySchool = [
       return apiResponse.errorResponse(res, err.message)
     })
 
-    console.log(schoolID)
     //TODO Convert RoleID and ClassID to Names
 
     log('Controller.employeeController.getEmployeeBySchool - END ', 'debug')

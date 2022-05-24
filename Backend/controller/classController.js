@@ -8,12 +8,12 @@ const Employee = require('../models/employeeModel')
 exports.addClass = [
   async (req, res) => {
     log('Controller.classController.addClass - Start', 'debug')
-    const { name, studentID, employeeID, schoolID } = req.body
+    let employee = await Employee.findById(req.headers['x-employeeid'])
     let ClassObject = new Class({
-      name,
-      studentID,
-      employeeID,
-      schoolID,
+      name: req.body.name,
+      studentID: null,
+      employeeID: req.body.employeeID,
+      schoolID: employee.schoolID,
     })
     let newClass = await ClassObject.save().catch((err) => {
       log(
@@ -200,7 +200,7 @@ exports.getClassBySchool = [
       let employee = await Employee.findById(req.headers['x-employeeid'])
       schoolID = employee.schoolID
     } else {
-      schoolID = req.headers['x-employeeid']
+      schoolID = req.headers['x-schoolid']
     }
     let ClassObject = await Class.find({ schoolID: schoolID }).catch((err) => {
       log(
@@ -212,6 +212,7 @@ exports.getClassBySchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    //CONVERT TEACHERID TO NAME
     log('Controller.classController.getClassBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,

@@ -27,10 +27,17 @@
     "header": "Willkommen Schulleiter ",
     "headerTeacher": "Ihre Mitarbeiter"
   },
+  "ClassPage": {
+    "header": "Klassenübersicht",
+    "addClass": {
+      "header": "Neue Klasse erstellen"
+    }
+  },
   "Buttons": {
     "cancel": "Abbrechen",
     "register": "Registrieren",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+    "addClass": "Klasse hinzufügen"
   },
   "Validation": {
     "required": "Benötigt",
@@ -44,6 +51,8 @@
     "classID": "Klassen ID",
     "role": "Rollen ID",
     "schoolID": "Schule ID",
+    "className": "Klassenname",
+    "employeeID": "Angestellten ID",
     "validateName": "",
     "validatePassword": ""
   },
@@ -51,6 +60,8 @@
     "name": "Name",
     "role": "Rolle",
     "class": "Klassen",
+    "amountStudents": "Anzahl Schüler",
+    "teacher": "Lehrer",
     "search": "Suchen"
   },
   "Responses": {
@@ -84,6 +95,7 @@
     "CLASS_FOUND_ALL": "Alle Klassen wurden gefunden",
     "CLASS_FOUND_ID": "Die Klasse wurde gefunden",
     "CLASS_FOUND_EMPLOYEE": "Alle Klassen eines Angestelten wurden gefunden",
+    "CLASS_FOUND_SCHOOL": "Alle Klassen einer Schule gefunden",
     "CLASS_NOT_FOUND": "Klasse nicht gefunden",
     "CLASS_HAS_STUDENTS": "Klasse hat noch Schüler zugewiesen",
     "EMPLOYEE_CREATED": "Angestelter erstellt",
