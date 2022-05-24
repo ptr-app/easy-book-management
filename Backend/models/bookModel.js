@@ -5,8 +5,8 @@ const bookModel = new Schema({
   name: { type: String, trim: true },
   author: { type: String, trim: true },
   releaseDate: { type: Date },
-  genre: { type: String },
   comment: { type: String },
+  genreID: { type: String },
   studentID: { type: [String] },
 })
 
