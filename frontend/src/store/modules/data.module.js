@@ -3,6 +3,7 @@ import requests from '../../helpers/requests'
 export const data = {
   namespaced: true,
   actions: {
+    //EMPLOYEE
     getEmployeeBySchool: async ({ commit }) => {
       return requests.getService('employee/getEmployeeBySchool').then(
         (resp) => {
@@ -13,6 +14,7 @@ export const data = {
         }
       )
     },
+    //CLASS
     getClassBySchool: async ({ commit }) => {
       return requests.getService('class/getClassBySchool').then(
         (resp) => {
@@ -63,6 +65,7 @@ export const data = {
         }
       )
     },
+    //STUDENT
     getStudentsByClass: async ({ commit }, id) => {
       return requests.getService('student/getStudentsByClass/' + id).then(
         (resp) => {
@@ -73,6 +76,7 @@ export const data = {
         }
       )
     },
+    //BOOK
     getBooksByStudent: async ({ commit }, id) => {
       return requests.getService('book/getBooksByStudent/' + id).then(
         (resp) => {
