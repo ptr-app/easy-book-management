@@ -87,6 +87,7 @@ export default {
         },
         {
           value: 'actions',
+          align: 'end',
           sortable: false,
         },
       ],
