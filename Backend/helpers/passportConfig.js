@@ -19,7 +19,7 @@ passport.use(
         )
         return done(null, false, { message: err.message })
       })
-      if (user === undefined) {
+      if (user === undefined || user == null) {
         log('Helpers.passportConfig.local - Cannot find user ', 'error')
         return done(null, false, { message: 'USER_NOT_FOUND' })
       } else {

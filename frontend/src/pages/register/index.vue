@@ -130,7 +130,7 @@
                       >
                         <v-select
                           filled
-                          v-model="user.role"
+                          v-model="user.roleName"
                           :label="$t('Validation.role')"
                           :items="roles"
                           :error-messages="error"
@@ -243,6 +243,7 @@ export default {
         password: '',
         confirmPassword: '',
         schoolName: '',
+        roleName: '',
       },
       types: [
         {

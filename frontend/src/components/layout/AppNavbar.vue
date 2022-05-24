@@ -62,7 +62,7 @@ export default {
         })
       }
     },
-    toggleDarkMode: function () {
+    toggleDarkMode() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
       this.darkMode = !this.darkMode
     },
