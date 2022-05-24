@@ -43,6 +43,16 @@ export const data = {
         }
       )
     },
+    editClass: async ({ commit }, Class) => {
+      return requests.postService('class/editClass', Class).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
   },
   getters: {},
   mutations: {},

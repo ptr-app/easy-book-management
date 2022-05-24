@@ -8,11 +8,18 @@
       @done="deleteClass"
       :buttons="[$t('Buttons.cancel'), $t('Buttons.delete')]"
     />
-    <add-user-dialog
+    <add-class-dialog
       v-if="addClassDialog"
       @close="addClassDialog = false"
       @done="classAdded"
       :dialog="addClassDialog"
+    />
+    <edit-class-dialog
+      v-if="editClassD"
+      @close="editClassD = false"
+      @done="editedClass"
+      :dialog="editClassD"
+      :selectedClass="selectedClass"
     />
     <v-card class="mt-5 mx-5">
       <v-card-title v-text="$t('ClassPage.header')" />
@@ -30,6 +37,7 @@
           :search="search"
           :headers="headers"
           @delete="deleteClassDialog"
+          @edit="editClassDialog"
         />
       </v-card-text>
     </v-card>
@@ -40,15 +48,22 @@
 import i18n from '@/i18n'
 import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
-import addUserDialog from './AddClass.vue'
+import addClassDialog from './AddClass.vue'
+import editClassDialog from './EditClass.vue'
 export default {
   name: 'class',
-  components: { CustomTable, addUserDialog, ValidationDialog },
+  components: {
+    CustomTable,
+    addClassDialog,
+    editClassDialog,
+    ValidationDialog,
+  },
   data() {
     return {
       loading: false,
       addClassDialog: false,
       deleteClassD: false,
+      editClassD: false,
       search: '',
       selectedClass: '',
       classes: [],
@@ -99,6 +114,13 @@ export default {
                 icon: 'mdi-delete',
                 key: 'delete',
               },
+              {
+                disabled: false,
+                title: i18n.t('Buttons.edit'),
+                function: 'edit',
+                icon: 'mdi-pencil',
+                key: 'edit',
+              },
             ]
           })
           console.log('CLASSES')
@@ -133,6 +155,15 @@ export default {
           this.loading = false
           console.log(err)
         })
+    },
+    editClassDialog(Class) {
+      this.editClassD = true
+      console.log(Class)
+      this.selectedClass = Class
+    },
+    editedClass() {
+      this.editClassD = false
+      window.location.reload
     },
   },
 }

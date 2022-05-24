@@ -35,14 +35,19 @@
     "deleteClass": {
       "header": "Klasse löschen",
       "content": "Wollen Sie die Klasse wirklich löschen?"
+    },
+    "editClass": {
+      "header": "Klasse bearbeiten"
     }
   },
   "Buttons": {
     "cancel": "Abbrechen",
     "register": "Registrieren",
     "confirm": "Bestätigen",
-    "addClass": "Klasse hinzufügen",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "addClass": "Klasse hinzufügen"
   },
   "Validation": {
     "required": "Benötigt",

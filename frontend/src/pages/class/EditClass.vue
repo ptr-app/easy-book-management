@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent width="auto">
     <v-card>
-      <v-card-title v-text="$t('ClassPage.addClass.header')" />
+      <v-card-title v-text="$t('ClassPage.editClass.header')" />
       <v-card-text>
         <validation-observer ref="observer" v-slot="{ invalid }">
           <v-form ref="form" data-cy="registerForm">
@@ -17,7 +17,7 @@
                       <v-text-field
                         filles
                         required
-                        v-model="newClass.name"
+                        v-model="editClass.name"
                         data-cy="registerClassName"
                         :label="$t('Validation.className')"
                         :error-messages="error"
@@ -31,7 +31,7 @@
                     >
                       <v-text-field
                         filles
-                        v-model="newClass.employeeID"
+                        v-model="editClass.employeeID"
                         data-cy="registerEmployeeID"
                         :label="$t('Validation.employeeID')"
                         :error-messages="error"
@@ -46,15 +46,15 @@
                     <v-btn
                       :loading="loading"
                       v-text="$t('Buttons.cancel')"
-                      @click=";(dialog = false), $emit('close')"
+                      @click="$emit('close')"
                     />
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-btn
                       :loading="loading"
                       :disabled="invalid"
-                      v-text="$t('Buttons.addClass')"
-                      @click="addClass"
+                      v-text="$t('Buttons.save')"
+                      @click="startEditClass"
                     />
                   </v-col>
                 </v-row>
@@ -83,7 +83,7 @@ extend('validateName', {
 })
 
 export default {
-  name: 'add-class-dialog',
+  name: 'edit-class-dialog',
   components: {
     ValidationObserver,
     ValidationProvider,
@@ -91,28 +91,31 @@ export default {
   data() {
     return {
       loading: false,
-      newClass: {
-        name: '',
-        employeeID: '',
+      editClass: {
+        name: this.selectedClass.name,
+        employeeID: this.selectedClass.employeeID,
+        _id: this.selectedClass._id,
       },
     }
   },
   props: {
     dialog: Boolean,
+    selectedClass: Object,
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user
     },
   },
-  created() {},
   methods: {
-    addClass() {
+    startEditClass() {
+      this.loading = true
       this.$store
-        .dispatch('data/addClass', this.newClass)
+        .dispatch('data/editClass', this.editClass)
         .then(() => {
           this.loading = false
-          this.$router.push('/home')
+          this.editClassD = false
+          window.location.reload
         })
         .catch((err) => {
           this.loading = false
