@@ -53,6 +53,26 @@ export const data = {
         }
       )
     },
+    getClassByEmployee: async ({ commit }) => {
+      return requests.getService('class/getClassByEmployee').then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    getStudentsByClass: async ({ commit }, id) => {
+      return requests.getService('student/getStudentsByClass/' + id).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
   },
   getters: {},
   mutations: {},

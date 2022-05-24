@@ -212,7 +212,7 @@ exports.getClassBySchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    //CONVERT TEACHERID TO NAME
+    //CONVERT CLASSID TO NAME, ROLE TO NAME
     log('Controller.classController.getClassBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,

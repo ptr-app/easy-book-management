@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-card class="mt-5 mx-5">
-      <v-card-title v-text="$t('HomeDean.header') + currentUser.name" />
+      <v-card-title v-text="$t('Home.Dean.header') + currentUser.name" />
       <v-card-text>
         <custom-table
           :items="employees"
           :search="search"
           :headers="headers"
-          :header="$t('HomeDean.headerTeacher')"
+          :header="$t('Home.Dean.headerTeacher')"
         />
       </v-card-text>
     </v-card>

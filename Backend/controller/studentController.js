@@ -1,6 +1,7 @@
-const {log} = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const { Student, Book } = require('../models/bookModel')
+const Student = require('../models/schoolModel')
+const Book = require('../models/bookModel')
 
 exports.addStudent = [
   async (req, res) => {
@@ -204,7 +205,7 @@ exports.getStudentByID = [
 exports.getStudentsByClass = [
   async (req, res) => {
     log('Controller.studentController.getStudentsByClass - Start', 'debug')
-    let students = await Student.find({ classID: req.body._id }).catch(
+    let students = await Student.find({ classID: req.params.id }).catch(
       (err) => {
         log(
           'Controller.studentController.getStudentsByClass - Failed while searching for the students with the classID: ' +

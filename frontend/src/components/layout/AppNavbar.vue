@@ -49,9 +49,9 @@ export default {
       let role = this.currentUser.role
       if (role === 'teacher' || role === 'dean') {
         this.tabs.push({ text: i18n.t('TabHeader.books'), link: '/books' })
-        this.tabs.push({ text: i18n.t('TabHeader.class'), link: '/class' })
       }
       if (role === 'dean') {
+        this.tabs.push({ text: i18n.t('TabHeader.class'), link: '/class' })
         this.tabs.push({
           text: i18n.t('TabHeader.students'),
           link: '/students',

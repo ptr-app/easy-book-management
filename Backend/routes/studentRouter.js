@@ -49,7 +49,7 @@ studentRouter.get(
 )
 
 studentRouter.get(
-  '/getStudentsByClass',
+  '/getStudentsByClass/:id',
   middleware.checkTeacher,
   studentController.getStudentsByClass
 )

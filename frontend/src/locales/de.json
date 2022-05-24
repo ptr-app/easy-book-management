@@ -23,9 +23,16 @@
     "teacherRole": "Lehrer",
     "deanRole": "Schulleiter"
   },
-  "HomeDean": {
-    "header": "Willkommen Schulleiter ",
-    "headerTeacher": "Ihre Mitarbeiter"
+  "Home": {
+    "Dean": {
+      "header": "Willkommen Schulleiter ",
+      "headerTeacher": "Ihre Mitarbeiter"
+    },
+    "Teacher": {
+      "header": "Willkommen Lehrer ",
+      "headerClass": "Ihre Klassen",
+      "headerClassSpezific": "Ihre Klasse "
+    }
   },
   "ClassPage": {
     "header": "Klassenübersicht",
@@ -47,7 +54,19 @@
     "delete": "Löschen",
     "edit": "Bearbeiten",
     "save": "Speichern",
-    "addClass": "Klasse hinzufügen"
+    "addClass": "Klasse hinzufügen",
+    "viewClass": "Klasse anschauen"
+  },
+  "TableHeaders": {
+    "name": "Name",
+    "role": "Rolle",
+    "class": "Klassen",
+    "amountStudents": "Anzahl Schüler",
+    "teacher": "Lehrer",
+    "search": "Suchen",
+    "classID": "Klassen ID",
+    "birthdate": "Geburtsdatum",
+    "amountBooks": "Anzahl Bücher"
   },
   "Validation": {
     "required": "Benötigt",
@@ -65,15 +84,6 @@
     "employeeID": "Angestellten ID",
     "validateName": "",
     "validatePassword": ""
-  },
-  "TableHeaders": {
-    "name": "Name",
-    "role": "Rolle",
-    "class": "Klassen",
-    "amountStudents": "Anzahl Schüler",
-    "teacher": "Lehrer",
-    "search": "Suchen",
-    "classID": "Klassen ID"
   },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",
