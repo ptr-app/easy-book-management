@@ -51,6 +51,25 @@
       "header": "Klasse bearbeiten"
     }
   },
+  "BookPage": {
+    "header": "Bücherübersicht",
+    "addBook": {
+      "headerAddBook": "Neues Buch erstellen",
+      "headerEditBook": "Neues Buch erstellen"
+    },
+    "deleteBook": {
+      "header": "Buch löschen",
+      "content": "Wollen Sie das Buch wirklich löschen?"
+    },
+    "addGenre": {
+      "headerAddGenre": "Genre erstellen",
+      "headerEditGenre": "Genre ändern"
+    },
+    "deleteGenre": {
+      "header": "Genre löschen",
+      "content": "Wollen Sie das Genre wirklich löschen?"
+    }
+  },
   "Buttons": {
     "cancel": "Abbrechen",
     "register": "Registrieren",
@@ -59,7 +78,11 @@
     "edit": "Bearbeiten",
     "save": "Speichern",
     "addClass": "Klasse hinzufügen",
-    "viewClass": "Klasse anschauen"
+    "viewClass": "Klasse anschauen",
+    "addBook": "Buch hinzufügen",
+    "editBook": "Buch bearbeiten",
+    "addGenre": "Genre hinzufügen",
+    "editGenre": "Genre bearbeiten"
   },
   "TableHeaders": {
     "name": "Name",
@@ -90,8 +113,12 @@
     "schoolID": "Schule ID",
     "className": "Klassenname",
     "employeeID": "Angestellten ID",
-    "validateName": "",
-    "validatePassword": ""
+    "bookName": "Buch Name",
+    "authorName": "Author",
+    "comment": "Bemerkung",
+    "genre": "Genre",
+    "validateName": "Namen Validierung fehlgeschlagen",
+    "validatePassword": "Passwort Validierung fehlgeschlagen"
   },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",
