@@ -1,7 +1,9 @@
 const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const Student = require('../models/schoolModel')
+const Student = require('../models/studentModel')
 const Book = require('../models/bookModel')
+const Class = require('../models/classModel')
+const School = require('../models/schoolModel')
 
 exports.addStudent = [
   async (req, res) => {
@@ -225,3 +227,42 @@ exports.getStudentsByClass = [
     )
   },
 ]
+
+exports.getStudentsBySchool = [
+  async (req, res) => {
+    log('Controller.studentController.getStudentsByEmployee - Start', 'debug')
+    let school = await School.find({ employeeID: req.headers['x-employeeid'] })
+    let students = await getStudents(school)
+    log('Controller.studentController.getStudentsByEmployee - END ', 'debug')
+    return apiResponse.successResponseWithData(
+      res,
+      'STUDENT_FOUND_EMPLOYEE',
+      students
+    )
+  },
+]
+
+//HELPER FUNCTIONS
+
+async function getStudents(school) {
+  let students = []
+  for (let i = 0; i < school.length; i = i + 1) {
+    let classes = await Class.find({ schoolID: school[i]._id })
+    for (let j = 0; j < classes.length; j = j + 1) {
+      let classStudent = await Student.find({ classID: classes[j]._id })
+      for (let k = 0; k < classStudent.length; k = k + 1) {
+        students.push({
+          _id: classStudent[k]._id,
+          name: classStudent[k].name,
+          bookID: classStudent[k].bookID,
+          birthdate: classStudent[k].birthdate,
+          classID: classes[j]._id,
+          className: classes[j].name,
+          schoolID: school[i]._id,
+          schoolName: school[i].name,
+        })
+      }
+    }
+  }
+  return students
+}

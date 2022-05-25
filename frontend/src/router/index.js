@@ -10,6 +10,7 @@ import Register from '../pages/register'
 import Home from '../pages/home'
 import Class from '../pages/class'
 import Book from '../pages/book'
+import Student from '../pages/student'
 
 Vue.use(VueRouter)
 axios.defaults.baseURL = window.location.origin + '/api/'
@@ -45,6 +46,12 @@ const routes = [
     name: 'Book',
     component: Book,
     meta: { middleware: [logged, teacher] },
+  },
+  {
+    path: '/students',
+    name: 'Student',
+    component: Student,
+    meta: { middleware: [logged, dean] },
   },
 ]
 

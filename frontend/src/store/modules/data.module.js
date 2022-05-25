@@ -66,8 +66,38 @@ export const data = {
       )
     },
     //STUDENT
+    deleteStudent: async ({ commit }, student) => {
+      return requests.deleteService('student/deleteStudent', student).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    editStudent: async ({ commit }, student) => {
+      return requests.postService('student/editStudent', student).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
     getStudentsByClass: async ({ commit }, id) => {
       return requests.getService('student/getStudentsByClass/' + id).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    getStudentsBySchool: async ({ commit }) => {
+      return requests.getService('student/getStudentsBySchool').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
         },

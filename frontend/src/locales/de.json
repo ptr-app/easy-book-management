@@ -70,6 +70,16 @@
       "content": "Wollen Sie das Genre wirklich löschen?"
     }
   },
+  "StudentPage": {
+    "header": "Schülerübersicht",
+    "deleteStudent": {
+      "header": "Schüler löschen",
+      "content": "Wollen Sie den Schüler wirklich löschen?"
+    },
+    "editStudent": {
+      "header": "Schüler bearbeiten"
+    }
+  },
   "Buttons": {
     "cancel": "Abbrechen",
     "register": "Registrieren",
@@ -82,7 +92,8 @@
     "addBook": "Buch hinzufügen",
     "editBook": "Buch bearbeiten",
     "addGenre": "Genre hinzufügen",
-    "editGenre": "Genre bearbeiten"
+    "editGenre": "Genre bearbeiten",
+    "addStudent": "Student hinzufügen"
   },
   "TableHeaders": {
     "name": "Name",
@@ -92,6 +103,7 @@
     "teacher": "Lehrer",
     "search": "Suchen",
     "classID": "Klassen ID",
+    "className": "Klassen Name",
     "birthdate": "Geburtsdatum",
     "amountBooks": "Anzahl Bücher",
     "author": "Author",
@@ -194,6 +206,7 @@
     "STUDENT_DELETED": "Schüler wurde gelöscht",
     "STUDENT_FOUND": "Schüler gefunden",
     "STUDENTS_FOUND": "Alle Schüller gefunden",
-    "STUDENT_FOUND_CLASS": "Alle Schüler einer Klasse gefunden"
+    "STUDENT_FOUND_CLASS": "Alle Schüler einer Klasse gefunden",
+    "STUDENT_FOUND_EMPLOYEE": "Alle Schüler eines Angestellten gefunden"
   }
 }
