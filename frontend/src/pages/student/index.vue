@@ -21,10 +21,24 @@
         <custom-table
           :items="students"
           :search="search"
-          :headers="headers"
+          :headers="headerStudent"
           @delete="deleteStudentDialog"
           @edit="editStudentDialog"
+          @viewStudent="viewStudent"
         />
+        <div v-if="viewStudentDetails">
+          <header-medium
+            class="mt-8"
+            :title="
+              $t('StudentPage.headerStudentSpezific') + selectedStudent.name
+            "
+          />
+          <custom-table
+            :items="students.bookID"
+            :search="searchStudent"
+            :headers="headerBook"
+          />
+        </div>
       </v-card-text>
     </v-card>
   </div>
@@ -34,6 +48,7 @@
 import i18n from '@/i18n'
 import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
+import HeaderMedium from '../../components/text/HeaderMedium.vue'
 import editStudentDialog from './EditStudent.vue'
 export default {
   name: 'student',
@@ -41,16 +56,19 @@ export default {
     CustomTable,
     editStudentDialog,
     ValidationDialog,
+    HeaderMedium,
   },
   data() {
     return {
       loading: false,
       deleteStudentD: false,
       editStudentD: false,
+      viewStudentDetails: false,
       search: '',
+      searchStudent: '',
       selectedStudent: '',
       students: [],
-      headers: [
+      headerStudent: [
         {
           text: i18n.t('TableHeaders.name'),
           align: 'start',
@@ -71,6 +89,34 @@ export default {
         {
           text: i18n.t('TableHeaders.schoolName'),
           value: 'schoolName',
+        },
+        {
+          value: 'actions',
+          align: 'end',
+          sortable: false,
+        },
+      ],
+      headerBook: [
+        {
+          text: i18n.t('TableHeaders.name'),
+          align: 'start',
+          value: 'name',
+        },
+        {
+          text: i18n.t('TableHeaders.author'),
+          value: 'author',
+        },
+        {
+          text: i18n.t('TableHeaders.releaseDate'),
+          value: 'releaseDate',
+        },
+        {
+          text: i18n.t('TableHeaders.comment'),
+          value: 'comment',
+        },
+        {
+          text: i18n.t('TableHeaders.genre'),
+          value: 'genreName',
         },
         {
           value: 'actions',
@@ -113,6 +159,13 @@ export default {
                 icon: 'mdi-pencil',
                 key: 'edit',
               },
+              {
+                disabled: false,
+                title: i18n.t('Buttons.viewStudent'),
+                function: 'viewStudent',
+                icon: 'mdi-magnify',
+                key: 'viewStudent',
+              },
             ]
           })
           console.log('Students')
@@ -152,6 +205,10 @@ export default {
     editedStudent() {
       this.editStudentD = false
       window.location.reload
+    },
+    viewStudent(student) {
+      this.selectedStudent = student
+      this.viewStudentDetails = true
     },
   },
 }

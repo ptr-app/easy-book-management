@@ -72,6 +72,7 @@
   },
   "StudentPage": {
     "header": "Schülerübersicht",
+    "headerStudentSpezific": "Der Schüler ",
     "deleteStudent": {
       "header": "Schüler löschen",
       "content": "Wollen Sie den Schüler wirklich löschen?"
@@ -93,7 +94,7 @@
     "editBook": "Buch bearbeiten",
     "addGenre": "Genre hinzufügen",
     "editGenre": "Genre bearbeiten",
-    "addStudent": "Student hinzufügen"
+    "viewStudent": "Schüler anschauen"
   },
   "TableHeaders": {
     "name": "Name",
@@ -109,7 +110,8 @@
     "author": "Author",
     "releaseDate": "Erscheinungsdatum",
     "comment": "Bemerkung",
-    "genre": "Genre"
+    "genre": "Genre",
+    "schoolName": "Schulname"
   },
   "Validation": {
     "required": "Benötigt",
