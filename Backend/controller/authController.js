@@ -86,6 +86,18 @@ exports.registerStudent = [
       userID: newStudent._id,
       isStudent: true,
     })
+    let correspondendClass = await Class.findById(classID)
+    correspondendClass.studentsID.push(newStudent._id)
+    console.log('CORRESPONDENDCLASS')
+    console.log(correspondendClass)
+    Class.findByIdAndUpdate(classID, correspondendClass).catch((err) => {
+      log(
+        'Controller.authController.registerStudent - Failed to update Class: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
     let newUser = await newUserModel.save().catch((err) => {
       log(
         'Controller.authController.registerStudent - Failed to add user: ' +

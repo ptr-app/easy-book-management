@@ -3,7 +3,7 @@ const { Schema } = mongoose
 
 const classModel = new Schema({
   name: { type: String, trim: true },
-  studentsID: { type: [String] },
+  studentsID: [String],
   employeeID: { type: String, trim: true },
   schoolID: { type: String, trim: true },
 })
