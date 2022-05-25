@@ -4,6 +4,7 @@ const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Class = require('../models/classModel')
 const Employee = require('../models/employeeModel')
+const School = require('../models/schoolModel')
 
 exports.addClass = [
   async (req, res) => {
@@ -23,6 +24,9 @@ exports.addClass = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    let school = await School.findById(employee.schoolID)
+    school.classID.push(newClass._id)
+    await School.findByIdAndUpdate(employee.schoolID, school)
     log('Controller.classController.addClass - End', 'debug')
     return apiResponse.successResponseWithData(res, 'CLASS_CREATED', newClass)
   },
