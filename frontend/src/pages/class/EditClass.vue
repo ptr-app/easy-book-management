@@ -99,8 +99,7 @@ export default {
         .dispatch('data/editClass', this.editClass)
         .then(() => {
           this.loading = false
-          this.editClassD = false
-          window.location.reload
+          this.$emit('close')
         })
         .catch((err) => {
           this.loading = false

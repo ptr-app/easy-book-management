@@ -112,7 +112,7 @@ export default {
         .dispatch('data/addClass', this.newClass)
         .then(() => {
           this.loading = false
-          this.$router.push('/home')
+          this.$emit('close')
         })
         .catch((err) => {
           this.loading = false
