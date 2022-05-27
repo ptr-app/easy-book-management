@@ -56,10 +56,6 @@ export default {
           text: i18n.t('TabHeader.students'),
           link: '/students',
         })
-        this.tabs.push({
-          text: i18n.t('TabHeader.employees'),
-          link: '/employee',
-        })
       }
     },
     toggleDarkMode() {
