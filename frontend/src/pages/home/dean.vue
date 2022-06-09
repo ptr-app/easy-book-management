@@ -41,6 +41,10 @@ export default {
           value: 'className',
         },
         {
+          text: i18n.t('TableHeaders.schoolName'),
+          value: 'schoolName',
+        },
+        {
           value: 'actions',
           sortable: false,
         },

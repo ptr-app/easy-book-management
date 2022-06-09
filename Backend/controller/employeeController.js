@@ -267,13 +267,47 @@ exports.getEmployeeBySchool = [
       return apiResponse.errorResponse(res, err.message)
     })
 
-    //TODO Convert RoleID and ClassID to Names
+    let returnEmployee = await mergeRoleIDWithNameAndClassIDWithName(employees)
 
     log('Controller.employeeController.getEmployeeBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,
       'EMPLOYEE_FOUND_SCHOOL',
-      employees
+      returnEmployee
     )
   },
 ]
+
+//HELPER FUNCTIONS
+
+async function mergeRoleIDWithNameAndClassIDWithName(employee) {
+  let employees = []
+  for (let i = 0; i < employee.length; i++) {
+    let classes = []
+    if (employee[i].classID.length === 0) {
+      classes = ['']
+    } else {
+      for (let j = 0; j < employee[i].classID.length; j++) {
+        let classObject = await Class.findById(employee[i].classID[j])
+        classes.push(classObject.name)
+      }
+    }
+    let role = await Role.findById(employee[i].roleID)
+    console.log(role)
+    let school = await School.findById(employee[i].schoolID)
+    console.log(school)
+    employees.push({
+      _id: employee[i]._id,
+      name: employee[i].name,
+      birthdate: employee[i].birthdate,
+      classID: employee[i].classID,
+      className: classes,
+      roleID: employee[i].roleID,
+      roleName: role.name,
+      schoolID: employee[i].schoolID,
+      schoolName: school.name,
+    })
+  }
+  console.log(employees)
+  return employees
+}
