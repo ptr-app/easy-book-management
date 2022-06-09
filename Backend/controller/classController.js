@@ -216,12 +216,30 @@ exports.getClassBySchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    //CONVERT CLASSID TO NAME, ROLE TO NAME
+    let returnClass = await mergeEmployeeIDToName(ClassObject)
     log('Controller.classController.getClassBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,
       'CLASS_FOUND_SCHOOL',
-      ClassObject
+      returnClass
     )
   },
 ]
+
+//HELPER FUNCTIONS
+
+async function mergeEmployeeIDToName(Class) {
+  let classes = []
+  for (let i = 0; i < Class.length; i++) {
+    let employee = await Employee.findById(Class[i].employeeID)
+    classes.push({
+      _id: Class[i]._id,
+      name: Class[i].name,
+      studentsID: Class[i].studentsID,
+      employeeID: Class[i].employeeID,
+      teacherName: employee.name,
+      schoolID: Class[i].schoolID,
+    })
+  }
+  return classes
+}
