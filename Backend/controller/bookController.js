@@ -2,6 +2,7 @@ const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Book = require('../models/bookModel')
 const Student = require('../models/studentModel')
+const Genre = require('../models/genreModel')
 
 exports.addBook = [
   async (req, res) => {
@@ -200,9 +201,13 @@ exports.getBooksByStudent = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    //CONVERT GENRE ID TO NAME
+    let returnBook = await mergeBooksWithGenre(book)
     log('Controller.bookController.getBooksByStudent - END ', 'debug')
-    return apiResponse.successResponseWithData(res, 'BOOK_FOUND_STUDENT', book)
+    return apiResponse.successResponseWithData(
+      res,
+      'BOOK_FOUND_STUDENT',
+      returnBook
+    )
   },
 ]
 
@@ -283,3 +288,25 @@ exports.returnBook = [
     return apiResponse.successResponse(res, 'BOOK_RETURNED')
   },
 ]
+
+//HELPER FUNCTIONS
+
+async function mergeBooksWithGenre(book) {
+  let books = []
+  for (let i = 0; i < book.length; i++) {
+    let genre = await Genre.findById(book[i].genreID)
+    book[i].genreName = genre.name
+    books.push({
+      _id: book[i]._id,
+      name: book[i].name,
+      author: book[i].author,
+      releaseDate: book[i].releaseDate,
+      comment: book[i].comment,
+      genreID: book[i].genreID,
+      genreName: genre.name,
+      studentID: book[i].studentID,
+    })
+  }
+  console.log(books)
+  return books
+}
