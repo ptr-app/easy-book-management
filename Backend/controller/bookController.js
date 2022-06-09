@@ -307,6 +307,5 @@ async function mergeBooksWithGenre(book) {
       studentID: book[i].studentID,
     })
   }
-  console.log(books)
   return books
 }
