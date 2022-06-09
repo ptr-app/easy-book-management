@@ -295,7 +295,6 @@ async function mergeBooksWithGenre(book) {
   let books = []
   for (let i = 0; i < book.length; i++) {
     let genre = await Genre.findById(book[i].genreID)
-    book[i].genreName = genre.name
     books.push({
       _id: book[i]._id,
       name: book[i].name,
