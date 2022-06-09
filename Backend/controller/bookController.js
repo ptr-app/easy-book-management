@@ -205,3 +205,81 @@ exports.getBooksByStudent = [
     return apiResponse.successResponseWithData(res, 'BOOK_FOUND_STUDENT', book)
   },
 ]
+
+exports.rentBook = [
+  async (req, res) => {
+    log('Controller.bookController.rentBook - Start', 'debug')
+    const { bookID, studentID } = req.body
+    let book = await Book.findById(bookID)
+    if (book.studentID.length > 0) {
+      log(
+        'Controller.bookController.rentBook - Book is already rented by another person: ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'BOOK_IS_RENTED')
+    }
+    let newBook = await Book.findByIdAndUpdate(bookID, {
+      studentID: studentID,
+    }).catch((err) => {
+      log(
+        'Controller.bookController.rentBook - Failed to update book: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let student = await Student.findById(studentID)
+    student.bookID.push(bookID)
+    let newStudent = await Student.findByIdAndUpdate(studentID, {
+      bookID: student.bookID,
+    }).catch((err) => {
+      log(
+        'Controller.bookController.rentBook - Failed to update Student: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    log('Controller.bookController.rentBook - End', 'debug')
+    return apiResponse.successResponse(res, 'BOOK_RENTED')
+  },
+]
+
+exports.returnBook = [
+  async (req, res) => {
+    log('Controller.bookController.returnBook - Start', 'debug')
+    const { bookID, studentID } = req.body
+    let book = await Book.findById(bookID)
+    if (book.studentID.length === 0) {
+      log(
+        'Controller.bookController.returnBook - Book is not rented by another person: ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'BOOK_IS_NOT_RENTED')
+    }
+    let newBook = await Book.findByIdAndUpdate(bookID, {
+      studentID: '',
+    }).catch((err) => {
+      log(
+        'Controller.bookController.returnBook - Failed to update book: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let student = await Student.findById(studentID)
+    student.bookID.remove(bookID)
+    let newStudent = await Student.findByIdAndUpdate(studentID, {
+      bookID: student.bookID,
+    }).catch((err) => {
+      log(
+        'Controller.bookController.returnBook - Failed to update Student: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    log('Controller.bookController.returnBook - End', 'debug')
+    return apiResponse.successResponse(res, 'BOOK_RETURNED')
+  },
+]

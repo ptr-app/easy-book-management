@@ -157,6 +157,26 @@ export const data = {
         }
       )
     },
+    rentBook: async ({ commit }, book) => {
+      return requests.postService('book/rentBook', book).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    returnBook: async ({ commit }, book) => {
+      return requests.postService('book/returnBook', book).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
     //GENRE
     addGenre: async ({ commit }, genre) => {
       return requests.postService('genre/addGenre', genre).then(

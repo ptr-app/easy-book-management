@@ -7,7 +7,7 @@ const bookModel = new Schema({
   releaseDate: { type: Date },
   comment: { type: String },
   genreID: { type: String },
-  studentID: { type: [String] },
+  studentID: { type: String },
 })
 
 const Book = mongoose.model('Book', bookModel)

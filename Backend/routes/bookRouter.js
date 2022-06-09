@@ -48,4 +48,12 @@ bookRouter.get(
   bookController.getAllBooksOfOneGenre
 )
 
+bookRouter.post('/rentBook', middleware.checkStudent, bookController.rentBook)
+
+bookRouter.post(
+  '/returnBook',
+  middleware.checkStudent,
+  bookController.returnBook
+)
+
 module.exports.default = bookRouter

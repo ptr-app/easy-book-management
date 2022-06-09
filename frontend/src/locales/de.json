@@ -34,7 +34,15 @@
     },
     "Student": {
       "header": "Willkommen Schüler ",
-      "headerBooks": "Ihre ausgeliehenen Bücher"
+      "headerBooks": "Ihre ausgeliehenen Bücher",
+      "returnBook": {
+        "header": "Buch zurückgeben",
+        "content": "Wollen sie das Buch wirklich zurückgeben ?"
+      },
+      "rentBook": {
+        "header": "Buch ausleihen",
+        "content": "Wollen sie das Buch wirklich ausleihen ?"
+      }
     }
   },
   "ClassPage": {
@@ -93,7 +101,9 @@
     "editBook": "Buch bearbeiten",
     "addGenre": "Genre hinzufügen",
     "editGenre": "Genre bearbeiten",
-    "viewStudent": "Schüler anschauen"
+    "viewStudent": "Schüler anschauen",
+    "rentBook": "Buch ausleihen",
+    "returnBook": "Buch zurückgeben"
   },
   "TableHeaders": {
     "name": "Name",
@@ -157,6 +167,10 @@
     "BOOK_FOUND_NAME": "Bücher mit dem Namen gefunden",
     "BOOK_FOUND_STUDENT": "Bücher von dem Schüler gefunden",
     "BOOK_HAS_STUDENT": "Buch wurde schon von einem Schüler ausgeliehen",
+    "BOOK_RENTED": "Buch wurde ausgeliehen",
+    "BOOK_IS_RENTED": "Dieses Buch wurde schon von jemand anderen ausgeliehen",
+    "BOOK_IS_NOT_RENTED": "Dieses Buch ist nicht ausgeliehen",
+    "BOOK_RETURNED": "Dieses Buch wurde zurückgegeben",
     "CLASS_NEED_EMPLOYEE": "Eine Klasse braucht einen zugewiesenen Angestellten",
     "CLASS_DELETED": "Die Klasse wurde gelöscht",
     "CLASS_EDITED": "Die Klasse wurde bearbeitet",
