@@ -139,7 +139,7 @@ export default {
     },
     classAdded() {
       this.addClassDialog = false
-      window.location.reload
+      window.location.reload()
     },
     deleteClassDialog(Class) {
       this.deleteClassD = true
@@ -154,7 +154,7 @@ export default {
         .then(() => {
           this.loading = false
           this.deleteClassD = false
-          window.location.reload
+          window.location.reload()
         })
         .catch((err) => {
           this.loading = false
@@ -168,7 +168,7 @@ export default {
     },
     editedClass() {
       this.editClassD = false
-      window.location.reload
+      window.location.reload()
     },
   },
 }

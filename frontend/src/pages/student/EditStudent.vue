@@ -99,7 +99,7 @@ export default {
         .then(() => {
           this.loading = false
           this.$emit('close')
-          window.location.reload
+          window.location.reload()
         })
         .catch((err) => {
           this.loading = false

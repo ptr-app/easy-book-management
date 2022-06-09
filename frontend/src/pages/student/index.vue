@@ -190,7 +190,7 @@ export default {
         .then(() => {
           this.loading = false
           this.deleteStudentD = false
-          window.location.reload
+          window.location.reload()
         })
         .catch((err) => {
           this.loading = false
@@ -204,7 +204,7 @@ export default {
     },
     editedStudent() {
       this.editStudentD = false
-      window.location.reload
+      window.location.reload()
     },
     viewStudent(student) {
       this.selectedStudent = student

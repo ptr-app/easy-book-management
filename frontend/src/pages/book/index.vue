@@ -229,7 +229,7 @@ export default {
     },
     bookAdded() {
       this.addBookDialog = false
-      window.location.reload
+      window.location.reload()
     },
     deleteBookDialog(book) {
       this.deleteBookD = true
@@ -244,7 +244,7 @@ export default {
         .then(() => {
           this.loading = false
           this.deleteBookD = false
-          window.location.reload
+          window.location.reload()
         })
         .catch((err) => {
           this.loading = false
@@ -257,15 +257,15 @@ export default {
     },
     editedBook() {
       this.editBookD = false
-      window.location.reload
+      window.location.reload()
     },
     genreAdded() {
       this.addGenreDialog = false
-      window.location.reload
+      window.location.reload()
     },
     genreEdited() {
       this.editGenreD = false
-      window.location.reload
+      window.location.reload()
     },
     editGenreDialog(genre) {
       this.editGenreD = true
@@ -284,7 +284,7 @@ export default {
         .then(() => {
           this.loading = false
           this.deleteGenreD = false
-          window.location.reload
+          window.location.reload()
         })
         .catch((err) => {
           this.loading = false
