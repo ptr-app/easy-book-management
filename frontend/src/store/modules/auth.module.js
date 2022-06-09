@@ -63,6 +63,7 @@ export const auth = {
           localStorage.removeItem('user')
           sessionStorage.clear()
           commit('setLoggedIn', false)
+          window.location.reload()
         }),
         (error) => {
           return Promise.reject(error)
