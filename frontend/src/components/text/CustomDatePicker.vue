@@ -3,67 +3,69 @@
     offset-y
     v-model="dateMenu"
     transition="scale-transistion"
-    max-width="290px"
-    min-width="290px"
     :close-on-content-click="false"
-    :nudge-right="40"
   >
-    <template v-slot:acitvator="{ on, attrs }">
+    <template v-slot:activator="{ on }">
       <v-text-field
+        clearable
         readonly
-        v-model="user.birthdate"
-        prepend-icon="mdi-calendar"
-        v-bind="attrs"
+        filled
         v-on="on"
+        @click:clear="cleared"
+        prepend-inner-icon="mdi-calendar"
+        :label="label"
         :value="formatDate(picker)"
-        :label="$t('Validation.birthdate')"
+        :disabled="disableInput"
       />
     </template>
     <v-date-picker
       no-title
-      first-day-of-the-week="1"
+      first-day-of-week="1"
       v-model="picker"
-      :min="currentDate"
+      :value="formatDate(picker)"
       @input="dateMenu = false"
     />
   </v-menu>
 </template>
 
 <script>
-import i18n from '@/i18n'
 import moment from 'moment'
-
+import i18n from '@/i18n'
 export default {
   name: 'custom-date-picker',
+  data() {
+    return {
+      dateMenu: false,
+      picker: null,
+      rules: {
+        required: (value) => !!value || i18n.t('Rules.required'),
+      },
+    }
+  },
   props: {
     label: String,
-    min: String,
     disableInput: Boolean,
+    value: String,
   },
   watch: {
     picker(value) {
       this.$emit('input', value)
     },
   },
-  data() {
-    return {
-      dateMenu: false,
-      rules: {
-        required: (value) => !!value || i18n.t('Validation.required'),
-      },
-      picker: null,
-    }
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user
+    },
   },
   methods: {
     formatDate(date) {
-      return date ? moment(String(date)).format('DD.MM.YYYY') : ''
+      if (this.value) {
+        return this.value
+      }
+      return date ? moment(String(date)).format('DD.MM.YYYY') : null
     },
     cleared() {
       this.$emit('input', null)
-    },
-    currentDate() {
-      const today = new Date()
-      return today.toISOString().slice(0, 10)
     },
   },
 }

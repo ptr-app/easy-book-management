@@ -7,7 +7,8 @@
     "books": "Bücher",
     "class": "Klassen",
     "students": "Schüler",
-    "school": "Schule"
+    "school": "Schule",
+    "employee": "Angestellter"
   },
   "LoginPage": {
     "header": "EasyBookManagement",
@@ -138,6 +139,7 @@
     "employeeID": "Angestellten ID",
     "bookName": "Buch Name",
     "authorName": "Author",
+    "releaseDate": "Erscheinungsdatum",
     "comment": "Bemerkung",
     "genre": "Genre",
     "validateName": "Namen Validierung fehlgeschlagen",

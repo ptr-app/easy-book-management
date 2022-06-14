@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent width="auto">
     <v-card>
-      <v-card-title v-text="$t('StudentPage.editPage.header')" />
+      <v-card-title v-text="$t('StudentPage.editStudent.header')" />
       <v-card-text>
         <validation-observer ref="observer" v-slot="{ invalid }">
           <v-form ref="form" data-cy="registerForm">
@@ -25,7 +25,18 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" sm="6">
-                    <!-- ADD DATE PICKER COMPONENT -->
+                    <validation-provider
+                      v-slot="{ error }"
+                      rules="required"
+                      :name="$t('Validation.birthdate')"
+                    >
+                      <custom-date-picker
+                        v-model="editStudent.birthdate"
+                        :label="$t('Validation.birthdate')"
+                        :value="editStudent.birthdate"
+                        required
+                      />
+                    </validation-provider>
                   </v-col>
                 </v-row>
               </div>
@@ -60,6 +71,7 @@
 import i18n from '@/i18n'
 import { extend, ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
+import CustomDatePicker from '../../components/text/CustomDatePicker.vue'
 
 extend('required', {
   ...required,
@@ -71,6 +83,7 @@ export default {
   components: {
     ValidationObserver,
     ValidationProvider,
+    CustomDatePicker,
   },
   data() {
     return {

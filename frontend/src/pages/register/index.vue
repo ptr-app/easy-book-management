@@ -45,7 +45,17 @@
                   </v-row>
                   <v-row>
                     <v-col cols="12" sm="6">
-                      <!-- ADD DATE PICKER COMPONENT -->
+                      <validation-provider
+                        v-slot="{ error }"
+                        rules="required|validateName"
+                        :name="$t('Validation.birthdate')"
+                      >
+                        <custom-date-picker
+                          v-model="user.birthdate"
+                          :label="$t('Validation.birthdate')"
+                          required
+                        />
+                      </validation-provider>
                     </v-col>
                     <v-col cols="12" sm="6">
                       <validation-provider
@@ -239,7 +249,7 @@ export default {
       user: {
         loginName: '',
         name: '',
-        birthdate: '01.06.2022',
+        birthdate: '',
         password: '',
         confirmPassword: '',
         schoolName: '',

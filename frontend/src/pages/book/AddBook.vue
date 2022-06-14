@@ -49,7 +49,17 @@
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="6">
-                    <!-- DATE PICKER-->
+                    <validation-provider
+                      v-slot="{ error }"
+                      rules="required"
+                      :name="$t('Validation.releaseDate')"
+                    >
+                      <custom-date-picker
+                        v-model="book.releaseDate"
+                        :label="$t('Validation.releaseDate')"
+                        required
+                      />
+                    </validation-provider>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <validation-provider
@@ -122,6 +132,7 @@
 import i18n from '@/i18n'
 import { extend, ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
+import CustomDatePicker from '../../components/text/CustomDatePicker.vue'
 
 extend('required', {
   ...required,
@@ -138,6 +149,7 @@ export default {
   components: {
     ValidationObserver,
     ValidationProvider,
+    CustomDatePicker,
   },
   data() {
     return {
@@ -145,11 +157,10 @@ export default {
       book: {
         name: '',
         author: '',
-        releaseDate: '01.06.2022',
+        releaseDate: '',
         comment: '',
         genreID: '',
       },
-      genres: [],
     }
   },
   props: {
