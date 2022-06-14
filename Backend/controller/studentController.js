@@ -153,6 +153,30 @@ exports.deleteStudent = [
       )
       return apiResponse.errorResponse(res, 'STUDENT_HAS_BOOK')
     }
+    let studentClass = await Class.findOne({
+      studentsID: req.body.studentID,
+    }).catch((err) => {
+      log(
+        'Controller.studentController.deleteStudent - Failed to find class: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let newStudents = []
+    studentClass.studentsID.forEach((student) => {
+      if (student !== req.body.studentID) {
+        newStudents.push(student)
+      }
+    })
+    await studentClass.update({ studentsID: newStudents }).catch((err) => {
+      log(
+        'Controller.studentController.deleteStudent - Failed to find class: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
     await Student.findByIdAndDelete(req.body.studentID).catch((err) => {
       log(
         'Controller.studentController.deleteStudent - Failed to delete student: ' +
