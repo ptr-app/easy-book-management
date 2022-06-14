@@ -4,6 +4,7 @@ const Student = require('../models/studentModel')
 const Book = require('../models/bookModel')
 const Class = require('../models/classModel')
 const School = require('../models/schoolModel')
+const User = require('../models/userModel')
 
 exports.addStudent = [
   async (req, res) => {
@@ -137,9 +138,9 @@ exports.editStudentBookID = [
 exports.deleteStudent = [
   async (req, res) => {
     log('Controller.studentController.deleteStudent - Start ', 'debug')
-    let book = Book.findById({ studentID: req.body._id }).catch((err) => {
+    let book = Book.find({ studentID: req.body.studentID }).catch((err) => {
       log(
-        'Controller.studentController.deleteStudent - Failed to find class: ' +
+        'Controller.studentController.deleteStudent - Failed to find book: ' +
           err.message,
         'error'
       )
@@ -152,9 +153,17 @@ exports.deleteStudent = [
       )
       return apiResponse.errorResponse(res, 'STUDENT_HAS_BOOK')
     }
-    await Student.findByIdAndDelete(req.body._id).catch((err) => {
+    await Student.findByIdAndDelete(req.body.studentID).catch((err) => {
       log(
         'Controller.studentController.deleteStudent - Failed to delete student: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    await User.findOneAndDelete({ userID: req.body.studentID }).catch((err) => {
+      log(
+        'Controller.studentController.deleteStudent - Failed to delete user: ' +
           err.message,
         'error'
       )
