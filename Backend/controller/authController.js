@@ -69,7 +69,7 @@ exports.registerStudent = [
       name: name,
       birthdate: birthdate,
       classID: classID,
-      bookID: null,
+      bookID: [],
     })
     let newStudent = await newStudentModel.save().catch((err) => {
       log(
