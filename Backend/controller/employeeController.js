@@ -293,9 +293,7 @@ async function mergeRoleIDWithNameAndClassIDWithName(employee) {
       }
     }
     let role = await Role.findById(employee[i].roleID)
-    console.log(role)
     let school = await School.findById(employee[i].schoolID)
-    console.log(school)
     employees.push({
       _id: employee[i]._id,
       name: employee[i].name,
@@ -308,6 +306,5 @@ async function mergeRoleIDWithNameAndClassIDWithName(employee) {
       schoolName: school.name,
     })
   }
-  console.log(employees)
   return employees
 }

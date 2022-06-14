@@ -88,8 +88,6 @@ exports.registerStudent = [
     })
     let correspondendClass = await Class.findById(classID)
     correspondendClass.studentsID.push(newStudent._id)
-    console.log('CORRESPONDENDCLASS')
-    console.log(correspondendClass)
     Class.findByIdAndUpdate(classID, correspondendClass).catch((err) => {
       log(
         'Controller.authController.registerStudent - Failed to update Class: ' +
