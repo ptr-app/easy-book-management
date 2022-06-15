@@ -8,19 +8,26 @@
       @done="confirmRentBook"
       :buttons="[$t('Buttons.cancel'), $t('Buttons.rentBook')]"
     />
-    <v-dialog v-model="dialog" persistent width="auto">
+    <v-dialog v-model="dialog" persistent width="1000">
       <v-card>
         <v-card-title v-text="$t('Home.Student.rentBook.header')" />
         <v-card-text>
           <validation-observer ref="observer" v-slot="{ invalid }">
             <v-form ref="form" data-cy="registerForm">
               <v-container>
-                <div>
+                <v-col cols="3" sm="3" class="mb-n11">
+                  <v-select
+                    :label="$t('TableHeaders.genre')"
+                    :items="genres"
+                    v-model="filteredGenre"
+                  />
+                </v-col>
+                <div class="mt-n10">
                   <custom-table
                     :items="books"
                     :search="search"
                     :headers="header"
-                    :header="$t('Home.Student.rentBook.header')"
+                    :filters="filters"
                     @rentBook="rentBook"
                   />
                 </div>
@@ -29,7 +36,7 @@
                     <v-btn
                       :loading="loading"
                       v-text="$t('Buttons.cancel')"
-                      @click=";(dialog = false), $emit('close')"
+                      @click=";(rentBookDialog = false), $emit('close')"
                       class="ml-6"
                     />
                     <v-spacer />
@@ -82,6 +89,8 @@ export default {
       search: '',
       books: [{}],
       selectedBook: {},
+      genres: ['all'],
+      filteredGenre: 'all',
       header: [
         {
           text: i18n.t('TableHeaders.name'),
@@ -103,11 +112,22 @@ export default {
         {
           text: i18n.t('TableHeaders.genre'),
           value: 'genreName',
+          filter: (value) => {
+            if (this.filteredGenre === 'all') return true
+            return this.filteredGenre === value
+          },
         },
         {
           value: 'actions',
           align: 'end',
           sortable: false,
+        },
+      ],
+      filters: [
+        {
+          label: "$t('TableHeaders.genre')",
+          items: 'genres',
+          model: 'filteredGenre',
         },
       ],
     }
@@ -122,6 +142,7 @@ export default {
   },
   created() {
     this.initializeBooks()
+    this.initializeGenres()
   },
   methods: {
     initializeBooks() {
@@ -141,6 +162,21 @@ export default {
                 key: 'rentBook',
               },
             ]
+          })
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+    },
+    initializeGenres() {
+      this.loading = true
+      this.$store
+        .dispatch('data/getAllGenres')
+        .then((resp) => {
+          this.loading = false
+          resp.forEach((genre) => {
+            this.genres.push(genre.name)
           })
         })
         .catch((err) => {

@@ -171,7 +171,7 @@
     "BOOKS_FOUND": "Alle Bücher gefunden",
     "BOOK_FOUND_GENRE": "Bücher mit dem Genre gefunden",
     "BOOK_FOUND_NAME": "Bücher mit dem Namen gefunden",
-    "BOOK_FOUND_STUDENT": "Bücher von dem Schüler gefunden",
+    "BOOK_FOUND_STUDENT": "Ihre Ausgeliehenen Bücher wurden gefunden",
     "BOOK_HAS_STUDENT": "Buch wurde schon von einem Schüler ausgeliehen",
     "BOOK_RENTED": "Buch wurde ausgeliehen",
     "BOOK_IS_RENTED": "Dieses Buch wurde schon von jemand anderen ausgeliehen",
