@@ -88,6 +88,7 @@ export default {
             this.loading = false
             console.log(err)
           })
+          window.location.reload()
         })
         .catch((err) => {
           this.loading = false

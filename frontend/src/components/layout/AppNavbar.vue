@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app hide-on-scroll v-if="currentUser && !mobile">
+  <v-app-bar app hide-on-scroll v-if="currentUser && !mobile && showBar">
     <template v-slot:extension>
       <v-tabs align-with-title>
         <v-tabs-slider color="red" />
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       tabs: [{ text: i18n.t('TabHeader.home'), link: '/home' }],
+      showBar: false,
     }
   },
   computed: {
@@ -42,7 +43,10 @@ export default {
   },
   created() {
     this.mobile = this.$vuetify.breakpoint.mdAndDown
-    this.initializeTabs()
+    if (this.currentUser) {
+      this.initializeTabs()
+      this.showBar = true
+    }
   },
   methods: {
     initializeTabs() {
@@ -62,13 +66,9 @@ export default {
       this.$store.commit('auth/setDarkMode', !this.darkMode)
     },
     logout() {
-      this.$store
-        .dispatch('auth/logout')
-        .then(() => {
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      this.$store.dispatch('auth/logout').catch((error) => {
+        console.log(error)
+      })
     },
   },
 }
