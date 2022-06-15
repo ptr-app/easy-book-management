@@ -149,6 +149,11 @@
     "validateName": "Namen Validierung fehlgeschlagen",
     "validatePassword": "Passwort Validierung fehlgeschlagen"
   },
+  "Filter": {
+    "all": "Alle",
+    "teacher": "Lehrer",
+    "dean": "Schulleiter"
+  },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",
     "UNKNOWN_STUDENT": "Der angegebene Schüler wurde nicht gefunden",

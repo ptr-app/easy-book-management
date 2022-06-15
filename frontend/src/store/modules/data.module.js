@@ -228,6 +228,17 @@ export const data = {
         }
       )
     },
+    //Roles
+    getAllRoles: async ({ commit }) => {
+      return requests.getService('role/getAllRoles').then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
   },
   getters: {},
   mutations: {},

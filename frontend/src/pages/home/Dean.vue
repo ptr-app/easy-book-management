@@ -11,6 +11,22 @@
     <v-card class="mt-5 mx-5">
       <v-card-title v-text="$t('Home.Dean.header') + currentUser.name" />
       <v-card-text>
+        <v-row>
+          <v-col cols="3" sm="3">
+            <v-select
+              :label="$t('TableHeaders.role')"
+              :items="roles"
+              v-model="filteredRole"
+            />
+          </v-col>
+          <v-col cols="3" sm="3">
+            <v-select
+              :label="$t('TableHeaders.class')"
+              :items="classes"
+              v-model="filteredClass"
+            />
+          </v-col>
+        </v-row>
         <custom-table
           :items="employees"
           :search="search"
@@ -38,6 +54,10 @@ export default {
       search: '',
       employees: [{}],
       selectedEmployee: {},
+      filteredRole: i18n.t('Filter.all'),
+      roles: [i18n.t('Filter.all')],
+      filteredClass: i18n.t('Filter.all'),
+      classes: [i18n.t('Filter.all')],
       headers: [
         {
           text: i18n.t('TableHeaders.name'),
@@ -47,10 +67,18 @@ export default {
         {
           text: i18n.t('TableHeaders.role'),
           value: 'roleName',
+          filter: (value) => {
+            if (this.filteredRole === i18n.t('Filter.all')) return true
+            return this.filteredRole === value
+          },
         },
         {
           text: i18n.t('TableHeaders.class'),
           value: 'className',
+          filter: (value) => {
+            if (this.filteredClass === i18n.t('Filter.all')) return true
+            return this.filteredClass === value
+          },
         },
         {
           text: i18n.t('TableHeaders.schoolName'),
@@ -70,6 +98,8 @@ export default {
   },
   created() {
     this.initEmployees()
+    this.initRoles()
+    this.initClasses()
   },
   methods: {
     initEmployees() {
@@ -88,6 +118,36 @@ export default {
                 key: 'delete',
               },
             ]
+          })
+          this.loading = false
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+    },
+    initRoles() {
+      this.loading = true
+      this.$store
+        .dispatch('data/getAllRoles')
+        .then(async (resp) => {
+          resp.forEach((role) => {
+            this.roles.push(i18n.t('Filter.' + role.name))
+          })
+          this.loading = false
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+    },
+    initClasses() {
+      this.loading = true
+      this.$store
+        .dispatch('data/getClassBySchool')
+        .then(async (resp) => {
+          resp.forEach((Class) => {
+            this.classes.push(Class.name)
           })
           this.loading = false
         })

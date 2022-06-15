@@ -89,8 +89,8 @@ export default {
       search: '',
       books: [{}],
       selectedBook: {},
-      genres: ['all'],
-      filteredGenre: 'all',
+      genres: [i18n.t('Filter.all')],
+      filteredGenre: i18n.t('Filter.all'),
       header: [
         {
           text: i18n.t('TableHeaders.name'),
@@ -113,7 +113,7 @@ export default {
           text: i18n.t('TableHeaders.genre'),
           value: 'genreName',
           filter: (value) => {
-            if (this.filteredGenre === 'all') return true
+            if (this.filteredGenre === i18n.t('Filter.all')) return true
             return this.filteredGenre === value
           },
         },
