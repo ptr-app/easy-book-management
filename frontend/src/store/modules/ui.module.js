@@ -1,5 +1,4 @@
 import i18n from '../../i18n'
-import requests from '../../helpers/requests'
 
 export const ui = {
   namespaced: true,
@@ -16,28 +15,17 @@ export const ui = {
       return state.notification
     },
   },
-  actions: {
-    getIframeData: async ({ commit }, data) => {
-      return requests.getService('general/iframe', data).then(
-        (resp) => {
-          return Promise.resolve(resp.data.data)
-        },
-        (error) => {
-          return Promise.reject(error)
-        }
-      )
-    },
-  },
+  actions: {},
   mutations: {
     setNotification: (state, { display, code, alertClass }) => {
-      ;(state.notification.display = display),
-        (state.notification.text = /[a-z]/.test(code)
-          ? code
-          : i18n.t('Responses.' + code))
+      state.notification.display = display
+      state.notification.text = /[a-z]/.test(code)
+        ? code
+        : i18n.t('Responses.' + code)
       state.notification.class = alertClass
       setTimeout(() => {
         state.notification.display = false
-      })
+      }, 5000)
     },
   },
 }

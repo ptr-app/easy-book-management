@@ -59,11 +59,10 @@ axios.interceptors.response.use(
   (res) => {
     store.commit('ui/setNotification', { display: false })
     if (res.data.code) {
-      console.log(res.data.code)
       store.commit('ui/setNotification', {
         display: true,
         code: res.data.code,
-        alertClass: 'sucess',
+        alertClass: 'success',
       })
     }
     return res

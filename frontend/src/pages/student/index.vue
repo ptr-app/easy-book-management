@@ -199,7 +199,6 @@ export default {
     },
     editStudentDialog(student) {
       this.editStudentD = true
-      console.log(student)
       this.selectedStudent = student
     },
     editedStudent() {
