@@ -7,16 +7,15 @@
 </template>
 
 <script>
-import i18n from '@/i18n'
-import student from './student.vue'
-import teacher from './teacher.vue'
-import dean from './dean.vue'
+import Student from './Student.vue'
+import Teacher from './Teacher.vue'
+import Dean from './Dean.vue'
 export default {
   name: 'home',
   components: {
-    student,
-    teacher,
-    dean,
+    Student,
+    Teacher,
+    Dean,
   },
   data() {
     return {}

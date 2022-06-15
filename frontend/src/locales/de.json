@@ -26,7 +26,11 @@
   "Home": {
     "Dean": {
       "header": "Willkommen Schulleiter ",
-      "headerTeacher": "Ihre Mitarbeiter"
+      "headerTeacher": "Ihre Mitarbeiter",
+      "deleteEmployee": {
+        "header": "Mitarbeiter löschen",
+        "content": "Wollen Sie diesen Mitarbeiter wirklich löschen ?"
+      }
     },
     "Teacher": {
       "header": "Willkommen Lehrer ",
@@ -180,7 +184,7 @@
     "CLASS_CREATED": "Die Klasse urde erstellt",
     "CLASS_FOUND_ALL": "Alle Klassen wurden gefunden",
     "CLASS_FOUND_ID": "Die Klasse wurde gefunden",
-    "CLASS_FOUND_EMPLOYEE": "Alle Klassen eines Angestelten wurden gefunden",
+    "CLASS_FOUND_EMPLOYEE": "Es wurden ihnen zugehörige Klassen gefunden",
     "CLASS_FOUND_SCHOOL": "Alle Klassen einer Schule gefunden",
     "CLASS_NOT_FOUND": "Klasse nicht gefunden",
     "CLASS_HAS_STUDENTS": "Klasse hat noch Schüler zugewiesen",
@@ -224,6 +228,6 @@
     "STUDENT_FOUND": "Schüler gefunden",
     "STUDENTS_FOUND": "Alle Schüller gefunden",
     "STUDENT_FOUND_CLASS": "Alle Schüler einer Klasse gefunden",
-    "STUDENT_FOUND_EMPLOYEE": "Alle Schüler eines Angestellten gefunden"
+    "STUDENT_FOUND_EMPLOYEE": "Es wurden alle ihrer Schüller gefunden"
   }
 }

@@ -4,6 +4,7 @@ const Employee = require('../models/employeeModel')
 const Role = require('../models/roleModel')
 const School = require('../models/schoolModel')
 const Class = require('../models/classModel')
+const User = require('../models/userModel')
 
 exports.addEmployee = [
   async (req, res) => {
@@ -123,7 +124,7 @@ exports.updateRoleID = [
 exports.deleteEmployee = [
   async (req, res) => {
     log('Controller.employeeController.deleteEmployee - Start ', 'debug')
-    let employee = Employee.findById(req.body._id).catch((err) => {
+    let employee = Employee.findById(req.body.employeeID).catch((err) => {
       log(
         'Controller.employeeController.deleteEmployee - Failed to find employee: ' +
           err.message,
@@ -131,14 +132,14 @@ exports.deleteEmployee = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    if (employee.classID !== null) {
+    if (employee.classID !== undefined && employee.classID !== null) {
       log(
         'Controller.employeeController.deleteEmployee - Failed to delete employee with Class attached to it: ',
         'error'
       )
       return apiResponse.errorResponse(res, 'EMPLOYEE_HAS_CLASS')
     }
-    await Employee.findByIdAndDelete(req.body._id).catch((err) => {
+    await Employee.findByIdAndDelete(req.body.employeeID).catch((err) => {
       log(
         'Controller.employeeController.deleteEmployee - Failed to delete class: ' +
           err.message,
@@ -146,6 +147,15 @@ exports.deleteEmployee = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    await User.findOneAndDelete({ userID: req.body.employeeID }).catch(
+      (err) => {
+        log(
+          'Controller.employeeController.deleteEmployee - Failed to delete user: ' +
+            err.message,
+          'error'
+        )
+      }
+    )
 
     log('Controller.employeeController.deleteEmployee - End', 'debug')
     return apiResponse.successResponse(res, 'EMPLOYEE_DELETED')

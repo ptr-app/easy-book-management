@@ -4,6 +4,16 @@ export const data = {
   namespaced: true,
   actions: {
     //EMPLOYEE
+    deleteEmployee: async ({ commit }, employee) => {
+      return requests.deleteService('employee/deleteEmployee', employee).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
     getEmployeeBySchool: async ({ commit }) => {
       return requests.getService('employee/getEmployeeBySchool').then(
         (resp) => {
