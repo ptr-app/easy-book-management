@@ -15,7 +15,7 @@ exports.successResponseWithData = function (res, message, data) {
 }
 
 exports.errorResponse = function (res, message) {
-  return res.status(500).json({ cose: message })
+  return res.status(500).json({ code: message })
 }
 
 exports.errorResponseWithData = function (res, message, data) {
