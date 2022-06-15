@@ -129,8 +129,13 @@ exports.getAllBooks = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    let allBooksGenre = await mergeBooksWithGenre(allBooks)
     log('Controller.bookController.getAllBooks - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'BOOKS_FOUND', allBooks)
+    return apiResponse.successResponseWithData(
+      res,
+      'BOOKS_FOUND',
+      allBooksGenre
+    )
   },
 ]
 
