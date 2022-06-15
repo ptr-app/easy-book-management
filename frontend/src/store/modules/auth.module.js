@@ -1,4 +1,5 @@
 import requests from '../../helpers/requests'
+import router from '../../router/index'
 
 const user = JSON.parse(localStorage.getItem('user'))
 const language = JSON.parse(localStorage.getItem('language'))
@@ -66,8 +67,9 @@ export const auth = {
         requests.postService('auth/logout').then(() => {
           localStorage.removeItem('user')
           sessionStorage.clear()
+          commit('setUser', null)
           commit('setLoggedIn', false)
-          window.location.reload()
+          router.push('/login')
         }),
         (error) => {
           return Promise.reject(error)
