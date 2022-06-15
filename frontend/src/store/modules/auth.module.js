@@ -2,12 +2,14 @@ import requests from '../../helpers/requests'
 
 const user = JSON.parse(localStorage.getItem('user'))
 const language = JSON.parse(localStorage.getItem('language'))
+const darkMode = JSON.parse(localStorage.getItem('darkMode'))
 const initializeUser = user
-  ? { status: { loggedIn: true }, user, language }
+  ? { status: { loggedIn: true }, user, language, darkMode }
   : {
       status: { loggedIn: false },
       user: null,
       language,
+      darkMode,
     }
 
 export const auth = {
@@ -19,7 +21,9 @@ export const auth = {
         (resp) => {
           let user = resp.data.data
           localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('darkMode', JSON.stringify(false))
           commit('setUser', resp.data.data)
+          commit('setDarkMode', false)
           return Promise.resolve(resp.data.data)
         },
         (error) => {
@@ -81,6 +85,9 @@ export const auth = {
     loggedIn: (state) => {
       return state.status.loggedIn
     },
+    darkMode: (state) => {
+      return state.darkMode
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -88,6 +95,10 @@ export const auth = {
     },
     setLoggedIn(state, loggedIn) {
       state.status.loggedIn = loggedIn
+    },
+    setDarkMode(state, darkMode) {
+      localStorage.setItem('darkMode', JSON.stringify(darkMode))
+      state.darkMode = darkMode
     },
   },
 }

@@ -29,15 +29,15 @@ export default {
   data() {
     return {
       tabs: [{ text: i18n.t('TabHeader.home'), link: '/home' }],
-      darkMode: false,
     }
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user
     },
-    switchLabel: function () {
-      return this.darkMode ? 'light' : 'dark'
+    darkMode() {
+      this.$vuetify.theme.dark = this.$store.state.auth.darkMode
+      return this.$store.state.auth.darkMode
     },
   },
   created() {
@@ -59,8 +59,7 @@ export default {
       }
     },
     toggleDarkMode() {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
-      this.darkMode = !this.darkMode
+      this.$store.commit('auth/setDarkMode', !this.darkMode)
     },
     logout() {
       this.$store
