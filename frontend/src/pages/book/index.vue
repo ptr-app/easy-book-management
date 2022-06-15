@@ -63,6 +63,13 @@
           @editGenre="editGenreDialog"
         />
         <v-row class="mt-6">
+          <v-col cols="3" sm="3" class="mb-n11">
+            <v-select
+              :label="$t('TableHeaders.genre')"
+              :items="filterGenres"
+              v-model="filteredGenre"
+            />
+          </v-col>
           <v-spacer />
           <v-btn
             v-text="this.$t('Buttons.addBook')"
@@ -111,6 +118,8 @@ export default {
       books: [],
       selectGenre: [],
       genres: [],
+      filterGenres: [i18n.t('Filter.all')],
+      filteredGenre: i18n.t('Filter.all'),
       headerGenre: [
         {
           text: i18n.t('TableHeaders.genre'),
@@ -143,6 +152,10 @@ export default {
         {
           text: i18n.t('TableHeaders.genre'),
           value: 'genreName',
+          filter: (value) => {
+            if (this.filteredGenre === i18n.t('Filter.all')) return true
+            return this.filteredGenre === value
+          },
         },
         {
           value: 'actions',
@@ -203,6 +216,7 @@ export default {
             this.selectGenre.push({ value: genre._id, text: genre.name })
           })
           this.genres.forEach((genre) => {
+            this.filterGenres.push(genre.name)
             genre.dropdownItems = [
               {
                 disabled: false,
