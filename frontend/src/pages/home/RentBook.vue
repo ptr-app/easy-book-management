@@ -15,7 +15,7 @@
           <validation-observer ref="observer" v-slot="{ invalid }">
             <v-form ref="form" data-cy="registerForm">
               <v-container>
-                <v-col cols="3" sm="3" class="mb-n11">
+                <v-col cols="3" sm="3">
                   <v-select
                     :label="$t('TableHeaders.genre')"
                     :items="genres"
