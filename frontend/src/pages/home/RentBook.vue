@@ -39,13 +39,6 @@
                       @click=";(rentBookDialog = false), $emit('close')"
                       class="ml-6"
                     />
-                    <v-spacer />
-                    <v-btn
-                      :loading="loading"
-                      :disabled="invalid"
-                      v-text="$t('Buttons.rentBook')"
-                      @click="rentBook"
-                    />
                   </v-row>
                 </div>
               </v-container>
