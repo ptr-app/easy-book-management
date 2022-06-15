@@ -17,6 +17,13 @@
     />
     <v-card class="mt-5 mx-5">
       <v-card-title v-text="$t('StudentPage.header')" />
+      <v-col cols="3" sm="3" class="mb-n11">
+        <v-select
+          :label="$t('TableHeaders.class')"
+          :items="classes"
+          v-model="filteredClass"
+        />
+      </v-col>
       <v-card-text>
         <custom-table
           :items="students"
@@ -68,6 +75,8 @@ export default {
       searchStudent: '',
       selectedStudent: '',
       students: [],
+      classes: [i18n.t('Filter.all')],
+      filteredClass: i18n.t('Filter.all'),
       headerStudent: [
         {
           text: i18n.t('TableHeaders.name'),
@@ -85,6 +94,10 @@ export default {
         {
           text: i18n.t('TableHeaders.className'),
           value: 'className',
+          filter: (value) => {
+            if (this.filteredClass === i18n.t('Filter.all')) return true
+            return this.filteredClass === value
+          },
         },
         {
           text: i18n.t('TableHeaders.schoolName'),
@@ -133,6 +146,7 @@ export default {
   },
   created() {
     this.initStudents()
+    this.initClasses()
   },
   methods: {
     initStudents() {
@@ -170,6 +184,21 @@ export default {
           })
           console.log('Students')
           console.log(this.students)
+          this.loading = false
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+    },
+    initClasses() {
+      this.loading = true
+      this.$store
+        .dispatch('data/getClassBySchool')
+        .then(async (resp) => {
+          resp.forEach((Class) => {
+            this.classes.push(Class.name)
+          })
           this.loading = false
         })
         .catch((err) => {
