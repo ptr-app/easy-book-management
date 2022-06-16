@@ -119,8 +119,6 @@ export default {
       this.$store
         .dispatch('data/getClassBySchool')
         .then(async (resp) => {
-          console.log('resp')
-          console.log(resp)
           this.classes = resp
           this.classes.forEach((Class) => {
             Class.dropdownItems = [

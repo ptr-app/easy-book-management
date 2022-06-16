@@ -99,7 +99,7 @@ export default {
         .dispatch('data/editClass', this.editClass)
         .then(() => {
           this.loading = false
-          this.$emit('close')
+          this.$emit('done')
         })
         .catch((err) => {
           this.loading = false

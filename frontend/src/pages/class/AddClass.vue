@@ -112,7 +112,7 @@ export default {
         .dispatch('data/addClass', this.newClass)
         .then(() => {
           this.loading = false
-          this.$emit('close')
+          this.$emit('done')
         })
         .catch((err) => {
           this.loading = false
