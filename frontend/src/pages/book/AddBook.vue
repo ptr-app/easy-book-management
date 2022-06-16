@@ -181,12 +181,11 @@ export default {
       this.selectedBook ? this.editBook() : this.addBook()
     },
     addBook() {
-      console.log('ADDBOOK')
       this.$store
         .dispatch('data/addBook', this.book)
         .then(() => {
           this.loading = false
-          this.$emit('close')
+          this.$emit('done')
         })
         .catch((err) => {
           this.loading = false
@@ -198,7 +197,7 @@ export default {
         .dispatch('data/editBook', this.book)
         .then(() => {
           this.loading = false
-          this.$emit('close')
+          this.$emit('done')
         })
         .catch((err) => {
           this.loading = false
