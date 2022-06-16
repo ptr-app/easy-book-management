@@ -27,6 +27,7 @@
     "Dean": {
       "header": "Willkommen Schulleiter ",
       "headerTeacher": "Ihre Mitarbeiter",
+      "copySchoolIDMessage": "School ID wurde in die Zwischenablage kopiert",
       "deleteEmployee": {
         "header": "Mitarbeiter löschen",
         "content": "Wollen Sie diesen Mitarbeiter wirklich löschen ?"
@@ -52,7 +53,7 @@
   },
   "ClassPage": {
     "header": "Klassenübersicht",
-    "copyIDMessage": "Klasen ID wurde in die Zwischenablage kopiert",
+    "copyClassIDMessage": "Klasen ID wurde in die Zwischenablage kopiert",
     "addClass": {
       "header": "Neue Klasse erstellen"
     },
@@ -116,7 +117,8 @@
     "returnBook": "Buch zurückgeben",
     "editTeacher": "Lehrer ändern",
     "assignTeacher": "Lehrer zuweisen",
-    "copyClassID": "Klassen ID kopieren"
+    "copyClassID": "Klassen ID kopieren",
+    "copySchoolID": "Schul ID kopieren"
   },
   "TableHeaders": {
     "name": "Name",

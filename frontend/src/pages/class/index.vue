@@ -204,7 +204,7 @@ export default {
     copy(Class) {
       this.$store.commit('ui/setNotification', {
         display: true,
-        code: i18n.t('ClassPage.copyIDMessage'),
+        code: i18n.t('ClassPage.copyClassIDMessage'),
         alertClass: 'success',
       })
       navigator.clipboard.writeText(Class._id)

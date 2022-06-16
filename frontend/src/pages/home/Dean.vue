@@ -33,6 +33,7 @@
           :headers="headers"
           :header="$t('Home.Dean.headerTeacher')"
           @delete="deleteEmployeeD"
+          @copy="copy"
         />
       </v-card-text>
     </v-card>
@@ -85,7 +86,12 @@ export default {
           value: 'schoolName',
         },
         {
+          text: i18n.t('TableHeaders.schoolID'),
+          value: 'schoolID',
+        },
+        {
           value: 'actions',
+          align: 'end',
           sortable: false,
         },
       ],
@@ -110,6 +116,13 @@ export default {
           this.employees = resp
           this.employees.forEach((employee) => {
             employee.dropdownItems = [
+              {
+                disabled: false,
+                title: i18n.t('Buttons.copySchoolID'),
+                function: 'copy',
+                icon: 'mdi-content-copy',
+                key: 'copy',
+              },
               {
                 disabled: false,
                 title: i18n.t('Buttons.delete'),
@@ -175,6 +188,14 @@ export default {
           this.loading = false
           console.log(err)
         })
+    },
+    copy(employee) {
+      this.$store.commit('ui/setNotification', {
+        display: true,
+        code: i18n.t('Home.Dean.copySchoolIDMessage'),
+        alertClass: 'success',
+      })
+      navigator.clipboard.writeText(employee.schoolID)
     },
   },
 }
