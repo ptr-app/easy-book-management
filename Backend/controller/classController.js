@@ -272,7 +272,6 @@ async function mergeEmployeeIDToName(Class) {
         'error'
       )
     })
-    console.log(employee)
     classes.push({
       _id: Class[i]._id,
       name: Class[i].name,
