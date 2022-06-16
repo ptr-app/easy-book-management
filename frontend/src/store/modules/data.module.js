@@ -157,8 +157,8 @@ export const data = {
         }
       )
     },
-    deletBook: async ({ commit }, book) => {
-      return requests.deleteService('book/deletBook', book).then(
+    deleteBook: async ({ commit }, book) => {
+      return requests.deleteService('book/deleteBook', book).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
         },
