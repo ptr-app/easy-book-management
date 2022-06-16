@@ -120,7 +120,7 @@ export default {
           console.log(err)
         })
     },
-    editBook() {
+    editGenre() {
       this.$store
         .dispatch('data/editGenre', this.genre)
         .then(() => {
