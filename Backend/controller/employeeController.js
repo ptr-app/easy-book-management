@@ -1,4 +1,5 @@
 const { log } = require('../helpers/logger')
+const ObjectId = require('mongoose').Types.ObjectId
 const apiResponse = require('../helpers/apiResponse')
 const Employee = require('../models/employeeModel')
 const Role = require('../models/roleModel')
@@ -204,37 +205,43 @@ exports.getEmployeeByRole = [
   async (req, res) => {
     log('Controller.employeeController.getEmployeeByRole - Start', 'debug')
     let roleID
-    let role = Role.findById(req.body.roleID).catch((err) => {
+    if (!ObjectId.isValid(req.params.role)) {
+      let role = await Role.findOne({ name: req.params.role }).catch((err) => {
+        log(
+          'Controller.employeeController.getEmployeeByRole - Failed to find Role By Name' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      })
+      roleID = role._id
+    } else if (checkID === new ObjectId(chekcID)) {
+      let role = Role.findById(req.params.role).catch((err) => {
+        log(
+          'Controller.employeeController.getEmployeeByRole - Failed to find Role ' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      })
+      roleID = role._id
+    } else {
       log(
-        'Controller.employeeController.getEmployeeByRole - Failed to find Role ' +
+        'Controller.employeeController.getEmployeeByRole - Failed to identify Role ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'ROLE_IDENTIFICATION_FAILED')
+    }
+    let employee = await Employee.find({ roleID: roleID }).catch((err) => {
+      log(
+        'Controller.employeeController.getEmployeeByRole - Failed while searching for employee with the role id: ' +
+          roleID +
+          '. Error Message is' +
           err.message,
         'error'
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    if (role === undefined) {
-      log(
-        'Controller.employeeController.getEmployeeByRole - Role not Found ' +
-          err.message,
-        'error'
-      )
-      return apiResponse.errorResponse(res, 'ROLE_NOT_FOUND')
-    } else {
-      roleID = req.body.roleID
-    }
-
-    let employee = await Employee.find({ roleID: req.body.roleID }).catch(
-      (err) => {
-        log(
-          'Controller.employeeController.getEmployeeByRole - Failed while searching for employee with the role id: ' +
-            req.body.employeeID +
-            '. Error Message is' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      }
-    )
     log('Controller.employeeController.getEmployeeByRole - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,

@@ -16,7 +16,7 @@ classRouter.post(
 
 classRouter.post(
   '/updateEmployeeID',
-  middleware.checkTeacher,
+  middleware.checkDean,
   classController.updateEmployeeID
 )
 

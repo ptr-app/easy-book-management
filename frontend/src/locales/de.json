@@ -52,6 +52,7 @@
   },
   "ClassPage": {
     "header": "Klassenübersicht",
+    "copyIDMessage": "Klasen ID wurde in die Zwischenablage kopiert",
     "addClass": {
       "header": "Neue Klasse erstellen"
     },
@@ -61,6 +62,10 @@
     },
     "editClass": {
       "header": "Klasse bearbeiten"
+    },
+    "editTeacher": {
+      "header": "Lehrer ändern",
+      "content": "Wollen Sie den Lehrer wirklich ändern?"
     }
   },
   "BookPage": {
@@ -108,7 +113,10 @@
     "editGenre": "Genre bearbeiten",
     "viewStudent": "Schüler anschauen",
     "rentBook": "Buch ausleihen",
-    "returnBook": "Buch zurückgeben"
+    "returnBook": "Buch zurückgeben",
+    "editTeacher": "Lehrer ändern",
+    "assignTeacher": "Lehrer zuweisen",
+    "copyClassID": "Klassen ID kopieren"
   },
   "TableHeaders": {
     "name": "Name",
@@ -193,6 +201,7 @@
     "CLASS_FOUND_SCHOOL": "Alle Klassen einer Schule gefunden",
     "CLASS_NOT_FOUND": "Klasse nicht gefunden",
     "CLASS_HAS_STUDENTS": "Klasse hat noch Schüler zugewiesen",
+    "CLASS_NOT_A_TEACHER": "Der ausgewählte Mitarbeiter ist kein Lehrer",
     "EMPLOYEE_CREATED": "Angestelter erstellt",
     "EMPLOYEE_EDITED": "Angesteller bearbeitet",
     "EMPLOYEE_ASSIGNED_CLASS": "Dem Angestellten wurde einer Klasse zugewiesen",
@@ -216,6 +225,7 @@
     "ROLES_FOUND": "Alle Rollen wurde gefunden",
     "ROLE_FOUND": "Rolle wurde gefunden",
     "ROLE_NOT_FOUND": "Rolle wurde nicht gefunden",
+    "ROLE_IDENTIFICATION_FAILED": "Die Rolle konnte nicht identifiziert werden",
     "SCHOOL_CREATED": "Schule wurde erstellt",
     "SCHOOL_EDITED": "Schule wurde bearbeitet",
     "SCHOOL_HAS_CLASS": "Die Schule hat noch Klassen",

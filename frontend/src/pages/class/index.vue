@@ -21,6 +21,13 @@
       :dialog="editClassD"
       :selectedClass="selectedClass"
     />
+    <edit-teacher-dialog
+      v-if="editTeacherD"
+      @close="editTeacherD = false"
+      @done="editedTeacher"
+      :dialog="editTeacherD"
+      :selectedClass="selectedClass"
+    />
     <v-card class="mt-5 mx-5">
       <v-card-title v-text="$t('ClassPage.header')" />
       <v-card-text>
@@ -38,6 +45,8 @@
           :headers="headers"
           @delete="deleteClassDialog"
           @edit="editClassDialog"
+          @editTeacher="editTeacherDialog"
+          @copy="copy"
         />
       </v-card-text>
     </v-card>
@@ -50,12 +59,14 @@ import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
 import addClassDialog from './AddClass.vue'
 import editClassDialog from './EditClass.vue'
+import editTeacherDialog from './EditTeacher.vue'
 export default {
   name: 'class',
   components: {
     CustomTable,
     addClassDialog,
     editClassDialog,
+    editTeacherDialog,
     ValidationDialog,
   },
   data() {
@@ -64,6 +75,7 @@ export default {
       addClassDialog: false,
       deleteClassD: false,
       editClassD: false,
+      editTeacherD: false,
       search: '',
       selectedClass: '',
       classes: [],
@@ -114,6 +126,13 @@ export default {
             Class.dropdownItems = [
               {
                 disabled: false,
+                title: i18n.t('Buttons.copyClassID'),
+                function: 'copy',
+                icon: 'mdi-content-copy',
+                key: 'copy',
+              },
+              {
+                disabled: false,
                 title: i18n.t('Buttons.delete'),
                 function: 'delete',
                 icon: 'mdi-delete',
@@ -126,10 +145,15 @@ export default {
                 icon: 'mdi-pencil',
                 key: 'edit',
               },
+              {
+                disabled: false,
+                title: i18n.t('Buttons.editTeacher'),
+                function: 'editTeacher',
+                icon: 'mdi-account-convert',
+                key: 'editTeacher',
+              },
             ]
           })
-          console.log('CLASSES')
-          console.log(this.classes)
           this.loading = false
         })
         .catch((err) => {
@@ -163,12 +187,27 @@ export default {
     },
     editClassDialog(Class) {
       this.editClassD = true
-      console.log(Class)
       this.selectedClass = Class
     },
     editedClass() {
       this.editClassD = false
       window.location.reload()
+    },
+    editTeacherDialog(Class) {
+      this.editTeacherD = true
+      this.selectedClass = Class
+    },
+    editedTeacher() {
+      this.editTeacherD = false
+      window.location.reload()
+    },
+    copy(Class) {
+      store.commit('ui/setNotification', {
+        display: true,
+        code: i18n.t('ClassPage.copyIDMessage'),
+        alertClass: 'success',
+      })
+      navigator.clipboard.writeText(Class._id)
     },
   },
 }

@@ -57,23 +57,26 @@ exports.updateEmployeeID = [
   async (req, res) => {
     log('Controller.classController.updateEmployeeID - Start', 'debug')
     let employeeID
-    if (req.body.employeeID !== undefined) {
-      let employee = Employee.findById(req.body.employeeID).catch((err) => {
-        log(
-          'Controller.classController.updateEmployeeID - Failed to find Employee ' +
-            err.message,
-          'error'
-        )
-        return apiResponse.errorResponse(res, err.message)
-      })
-      if (employee._id === process.env.TEACHER_ID) {
-        employeeID = req.body.employeeID
+    if (req.body.newEmployeeID !== undefined) {
+      let employee = await Employee.findById(req.body.newEmployeeID).catch(
+        (err) => {
+          log(
+            'Controller.classController.updateEmployeeID - Failed to find Employee ' +
+              err.message,
+            'error'
+          )
+          return apiResponse.errorResponse(res, err.message)
+        }
+      )
+      console.log(employee)
+      if (employee.roleID === process.env.TEACHER_ID) {
+        employeeID = req.body.newEmployeeID
       } else {
         log(
           'Controller.classController.updateEmployeeID - given Employee is not an Teacher ',
           'error'
         )
-        return apiResponse.errorResponse(res, 'NOT_A_TEACHER')
+        return apiResponse.errorResponse(res, 'CLASS_NOT_A_TEACHER')
       }
     } else {
       log(
@@ -82,11 +85,31 @@ exports.updateEmployeeID = [
       )
       return apiResponse.errorResponse(res, 'CLASS_NEED_EMPLOYEE')
     }
-    let ClassObject = await Class.findByIdAndUpdate(req.body._id, {
+    let ClassObject = await Class.findByIdAndUpdate(req.body.classID, {
       employeeID: employeeID,
     }).catch((err) => {
       log(
-        'Controller.classController.updateEmployeeID - Failed to update Student ' +
+        'Controller.classController.updateEmployeeID - Failed to update Class ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    await Employee.findByIdAndUpdate(req.body.newEmployeeID, {
+      classID: req.body.classID,
+    }).catch((err) => {
+      log(
+        'Controller.classController.updateEmployeeID - Failed to update NewEmployee ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    await Employee.findByIdAndUpdate(req.body.oldEmployeeID, {
+      classID: '',
+    }).catch((err) => {
+      log(
+        'Controller.classController.updateEmployeeID - Failed to update OldEmployee ' +
           err.message,
         'error'
       )

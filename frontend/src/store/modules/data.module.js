@@ -24,6 +24,16 @@ export const data = {
         }
       )
     },
+    getEmployeeByRole: async ({ commit }, role) => {
+      return requests.getService('employee/getEmployeeByRole/' + role).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
     //CLASS
     getClassBySchool: async ({ commit }) => {
       return requests.getService('class/getClassBySchool').then(
@@ -57,6 +67,16 @@ export const data = {
     },
     editClass: async ({ commit }, Class) => {
       return requests.postService('class/editClass', Class).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
+    updateEmployeeID: async ({ commit }, employee) => {
+      return requests.postService('class/updateEmployeeID', employee).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
         },
