@@ -284,7 +284,18 @@ exports.getEmployeeBySchool = [
       return apiResponse.errorResponse(res, err.message)
     })
 
-    let returnEmployee = await mergeRoleIDWithNameAndClassIDWithName(employees)
+    let returnEmployee = await mergeRoleIDWithNameAndClassIDWithName(
+      employees
+    ).catch((err) => {
+      log(
+        'Controller.employeeController.getEmployeeBySchool - Failed while merging Role and Class: ' +
+          schoolID +
+          '. Error Message is ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
 
     log('Controller.employeeController.getEmployeeBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
@@ -305,12 +316,43 @@ async function mergeRoleIDWithNameAndClassIDWithName(employee) {
       classes = ['']
     } else {
       for (let j = 0; j < employee[i].classID.length; j++) {
-        let classObject = await Class.findById(employee[i].classID[j])
-        classes.push(classObject.name)
+        if (employee[i].classID[j] !== '') {
+          let classObject = await Class.findById(employee[i].classID[j]).catch(
+            (err) => {
+              log(
+                'Controller.employeeController.mergeRoleIDWithNameAndClassIDWithName - Failed while Finding Class: ' +
+                  employee[i].classID[j] +
+                  '. Error Message is' +
+                  err.message,
+                'error'
+              )
+              return apiResponse.errorResponse(res, err.message)
+            }
+          )
+          classes.push(classObject.name)
+        }
       }
     }
-    let role = await Role.findById(employee[i].roleID)
-    let school = await School.findById(employee[i].schoolID)
+    let role = await Role.findById(employee[i].roleID).catch((err) => {
+      log(
+        'Controller.employeeController.mergeRoleIDWithNameAndClassIDWithName - Failed while Finding Role: ' +
+          employee[i].roleID +
+          '. Error Message is' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let school = await School.findById(employee[i].schoolID).catch((err) => {
+      log(
+        'Controller.employeeController.mergeRoleIDWithNameAndClassIDWithName - Failed while Finding School: ' +
+          employee[i].roleID +
+          '. Error Message is' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
     employees.push({
       _id: employee[i]._id,
       name: employee[i].name,
