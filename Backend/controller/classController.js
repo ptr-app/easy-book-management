@@ -152,6 +152,17 @@ exports.deleteClass = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    await Employee.findOneAndUpdate(
+      { classID: req.body.classID },
+      { classID: [''] }
+    ).catch((err) => {
+      log(
+        'Controller.classController.deleteClass - Failed to delete class: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
 
     log('Controller.classController.deleteClass - End', 'debug')
     return apiResponse.successResponse(res, 'CLASS_DELETED')
