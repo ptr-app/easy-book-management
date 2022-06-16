@@ -202,7 +202,7 @@ export default {
       window.location.reload()
     },
     copy(Class) {
-      store.commit('ui/setNotification', {
+      this.$store.commit('ui/setNotification', {
         display: true,
         code: i18n.t('ClassPage.copyIDMessage'),
         alertClass: 'success',
