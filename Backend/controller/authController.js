@@ -177,7 +177,7 @@ exports.registerSchool = [
     log('Controller.authController.registerSchool - Start', 'debug')
     const { loginName, name, password, birthdate, schoolName } = req.body
     let newSchoolModel = new School({ name: schoolName, classID: null })
-    let newSchool = newSchoolModel.save().catch((err) => {
+    let newSchool = await newSchoolModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to create School: ' +
           err.message,
@@ -193,6 +193,8 @@ exports.registerSchool = [
       schoolID: newSchool._id,
       roleID: process.env.DEAN_ID,
     })
+    console.log(newEmployeeModel)
+    console.log(newSchool)
     let newEmployee = await newEmployeeModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to add Employee: ' +
