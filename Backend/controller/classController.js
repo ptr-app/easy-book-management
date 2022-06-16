@@ -68,7 +68,6 @@ exports.updateEmployeeID = [
           return apiResponse.errorResponse(res, err.message)
         }
       )
-      console.log(employee)
       if (employee.roleID === process.env.TEACHER_ID) {
         employeeID = req.body.newEmployeeID
       } else {
@@ -105,16 +104,18 @@ exports.updateEmployeeID = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    await Employee.findByIdAndUpdate(req.body.oldEmployeeID, {
-      classID: '',
-    }).catch((err) => {
-      log(
-        'Controller.classController.updateEmployeeID - Failed to update OldEmployee ' +
-          err.message,
-        'error'
-      )
-      return apiResponse.errorResponse(res, err.message)
-    })
+    if (req.body.oldEmployeeID) {
+      await Employee.findByIdAndUpdate(req.body.oldEmployeeID, {
+        classID: '',
+      }).catch((err) => {
+        log(
+          'Controller.classController.updateEmployeeID - Failed to update OldEmployee ' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      })
+    }
 
     log('Controller.classController.updateEmployeeID - End', 'debug')
     return apiResponse.successResponseWithData(
