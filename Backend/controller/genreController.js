@@ -1,4 +1,4 @@
-const {log} = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Genre = require('../models/genreModel')
 const Book = require('../models/bookModel')
@@ -26,16 +26,16 @@ exports.addGenre = [
 exports.editGenre = [
   async (req, res) => {
     log('Controller.genreController.editGenre - Start', 'debug')
-    let genre = await Genre
-      .findByIdAndUpdate(req.body._id, req.body)
-      .catch((err) => {
+    let genre = await Genre.findByIdAndUpdate(req.body._id, req.body).catch(
+      (err) => {
         log(
           'Controller.genreController.editGenre - Failed to edit Genre ' +
             err.message,
           'error'
         )
         return apiResponse.errorResponse(res, err.message)
-      })
+      }
+    )
 
     log('Controller.genreController.editGenre - End', 'debug')
     return apiResponse.successResponseWithData(res, 'GENRE_EDITED', genre)
@@ -45,7 +45,7 @@ exports.editGenre = [
 exports.deleteGenre = [
   async (req, res) => {
     log('Controller.genreController.deleteGenre - Start ', 'debug')
-    let book = Book.find({ genreID: req.body._id }).catch((err) => {
+    let book = Book.find({ genreID: req.body.genreID }).catch((err) => {
       log(
         'Controller.genreController.deleteGenre - Failed to find book: ' +
           err.message,
@@ -60,7 +60,7 @@ exports.deleteGenre = [
       )
       return apiResponse.errorResponse(res, 'GENRE_HAS_BOOKS')
     }
-    await Genre.findByIdAndDelete(req.body._id).catch((err) => {
+    await Genre.findByIdAndDelete(req.body.genreID).catch((err) => {
       log(
         'Controller.genreController.deleteGenre - Failed to delete genre: ' +
           err.message,
