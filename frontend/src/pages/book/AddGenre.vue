@@ -113,7 +113,7 @@ export default {
         .dispatch('data/addGenre', this.genre)
         .then(() => {
           this.loading = false
-          this.$emit('close')
+          this.$emit('done')
         })
         .catch((err) => {
           this.loading = false
@@ -125,7 +125,7 @@ export default {
         .dispatch('data/editGenre', this.genre)
         .then(() => {
           this.loading = false
-          this.$emit('close')
+          this.$emit('done')
         })
         .catch((err) => {
           this.loading = false

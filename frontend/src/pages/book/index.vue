@@ -275,6 +275,7 @@ export default {
     },
     genreAdded() {
       this.addGenreDialog = false
+      console.log('GENRE ADDEDEDEDEDEDEERD')
       window.location.reload()
     },
     genreEdited() {
