@@ -86,6 +86,7 @@
                           required
                           v-model="user.password"
                           data-cy="registerPassword"
+                          type="password"
                           :label="$t('Validation.password')"
                           :error-messages="error"
                         />
@@ -102,6 +103,7 @@
                           required
                           v-model="user.confirmPassword"
                           data-cy="registerPassword"
+                          type="password"
                           :label="$t('Validation.confirmPassword')"
                           :error-messages="error"
                         />
