@@ -4,7 +4,7 @@
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
-            <v-card class="elevation-12">
+            <v-card class="elevation-12 pb-6">
               <v-toolbar dark color="primary">
                 <v-spacer />
                 <v-toolbar-title v-text="$t('LoginPage.header')" />
@@ -39,7 +39,7 @@
                 />
                 <v-spacer />
               </v-card-actions>
-              <v-row class="mt-n1">
+              <v-row class="mt-2">
                 <v-spacer />
                 <a
                   href="/register"
@@ -48,6 +48,7 @@
                 />
                 <v-spacer />
               </v-row>
+              <!--
               <v-row class="pb-5">
                 <v-spacer />
                 <a
@@ -57,6 +58,7 @@
                 />
                 <v-spacer />
               </v-row>
+              -->
             </v-card>
           </v-flex>
         </v-layout>
