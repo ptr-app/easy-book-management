@@ -156,8 +156,6 @@ export default {
       this.$emit('delete', this.selectedItems)
     },
     rowClick(item) {
-      console.log('ITEM')
-      console.log(item)
       if (this.enableRowClick) {
         this.$emit(this.rowClickResponse, item)
       }
