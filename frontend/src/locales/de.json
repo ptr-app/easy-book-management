@@ -135,7 +135,8 @@
     "releaseDate": "Erscheinungsdatum",
     "comment": "Bemerkung",
     "genre": "Genre",
-    "schoolName": "Schulname"
+    "schoolName": "Schulname",
+    "schoolID": "Schul ID"
   },
   "Validation": {
     "required": "Benötigt",
