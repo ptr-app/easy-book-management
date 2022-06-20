@@ -189,7 +189,7 @@ exports.registerSchool = [
     let newEmployeeModel = new Employee({
       name: name,
       birthdate: birthdate,
-      classID: null,
+      classID: [],
       schoolID: newSchool._id,
       roleID: process.env.DEAN_ID,
     })
