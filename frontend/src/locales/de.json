@@ -8,7 +8,7 @@
     "class": "Klassen",
     "students": "Schüler",
     "school": "Schule",
-    "employee": "Angestellter"
+    "employees": "Angestellter"
   },
   "LoginPage": {
     "header": "EasyBookManagement",
