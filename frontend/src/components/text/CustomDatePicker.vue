@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       dateMenu: false,
-      picker: null,
+      picker: this.value,
       rules: {
         required: (value) => !!value || i18n.t('Rules.required'),
       },
@@ -59,9 +59,6 @@ export default {
   },
   methods: {
     formatDate(date) {
-      if (this.value) {
-        return this.value
-      }
       return date ? moment(String(date)).format('DD.MM.YYYY') : null
     },
     cleared() {
