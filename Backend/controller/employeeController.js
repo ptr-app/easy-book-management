@@ -297,6 +297,10 @@ exports.getEmployeeBySchool = [
       return apiResponse.errorResponse(res, err.message)
     })
 
+    if (!Array.isArray(returnEmployee)) {
+      returnEmployee = [returnEmployee]
+    }
+
     log('Controller.employeeController.getEmployeeBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,
@@ -311,12 +315,12 @@ exports.getEmployeeBySchool = [
 async function mergeRoleIDWithNameAndClassIDWithName(employee) {
   let employees = []
   if (!employee) {
-    return []
+    return employee
   }
   for (let i = 0; i < employee.length; i++) {
     let classes = []
     if (!employee[i].classID) {
-      return []
+      return employee[i]
     }
     if (employee[i].classID.length === 0) {
       classes = ['']
