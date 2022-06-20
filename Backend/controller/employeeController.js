@@ -319,16 +319,15 @@ async function mergeRoleIDWithNameAndClassIDWithName(employee) {
   }
   for (let i = 0; i < employee.length; i++) {
     let classes = []
-    if (!employee[i].classID) {
-      return employee[i]
-    }
-    if (employee[i].classID.length === 0) {
-      classes = ['']
-    } else {
-      for (let j = 0; j < employee[i].classID.length; j++) {
-        if (employee[i].classID[j] !== '') {
-          let classObject = await Class.findById(employee[i].classID[j]).catch(
-            (err) => {
+    if (employee[i].classID) {
+      if (employee[i].classID.length === 0) {
+        classes = ['']
+      } else {
+        for (let j = 0; j < employee[i].classID.length; j++) {
+          if (employee[i].classID[j] !== '') {
+            let classObject = await Class.findById(
+              employee[i].classID[j]
+            ).catch((err) => {
               log(
                 'Controller.employeeController.mergeRoleIDWithNameAndClassIDWithName - Failed while Finding Class: ' +
                   employee[i].classID[j] +
@@ -337,9 +336,9 @@ async function mergeRoleIDWithNameAndClassIDWithName(employee) {
                 'error'
               )
               return apiResponse.errorResponse(res, err.message)
-            }
-          )
-          classes.push(classObject.name)
+            })
+            classes.push(classObject.name)
+          }
         }
       }
     }
