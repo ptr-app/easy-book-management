@@ -310,8 +310,14 @@ exports.getEmployeeBySchool = [
 
 async function mergeRoleIDWithNameAndClassIDWithName(employee) {
   let employees = []
+  if (!employee) {
+    return []
+  }
   for (let i = 0; i < employee.length; i++) {
     let classes = []
+    if (!employee[i].classID) {
+      return []
+    }
     if (employee[i].classID.length === 0) {
       classes = ['']
     } else {
