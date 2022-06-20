@@ -193,8 +193,6 @@ exports.registerSchool = [
       schoolID: newSchool._id,
       roleID: process.env.DEAN_ID,
     })
-    console.log(newEmployeeModel)
-    console.log(newSchool)
     let newEmployee = await newEmployeeModel.save().catch((err) => {
       log(
         'Controller.authController.registerSchool - Failed to add Employee: ' +
