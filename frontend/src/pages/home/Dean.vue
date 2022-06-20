@@ -115,6 +115,7 @@ export default {
         .then(async (resp) => {
           this.employees = resp
           this.employees.forEach((employee) => {
+            employee.roleName = i18n.t('Filter.' + employee.roleName)
             employee.dropdownItems = [
               {
                 disabled: false,
