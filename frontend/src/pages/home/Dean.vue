@@ -78,7 +78,7 @@ export default {
           value: 'className',
           filter: (value) => {
             if (this.filteredClass === i18n.t('Filter.all')) return true
-            return this.filteredClass === value
+            return value.includes(this.filteredClass)
           },
         },
         {
