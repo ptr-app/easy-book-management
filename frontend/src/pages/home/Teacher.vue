@@ -42,6 +42,7 @@
 
 <script>
 import i18n from '@/i18n'
+import moment from 'moment'
 import HeaderMedium from '../../components/text/HeaderMedium.vue'
 import CustomTable from '../../components/data/CustomTable.vue'
 export default {
@@ -112,7 +113,7 @@ export default {
         },
         {
           text: i18n.t('TableHeaders.releaseDate'),
-          value: 'releaseDate',
+          value: 'releaseDateString',
         },
         {
           text: i18n.t('TableHeaders.comment'),
@@ -214,8 +215,13 @@ export default {
       this.selectedStudent = student
       this.$store
         .dispatch('data/getBooksByStudent', student._id)
-        .then(async (resp) => {
-          this.books = resp
+        .then(async (books) => {
+          books.forEach((book) => {
+            book.releaseDateString = moment(String(book.releaseDate)).format(
+              'DD.MM.YYYY'
+            )
+            this.books.push(book)
+          })
         })
         .catch((err) => {
           this.loading = false
