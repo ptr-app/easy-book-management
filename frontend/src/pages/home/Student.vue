@@ -39,6 +39,7 @@
 
 <script>
 import i18n from '@/i18n'
+import moment from 'moment'
 import HeaderMedium from '../../components/text/HeaderMedium.vue'
 import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
@@ -102,6 +103,9 @@ export default {
         .then(async (resp) => {
           this.books = resp
           this.books.forEach((book) => {
+            book.releaseDate = moment(String(book.releaseDate)).format(
+              'DD.MM.YYYY'
+            )
             book.dropdownItems = [
               {
                 disabled: false,
