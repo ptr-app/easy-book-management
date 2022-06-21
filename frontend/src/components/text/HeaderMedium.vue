@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div :class="`text-${$vuetify.breakpoint.name}-h5`" v-text="title" />
+    <div
+      class="mt-2 mb-2"
+      :class="`text-${$vuetify.breakpoint.name}-h5`"
+      v-text="title"
+    />
     <div
       id="divider"
       style="background-color: rgb(150, 150, 150); height: 1px; width: 100%"
