@@ -35,8 +35,17 @@
         />
         <div v-if="viewStudentDetails">
           <header-medium class="mt-8" :title="selectedStudent.name" />
+          <v-row class="mt-2">
+            <v-col cols="3" sm="3" class="mb-n11">
+              <v-select
+                :label="$t('TableHeaders.genre')"
+                :items="filterGenres"
+                v-model="filteredGenre"
+              />
+            </v-col>
+          </v-row>
           <custom-table
-            :items="students.bookID"
+            :items="books"
             :search="searchStudent"
             :headers="headerBook"
           />
@@ -71,8 +80,11 @@ export default {
       searchStudent: '',
       selectedStudent: '',
       students: [],
+      books: [],
       classes: [i18n.t('Filter.all')],
       filteredClass: i18n.t('Filter.all'),
+      filterGenres: [i18n.t('Filter.all')],
+      filteredGenre: i18n.t('Filter.all'),
       headerStudent: [
         {
           text: i18n.t('TableHeaders.name'),
@@ -126,6 +138,10 @@ export default {
         {
           text: i18n.t('TableHeaders.genre'),
           value: 'genreName',
+          filter: (value) => {
+            if (this.filteredGenre === i18n.t('Filter.all')) return true
+            return this.filteredGenre === value
+          },
         },
         {
           value: 'actions',
@@ -143,6 +159,7 @@ export default {
   created() {
     this.initStudents()
     this.initClasses()
+    this.initGenre()
   },
   methods: {
     initStudents() {
@@ -203,6 +220,21 @@ export default {
           console.log(err)
         })
     },
+    initGenre() {
+      this.loading = true
+      this.$store
+        .dispatch('data/getAllGenres')
+        .then((genres) => {
+          genres.forEach((genre) => {
+            this.filterGenres.push(genre.name)
+          })
+          this.loading = false
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+    },
     deleteStudentDialog(student) {
       this.deleteStudentD = true
       this.selectedStudent = student
@@ -233,6 +265,15 @@ export default {
     },
     viewStudent(student) {
       this.selectedStudent = student
+      this.$store
+        .dispatch('data/getBooksByStudent', student._id)
+        .then(async (resp) => {
+          this.books = resp
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
       this.viewStudentDetails = true
     },
   },

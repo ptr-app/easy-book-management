@@ -212,7 +212,6 @@ export default {
     viewStudent(student) {
       this.loading = true
       this.selectedStudent = student
-      console.log(student._id)
       this.$store
         .dispatch('data/getBooksByStudent', student._id)
         .then(async (resp) => {
