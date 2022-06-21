@@ -111,12 +111,6 @@ export default {
       mobile: false,
     }
   },
-  watch: {
-    items() {
-      console.log('items')
-      console.log(this.items)
-    },
-  },
   created() {
     this.textColor = this.isText ? 'brown--text' : 'white--text'
     this.color = this.$vuetify.theme.themes.light.primary
