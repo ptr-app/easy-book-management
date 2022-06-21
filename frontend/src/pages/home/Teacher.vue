@@ -19,7 +19,21 @@
             :items="students"
             :search="search"
             :headers="headersStudent"
+            @viewStudent="viewStudent"
           />
+        </div>
+        <div v-if="viewStudentDetails">
+          <header-medium class="mt-8" :title="selectedStudent.name" />
+          <v-row class="mt-2">
+            <v-col cols="3" sm="3" class="mb-n11">
+              <v-select
+                :label="$t('TableHeaders.genre')"
+                :items="filterGenres"
+                v-model="filteredGenre"
+              />
+            </v-col>
+          </v-row>
+          <custom-table :items="books" :search="search" :headers="headerBook" />
         </div>
       </v-card-text>
     </v-card>
@@ -37,10 +51,15 @@ export default {
     return {
       loading: false,
       viewClassDetails: false,
+      viewStudentDetails: false,
       search: '',
-      classes: [{}],
-      students: [{}],
+      classes: [],
+      students: [],
+      books: [],
       selectedClass: {},
+      selectedStudent: {},
+      filterGenres: [i18n.t('Filter.all')],
+      filteredGenre: i18n.t('Filter.all'),
       headersClass: [
         {
           text: i18n.t('TableHeaders.name'),
@@ -81,6 +100,38 @@ export default {
           sortable: false,
         },
       ],
+      headerBook: [
+        {
+          text: i18n.t('TableHeaders.name'),
+          align: 'start',
+          value: 'name',
+        },
+        {
+          text: i18n.t('TableHeaders.author'),
+          value: 'author',
+        },
+        {
+          text: i18n.t('TableHeaders.releaseDate'),
+          value: 'releaseDate',
+        },
+        {
+          text: i18n.t('TableHeaders.comment'),
+          value: 'comment',
+        },
+        {
+          text: i18n.t('TableHeaders.genre'),
+          value: 'genreName',
+          filter: (value) => {
+            if (this.filteredGenre === i18n.t('Filter.all')) return true
+            return this.filteredGenre === value
+          },
+        },
+        {
+          value: 'actions',
+          align: 'end',
+          sortable: false,
+        },
+      ],
     }
   },
   computed: {
@@ -90,6 +141,7 @@ export default {
   },
   created() {
     this.initEmployees()
+    this.initGenre()
   },
   methods: {
     initEmployees() {
@@ -116,6 +168,21 @@ export default {
           console.log(err)
         })
     },
+    initGenre() {
+      this.loading = true
+      this.$store
+        .dispatch('data/getAllGenres')
+        .then((genres) => {
+          genres.forEach((genre) => {
+            this.filterGenres.push(genre.name)
+          })
+          this.loading = false
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+    },
     viewClass(Class) {
       this.loading = true
       this.selectedClass = Class
@@ -127,10 +194,10 @@ export default {
             Class.dropdownItems = [
               {
                 disabled: false,
-                title: i18n.t('Buttons.viewClass'),
-                function: 'viewClass',
+                title: i18n.t('Buttons.viewStudent'),
+                function: 'viewStudent',
                 icon: 'mdi-magnify',
-                key: 'viewClass',
+                key: 'viewStudent',
               },
             ]
           })
@@ -141,6 +208,21 @@ export default {
           console.log(err)
         })
       this.viewClassDetails = true
+    },
+    viewStudent(student) {
+      this.loading = true
+      this.selectedStudent = student
+      console.log(student._id)
+      this.$store
+        .dispatch('data/getBooksByStudent', student._id)
+        .then(async (resp) => {
+          this.books = resp
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+      this.viewStudentDetails = true
     },
   },
 }
