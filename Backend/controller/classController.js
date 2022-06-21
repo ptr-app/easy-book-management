@@ -275,23 +275,27 @@ exports.getClassBySchool = [
 async function mergeEmployeeIDToName(Class) {
   let classes = []
   for (let i = 0; i < Class.length; i++) {
-    let employee = await Employee.findById(Class[i].employeeID).catch((err) => {
-      log(
-        'Controller.classController.mergeEmployeeIDToName - Failed to find EmployeeID: ' +
-          Class[i].employeeID +
-          '. Error Message is' +
-          err.message,
-        'error'
+    if (Class[i].employeeID) {
+      let employee = await Employee.findById(Class[i].employeeID).catch(
+        (err) => {
+          log(
+            'Controller.classController.mergeEmployeeIDToName - Failed to find EmployeeID: ' +
+              Class[i].employeeID +
+              '. Error Message is' +
+              err.message,
+            'error'
+          )
+        }
       )
-    })
-    classes.push({
-      _id: Class[i]._id,
-      name: Class[i].name,
-      studentsID: Class[i].studentsID,
-      employeeID: Class[i].employeeID,
-      teacherName: employee ? employee.name : '',
-      schoolID: Class[i].schoolID,
-    })
+      classes.push({
+        _id: Class[i]._id,
+        name: Class[i].name,
+        studentsID: Class[i].studentsID,
+        employeeID: Class[i].employeeID,
+        teacherName: employee ? employee.name : '',
+        schoolID: Class[i].schoolID,
+      })
+    }
   }
   return classes
 }
