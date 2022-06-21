@@ -42,6 +42,7 @@
 
 <script>
 import i18n from '@/i18n'
+import moment from 'moment'
 import HeaderMedium from '../../components/text/HeaderMedium.vue'
 import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
@@ -86,6 +87,10 @@ export default {
           value: 'schoolName',
         },
         {
+          text: i18n.t('TableHeaders.birthdate'),
+          value: 'birthdate',
+        },
+        {
           text: i18n.t('TableHeaders.schoolID'),
           value: 'schoolID',
         },
@@ -116,6 +121,9 @@ export default {
           this.employees = resp
           this.employees.forEach((employee) => {
             employee.roleName = i18n.t('Filter.' + employee.roleName)
+            employee.birthdate = moment(String(employee.birthdate)).format(
+              'DD.MM.YYYY'
+            )
             employee.dropdownItems = [
               {
                 disabled: false,

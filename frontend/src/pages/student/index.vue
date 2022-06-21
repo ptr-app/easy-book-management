@@ -53,6 +53,7 @@
 
 <script>
 import i18n from '@/i18n'
+import moment from 'moment'
 import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
 import HeaderMedium from '../../components/text/HeaderMedium.vue'
@@ -154,10 +155,11 @@ export default {
       this.$store
         .dispatch('data/getStudentsBySchool')
         .then(async (resp) => {
-          console.log('resp')
-          console.log(resp)
           this.students = resp
           this.students.forEach((student) => {
+            student.birthdate = moment(String(student.birthdate)).format(
+              'DD.MM.YYYY'
+            )
             student.dropdownItems = [
               {
                 disabled: false,
