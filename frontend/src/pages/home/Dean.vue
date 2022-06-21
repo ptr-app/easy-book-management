@@ -19,13 +19,6 @@
               v-model="filteredRole"
             />
           </v-col>
-          <v-col cols="3" sm="3">
-            <v-select
-              :label="$t('TableHeaders.class')"
-              :items="classes"
-              v-model="filteredClass"
-            />
-          </v-col>
         </v-row>
         <custom-table
           :items="employees"
@@ -58,8 +51,6 @@ export default {
       selectedEmployee: {},
       filteredRole: i18n.t('Filter.all'),
       roles: [i18n.t('Filter.all')],
-      filteredClass: i18n.t('Filter.all'),
-      classes: [i18n.t('Filter.all')],
       headers: [
         {
           text: i18n.t('TableHeaders.name'),
@@ -77,10 +68,6 @@ export default {
         {
           text: i18n.t('TableHeaders.class'),
           value: 'className',
-          filter: (value) => {
-            if (this.filteredClass === i18n.t('Filter.all')) return true
-            return value.includes(this.filteredClass)
-          },
         },
         {
           text: i18n.t('TableHeaders.schoolName'),
@@ -110,7 +97,6 @@ export default {
   created() {
     this.initEmployees()
     this.initRoles()
-    this.initClasses()
   },
   methods: {
     initEmployees() {
@@ -155,21 +141,6 @@ export default {
         .then(async (resp) => {
           resp.forEach((role) => {
             this.roles.push(i18n.t('Filter.' + role.name))
-          })
-          this.loading = false
-        })
-        .catch((err) => {
-          this.loading = false
-          console.log(err)
-        })
-    },
-    initClasses() {
-      this.loading = true
-      this.$store
-        .dispatch('data/getClassBySchool')
-        .then(async (resp) => {
-          resp.forEach((Class) => {
-            this.classes.push(Class.name)
           })
           this.loading = false
         })
