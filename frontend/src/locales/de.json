@@ -21,7 +21,9 @@
     "generall": "Generelles",
     "typeSpecific": "Typ spezifisch",
     "teacherRole": "Lehrer",
-    "deanRole": "Schulleiter"
+    "deanRole": "Schulleiter",
+    "notSamePassword": "Die Passwörter stimmen nicht überrein",
+    "noBirthdate": "Bitte geben Sie ein Geburtsdatum an"
   },
   "Home": {
     "Dean": {
@@ -71,6 +73,7 @@
   },
   "BookPage": {
     "header": "Bücherübersicht",
+    "noReleaseDate": "Bitte geben Sie ein Erscheinungsdatum an",
     "addBook": {
       "headerAddBook": "Neues Buch erstellen",
       "headerEditBook": "Neues Buch erstellen"

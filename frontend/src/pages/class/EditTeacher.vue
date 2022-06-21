@@ -12,31 +12,29 @@
       <v-card>
         <v-card-title v-text="$t('ClassPage.editTeacher.header')" />
         <v-card-text>
-          <validation-observer ref="observer" v-slot="{ invalid }">
-            <v-form ref="form" data-cy="registerForm">
-              <v-container>
-                <div>
-                  <custom-table
-                    :items="teachers"
-                    :search="search"
-                    :headers="headers"
-                    @editTeacher="newTeacher"
-                  />
-                </div>
-                <div class="mt-6 mr-4 ml-n3">
-                  <v-row>
-                    <v-col cols="12" sm="6">
-                      <v-btn
-                        :loading="loading"
-                        v-text="$t('Buttons.cancel')"
-                        @click="$emit('close')"
-                      />
-                    </v-col>
-                  </v-row>
-                </div>
-              </v-container>
-            </v-form>
-          </validation-observer>
+          <v-form ref="form" data-cy="registerForm">
+            <v-container>
+              <div>
+                <custom-table
+                  :items="teachers"
+                  :search="search"
+                  :headers="headers"
+                  @editTeacher="newTeacher"
+                />
+              </div>
+              <div class="mt-6 mr-4 ml-n3">
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-btn
+                      :loading="loading"
+                      v-text="$t('Buttons.cancel')"
+                      @click="$emit('close')"
+                    />
+                  </v-col>
+                </v-row>
+              </div>
+            </v-container>
+          </v-form>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -45,26 +43,12 @@
 
 <script>
 import i18n from '@/i18n'
-import { extend, ValidationObserver, ValidationProvider } from 'vee-validate'
-import { required } from 'vee-validate/dist/rules'
 import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
-
-extend('required', {
-  ...required,
-  message: i18n.t('Validation.required'),
-})
-
-extend('validateName', {
-  validate: (value) => /(^[a-zA-Z0-9\-.\s]+)$/.test(value),
-  message: i18n.t('Validation.validateName'),
-})
 
 export default {
   name: 'edit-teacher-dialog',
   components: {
-    ValidationObserver,
-    ValidationProvider,
     CustomTable,
     ValidationDialog,
   },

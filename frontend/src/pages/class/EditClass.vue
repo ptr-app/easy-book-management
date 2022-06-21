@@ -10,7 +10,7 @@
                 <v-row>
                   <v-col cols="12" sm="6">
                     <validation-provider
-                      v-slot="{ error }"
+                      v-slot="{ errors }"
                       rules="required|validateName"
                       :name="$t('Validation.className')"
                     >
@@ -20,7 +20,7 @@
                         v-model="editClass.name"
                         data-cy="registerClassName"
                         :label="$t('Validation.className')"
-                        :error-messages="error"
+                        :error-messages="errors"
                       />
                     </validation-provider>
                   </v-col>
@@ -64,7 +64,7 @@ extend('required', {
 })
 
 extend('validateName', {
-  validate: (value) => /(^[a-zA-Z0-9\-.\s]+)$/.test(value),
+  validate: (value) => /(^[a-zA-Z0-9\-.äöüÄÖÜ\s]+)$/.test(value),
   message: i18n.t('Validation.validateName'),
 })
 

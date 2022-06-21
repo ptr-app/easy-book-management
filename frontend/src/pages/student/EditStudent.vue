@@ -10,7 +10,7 @@
                 <v-row>
                   <v-col cols="12" sm="6">
                     <validation-provider
-                      v-slot="{ error }"
+                      v-slot="{ errors }"
                       rules="required"
                       :name="$t('Validation.name')"
                     >
@@ -20,19 +20,20 @@
                         v-model="editStudent.name"
                         data-cy="registerFirstName"
                         :label="$t('Validation.name')"
-                        :error-messages="error"
+                        :error-messages="errors"
                       />
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <validation-provider
-                      v-slot="{ error }"
+                      v-slot="{ errors }"
                       rules="required"
                       :name="$t('Validation.birthdate')"
                     >
                       <custom-date-picker
                         v-model="editStudent.birthdate"
                         :label="$t('Validation.birthdate')"
+                        :error-messages="errors"
                         :value="editStudent.birthdate"
                         required
                       />

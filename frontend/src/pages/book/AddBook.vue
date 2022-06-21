@@ -51,25 +51,23 @@
                   <v-col cols="12" sm="6">
                     <validation-provider
                       v-slot="{ error }"
-                      rules="required"
                       :name="$t('Validation.releaseDate')"
                     >
                       <custom-date-picker
                         v-model="book.releaseDate"
                         :label="$t('Validation.releaseDate')"
-                        required
+                        :error-messages="error"
                       />
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <validation-provider
                       v-slot="{ error }"
-                      rules="required|validateName"
+                      rules="validateName"
                       :name="$t('Validation.comment')"
                     >
                       <v-text-field
                         filles
-                        required
                         v-model="book.comment"
                         data-cy="registerBookName"
                         :label="$t('Validation.comment')"
@@ -140,7 +138,7 @@ extend('required', {
 })
 
 extend('validateName', {
-  validate: (value) => /(^[a-zA-Z0-9\-.\s]+)$/.test(value),
+  validate: (value) => /(^[a-zA-Z0-9\-.äöüÄÖÜ\s]+)$/.test(value),
   message: i18n.t('Validation.validateName'),
 })
 
@@ -157,7 +155,7 @@ export default {
       book: {
         name: '',
         author: '',
-        releaseDate: '',
+        releaseDate: undefined,
         comment: '',
         genreID: '',
       },
@@ -178,6 +176,15 @@ export default {
   },
   methods: {
     checkMethod() {
+      if (this.book.releaseDate === undefined) {
+        this.$store.commit('ui/setNotification', {
+          display: true,
+          code: i18n.t('BookPage.noReleaseDate'),
+          alertClass: 'error',
+        })
+        this.loading = false
+        return false
+      }
       this.selectedBook ? this.editBook() : this.addBook()
     },
     addBook() {
