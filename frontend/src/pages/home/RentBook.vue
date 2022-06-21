@@ -64,7 +64,7 @@ export default {
       loading: false,
       rentBookDialog: false,
       search: '',
-      books: [{}],
+      books: [],
       selectedBook: {},
       genres: [i18n.t('Filter.all')],
       filteredGenre: i18n.t('Filter.all'),
@@ -128,8 +128,7 @@ export default {
         .dispatch('data/getAllBooks')
         .then((resp) => {
           this.loading = false
-          this.books = resp
-          this.books.forEach((book) => {
+          resp.forEach((book) => {
             book.dropdownItems = [
               {
                 disabled: false,
@@ -139,7 +138,11 @@ export default {
                 key: 'rentBook',
               },
             ]
+            if (!book.rented) {
+              this.books.push(book)
+            }
           })
+          console.log(this.books)
         })
         .catch((err) => {
           this.loading = false
