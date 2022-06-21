@@ -90,7 +90,6 @@
   },
   "StudentPage": {
     "header": "Schülerübersicht",
-    "headerStudentSpezific": "Der Schüler ",
     "deleteStudent": {
       "header": "Schüler löschen",
       "content": "Wollen Sie den Schüler wirklich löschen?"

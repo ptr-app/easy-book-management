@@ -34,12 +34,7 @@
           @viewStudent="viewStudent"
         />
         <div v-if="viewStudentDetails">
-          <header-medium
-            class="mt-8"
-            :title="
-              $t('StudentPage.headerStudentSpezific') + selectedStudent.name
-            "
-          />
+          <header-medium class="mt-8" :title="selectedStudent.name" />
           <custom-table
             :items="students.bookID"
             :search="searchStudent"
