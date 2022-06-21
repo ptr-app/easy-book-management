@@ -9,12 +9,12 @@ exports.addBook = [
     log('Controller.bookController.addBook - Start', 'debug')
     const { name, author, releaseDate, comment, genreID, studentID } = req.body
     let book = new Book({
-      name,
-      author,
-      releaseDate,
-      comment,
-      genreID,
-      studentID,
+      name: name,
+      author: author,
+      releaseDate: releaseDate,
+      comment: comment,
+      genreID: genreID,
+      studentID: '',
     })
     let newBook = await book.save().catch((err) => {
       log(
@@ -221,7 +221,7 @@ exports.rentBook = [
     log('Controller.bookController.rentBook - Start', 'debug')
     const { bookID, studentID } = req.body
     let book = await Book.findById(bookID)
-    if (book.studentID.length > 0) {
+    if (book.studentID !== '') {
       log(
         'Controller.bookController.rentBook - Book is already rented by another person: ',
         'error'
