@@ -50,6 +50,7 @@
 
 <script>
 import i18n from '@/i18n'
+import moment from 'moment'
 import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
 
@@ -81,6 +82,7 @@ export default {
         {
           text: i18n.t('TableHeaders.releaseDate'),
           value: 'releaseDate',
+          align: 'center',
         },
         {
           text: i18n.t('TableHeaders.comment'),
@@ -129,6 +131,9 @@ export default {
         .then((resp) => {
           this.loading = false
           resp.forEach((book) => {
+            book.releaseDate = moment(String(book.releaseDate)).format(
+              'DD.MM.YYYY'
+            )
             book.dropdownItems = [
               {
                 disabled: false,
