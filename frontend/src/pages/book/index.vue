@@ -70,6 +70,13 @@
               v-model="filteredGenre"
             />
           </v-col>
+          <v-col cols="3" sm="3" class="mb-n11">
+            <v-select
+              :label="$t('TableHeaders.rented')"
+              :items="filterRentStates"
+              v-model="filteredRentSate"
+            />
+          </v-col>
           <v-spacer />
           <v-btn
             v-text="this.$t('Buttons.addBook')"
@@ -121,6 +128,12 @@ export default {
       genres: [],
       filterGenres: [i18n.t('Filter.all')],
       filteredGenre: i18n.t('Filter.all'),
+      filterRentStates: [
+        i18n.t('Filter.all'),
+        i18n.t('Filter.true'),
+        i18n.t('Filter.false'),
+      ],
+      filteredRentSate: i18n.t('Filter.all'),
       headerGenre: [
         {
           text: i18n.t('TableHeaders.genre'),
@@ -145,6 +158,18 @@ export default {
         {
           text: i18n.t('TableHeaders.releaseDate'),
           value: 'releaseDate',
+        },
+        {
+          text: i18n.t('TableHeaders.rented'),
+          value: 'rented',
+          filter: (value) => {
+            if (this.filteredRentSate === i18n.t('Filter.all')) return true
+            return this.filteredRentSate === value
+          },
+        },
+        {
+          text: i18n.t('TableHeaders.rentedTo'),
+          value: 'studentName',
         },
         {
           text: i18n.t('TableHeaders.comment'),
@@ -186,6 +211,7 @@ export default {
             book.releaseDate = moment(String(book.releaseDate)).format(
               'DD.MM.YYYY'
             )
+            book.rented = i18n.t('Filter.' + book.rented)
             book.dropdownItems = [
               {
                 disabled: false,
@@ -279,7 +305,6 @@ export default {
     },
     genreAdded() {
       this.addGenreDialog = false
-      console.log('GENRE ADDEDEDEDEDEDEERD')
       window.location.reload()
     },
     genreEdited() {

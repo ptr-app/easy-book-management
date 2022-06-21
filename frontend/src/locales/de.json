@@ -138,7 +138,9 @@
     "comment": "Bemerkung",
     "genre": "Genre",
     "schoolName": "Schulname",
-    "schoolID": "Schul ID"
+    "schoolID": "Schul ID",
+    "rented": "Ausgeliehen",
+    "rentedTo": "Schüler"
   },
   "Validation": {
     "required": "Benötigt",
@@ -165,7 +167,9 @@
   "Filter": {
     "all": "Alle",
     "teacher": "Lehrer",
-    "dean": "Schulleiter"
+    "dean": "Schulleiter",
+    "true": "Ja",
+    "false": "Nein"
   },
   "Responses": {
     "MISSING_SESSION": "Sie sind nicht eingeloggt",

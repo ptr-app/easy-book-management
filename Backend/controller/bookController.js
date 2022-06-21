@@ -300,6 +300,10 @@ async function mergeBooksWithGenre(book) {
   let books = []
   for (let i = 0; i < book.length; i++) {
     let genre = await Genre.findById(book[i].genreID)
+    let student
+    if (book[i].studentID) {
+      student = await Student.findById(book[i].studentID)
+    }
     books.push({
       _id: book[i]._id,
       name: book[i].name,
@@ -308,7 +312,9 @@ async function mergeBooksWithGenre(book) {
       comment: book[i].comment,
       genreID: book[i].genreID,
       genreName: genre.name,
+      rented: book[i].studentID ? true : false,
       studentID: book[i].studentID,
+      studentName: student ? student.name : '',
     })
   }
   return books
