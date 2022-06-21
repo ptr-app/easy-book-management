@@ -157,7 +157,7 @@ export default {
         },
         {
           text: i18n.t('TableHeaders.releaseDate'),
-          value: 'releaseDate',
+          value: 'releaseDateString',
         },
         {
           text: i18n.t('TableHeaders.rented'),
@@ -208,7 +208,7 @@ export default {
         .then(async (resp) => {
           this.books = resp
           this.books.forEach((book) => {
-            book.releaseDate = moment(String(book.releaseDate)).format(
+            book.releaseDateString = moment(String(book.releaseDate)).format(
               'DD.MM.YYYY'
             )
             book.rented = i18n.t('Filter.' + book.rented)

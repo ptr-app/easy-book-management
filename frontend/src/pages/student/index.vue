@@ -97,7 +97,7 @@ export default {
         },
         {
           text: i18n.t('TableHeaders.birthdate'),
-          value: 'birthdate',
+          value: 'birthdateString',
         },
         {
           text: i18n.t('TableHeaders.className'),
@@ -129,7 +129,7 @@ export default {
         },
         {
           text: i18n.t('TableHeaders.releaseDate'),
-          value: 'releaseDate',
+          value: 'releaseDateString',
         },
         {
           text: i18n.t('TableHeaders.comment'),
@@ -169,7 +169,7 @@ export default {
         .then(async (resp) => {
           this.students = resp
           this.students.forEach((student) => {
-            student.birthdate = moment(String(student.birthdate)).format(
+            student.birthdateString = moment(String(student.birthdate)).format(
               'DD.MM.YYYY'
             )
             student.dropdownItems = [
@@ -196,8 +196,6 @@ export default {
               },
             ]
           })
-          console.log('Students')
-          console.log(this.students)
           this.loading = false
         })
         .catch((err) => {
@@ -267,8 +265,13 @@ export default {
       this.selectedStudent = student
       this.$store
         .dispatch('data/getBooksByStudent', student._id)
-        .then(async (resp) => {
-          this.books = resp
+        .then(async (books) => {
+          books.forEach((book) => {
+            book.releaseDateString = moment(String(book.releaseDate)).format(
+              'DD.MM.YYYY'
+            )
+            this.books.push(book)
+          })
         })
         .catch((err) => {
           this.loading = false

@@ -88,7 +88,7 @@ export default {
         },
         {
           text: i18n.t('TableHeaders.birthdate'),
-          value: 'birthdate',
+          value: 'birthdateString',
         },
         {
           text: i18n.t('TableHeaders.schoolID'),
@@ -121,9 +121,9 @@ export default {
           this.employees = resp
           this.employees.forEach((employee) => {
             employee.roleName = i18n.t('Filter.' + employee.roleName)
-            employee.birthdate = moment(String(employee.birthdate)).format(
-              'DD.MM.YYYY'
-            )
+            employee.birthdateString = moment(
+              String(employee.birthdate)
+            ).format('DD.MM.YYYY')
             employee.dropdownItems = [
               {
                 disabled: false,

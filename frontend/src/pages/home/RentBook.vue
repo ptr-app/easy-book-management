@@ -81,7 +81,7 @@ export default {
         },
         {
           text: i18n.t('TableHeaders.releaseDate'),
-          value: 'releaseDate',
+          value: 'releaseDateString',
           align: 'center',
         },
         {
@@ -131,7 +131,7 @@ export default {
         .then((resp) => {
           this.loading = false
           resp.forEach((book) => {
-            book.releaseDate = moment(String(book.releaseDate)).format(
+            book.releaseDateString = moment(String(book.releaseDate)).format(
               'DD.MM.YYYY'
             )
             book.dropdownItems = [
