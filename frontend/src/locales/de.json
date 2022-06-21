@@ -1,0 +1,257 @@
+{
+  "Generall": {
+    "ProjectName": "EasyBookManagement"
+  },
+  "TabHeader": {
+    "home": "Startseite",
+    "books": "Bücher",
+    "class": "Klassen",
+    "students": "Schüler",
+    "school": "Schule",
+    "employees": "Angestellter"
+  },
+  "LoginPage": {
+    "header": "EasyBookManagement",
+    "login": "Einloggen",
+    "register": "Registrieren",
+    "passwordForgotten": "Passwort vergessen"
+  },
+  "RegisterPage": {
+    "header": "Registrieren",
+    "generall": "Generelles",
+    "typeSpecific": "Typ spezifisch",
+    "teacherRole": "Lehrer",
+    "deanRole": "Schulleiter",
+    "notSamePassword": "Die Passwörter stimmen nicht überrein",
+    "noBirthdate": "Bitte geben Sie ein Geburtsdatum an"
+  },
+  "Home": {
+    "Dean": {
+      "header": "Willkommen Schulleiter ",
+      "headerTeacher": "Ihre Mitarbeiter",
+      "copySchoolIDMessage": "School ID wurde in die Zwischenablage kopiert",
+      "deleteEmployee": {
+        "header": "Mitarbeiter löschen",
+        "content": "Wollen Sie diesen Mitarbeiter wirklich löschen ?"
+      }
+    },
+    "Teacher": {
+      "header": "Willkommen Lehrer ",
+      "headerClass": "Ihre Klassen",
+      "headerClassSpezific": "Ihre Klasse "
+    },
+    "Student": {
+      "header": "Willkommen Schüler ",
+      "headerBooks": "Ihre ausgeliehenen Bücher",
+      "returnBook": {
+        "header": "Buch zurückgeben",
+        "content": "Wollen sie das Buch wirklich zurückgeben ?"
+      },
+      "rentBook": {
+        "header": "Buch ausleihen",
+        "content": "Wollen sie das Buch wirklich ausleihen ?"
+      }
+    }
+  },
+  "ClassPage": {
+    "header": "Klassenübersicht",
+    "copyClassIDMessage": "Klasen ID wurde in die Zwischenablage kopiert",
+    "addClass": {
+      "header": "Neue Klasse erstellen"
+    },
+    "deleteClass": {
+      "header": "Klasse löschen",
+      "content": "Wollen Sie die Klasse wirklich löschen?"
+    },
+    "editClass": {
+      "header": "Klasse bearbeiten"
+    },
+    "editTeacher": {
+      "header": "Lehrer ändern",
+      "content": "Wollen Sie den Lehrer wirklich ändern?"
+    }
+  },
+  "BookPage": {
+    "header": "Bücherübersicht",
+    "noReleaseDate": "Bitte geben Sie ein Erscheinungsdatum an",
+    "addBook": {
+      "headerAddBook": "Neues Buch erstellen",
+      "headerEditBook": "Neues Buch erstellen"
+    },
+    "deleteBook": {
+      "header": "Buch löschen",
+      "content": "Wollen Sie das Buch wirklich löschen?"
+    },
+    "addGenre": {
+      "headerAddGenre": "Genre erstellen",
+      "headerEditGenre": "Genre ändern"
+    },
+    "deleteGenre": {
+      "header": "Genre löschen",
+      "content": "Wollen Sie das Genre wirklich löschen?"
+    }
+  },
+  "StudentPage": {
+    "header": "Schülerübersicht",
+    "deleteStudent": {
+      "header": "Schüler löschen",
+      "content": "Wollen Sie den Schüler wirklich löschen?"
+    },
+    "editStudent": {
+      "header": "Schüler bearbeiten"
+    }
+  },
+  "Buttons": {
+    "cancel": "Abbrechen",
+    "register": "Registrieren",
+    "confirm": "Bestätigen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "addClass": "Klasse hinzufügen",
+    "viewClass": "Klasse anschauen",
+    "addBook": "Buch hinzufügen",
+    "editBook": "Buch bearbeiten",
+    "addGenre": "Genre hinzufügen",
+    "editGenre": "Genre bearbeiten",
+    "viewStudent": "Schüler anschauen",
+    "rentBook": "Buch ausleihen",
+    "returnBook": "Buch zurückgeben",
+    "editTeacher": "Lehrer ändern",
+    "assignTeacher": "Lehrer zuweisen",
+    "copyClassID": "Klassen ID kopieren",
+    "copySchoolID": "Schul ID kopieren"
+  },
+  "TableHeaders": {
+    "name": "Name",
+    "role": "Rolle",
+    "class": "Klassen",
+    "amountStudents": "Anzahl Schüler",
+    "teacher": "Lehrer",
+    "search": "Suchen",
+    "classID": "Klassen ID",
+    "className": "Klassen Name",
+    "birthdate": "Geburtsdatum",
+    "amountBooks": "Anzahl Bücher",
+    "author": "Author",
+    "releaseDate": "Erscheinungsdatum",
+    "comment": "Bemerkung",
+    "genre": "Genre",
+    "schoolName": "Schulname",
+    "schoolID": "Schul ID",
+    "rented": "Ausgeliehen",
+    "rentedTo": "Schüler"
+  },
+  "Validation": {
+    "required": "Benötigt",
+    "loginName": "Login Name",
+    "name": "Vollständiger Name",
+    "schoolName": "Schulname",
+    "birthdate": "Geburtsdatum",
+    "type": "Benutzerart",
+    "password": "Passwort",
+    "confirmPassword": "Passwort wiederholen",
+    "classID": "Klassen ID",
+    "role": "Rollen ID",
+    "schoolID": "Schule ID",
+    "className": "Klassenname",
+    "employeeID": "Angestellten ID",
+    "bookName": "Buch Name",
+    "authorName": "Author",
+    "releaseDate": "Erscheinungsdatum",
+    "comment": "Bemerkung",
+    "genre": "Genre",
+    "validateName": "Namen Validierung fehlgeschlagen",
+    "validatePassword": "Passwort Validierung fehlgeschlagen"
+  },
+  "Filter": {
+    "all": "Alle",
+    "teacher": "Lehrer",
+    "dean": "Schulleiter",
+    "true": "Ja",
+    "false": "Nein"
+  },
+  "Responses": {
+    "MISSING_SESSION": "Sie sind nicht eingeloggt",
+    "UNKNOWN_STUDENT": "Der angegebene Schüler wurde nicht gefunden",
+    "UNKNOWN_EMPLOYEE": "Der angegebene Angestellte wurde nicht gefunden",
+    "WRONG_PASSWORD": "Das angegebene Passwort ist falsch",
+    "USER_NOT_FOUND": "Der angegebene Nutzer wurde nicht gefunden",
+    "USER_LOGGED_IN": "Sie wurden eingeloggt",
+    "USER_LOGGED_OUT": "Sie wurden ausgeloggt",
+    "REGISTERED_STUDENT": "Schüler wurde registriert",
+    "REGISTERED_EMPLOYEE": "Angestellter wurde registriert",
+    "REGISTERED_SCHOOL": "Schule wurde registriert",
+    "NOT_A_TEACHER": "Sie sind kein Lehrer, deswegen können Sie diese Funktion nicht ausführen",
+    "NOT_A_DEAN": "Sie sind kein Schulleiter, deswegen können Sie diese Funktion nicht ausführen",
+    "NOT_A_ADMIN": "Sie sind kein Admin, deswegen können Sie diese Funktion nicht ausführen",
+    "BOOK_CREATED": "Buch wurde erstellt",
+    "BOOK_EDITED": "Buch wurde bearbeitet",
+    "BOOK_ASSIGNED_STUDENT": "Dem Buch wurde ein Student hinterlegt",
+    "BOOK_DELETED": "Das Buch wurde gelöscht",
+    "BOOK_FOUND": "Buch gefunden",
+    "BOOKS_FOUND": "Alle Bücher gefunden",
+    "BOOK_FOUND_GENRE": "Bücher mit dem Genre gefunden",
+    "BOOK_FOUND_NAME": "Bücher mit dem Namen gefunden",
+    "BOOK_FOUND_STUDENT": "Ihre Ausgeliehenen Bücher wurden gefunden",
+    "BOOK_HAS_STUDENT": "Buch wurde schon von einem Schüler ausgeliehen",
+    "BOOK_RENTED": "Buch wurde ausgeliehen",
+    "BOOK_IS_RENTED": "Dieses Buch wurde schon von jemand anderen ausgeliehen",
+    "BOOK_IS_NOT_RENTED": "Dieses Buch ist nicht ausgeliehen",
+    "BOOK_RETURNED": "Dieses Buch wurde zurückgegeben",
+    "CLASS_NEED_EMPLOYEE": "Eine Klasse braucht einen zugewiesenen Angestellten",
+    "CLASS_DELETED": "Die Klasse wurde gelöscht",
+    "CLASS_EDITED": "Die Klasse wurde bearbeitet",
+    "CLASS_ASSIGNED_EMPLOYEE": "Der Klasse wurde ein Angestellter hinzugefügt",
+    "CLASS_CREATED": "Die Klasse urde erstellt",
+    "CLASS_FOUND_ALL": "Alle Klassen wurden gefunden",
+    "CLASS_FOUND_ID": "Die Klasse wurde gefunden",
+    "CLASS_FOUND_EMPLOYEE": "Es wurden ihnen zugehörige Klassen gefunden",
+    "CLASS_FOUND_SCHOOL": "Alle Klassen einer Schule gefunden",
+    "CLASS_NOT_FOUND": "Klasse nicht gefunden",
+    "CLASS_HAS_STUDENTS": "Klasse hat noch Schüler zugewiesen",
+    "CLASS_NOT_A_TEACHER": "Der ausgewählte Mitarbeiter ist kein Lehrer",
+    "EMPLOYEE_CREATED": "Angestelter erstellt",
+    "EMPLOYEE_EDITED": "Angesteller bearbeitet",
+    "EMPLOYEE_ASSIGNED_CLASS": "Dem Angestellten wurde einer Klasse zugewiesen",
+    "EMPLOYEE_ASSIGNED_ROLE": "Dem Angestellten wurde eine Rolle zugewiesen",
+    "EMPLOYEE_HAS_CLASS": "Dem Angestellten ist noch eine Klasse zugewiesen",
+    "EMPLOYEE_DELETED": "Der Angestellte wurde gelöscht",
+    "EMPLOYEES_FOUND": "Alle Angestellten wurde gefunden",
+    "EMPLOYEE_FOUND": "Der Angestellte wurde gefunden",
+    "EMPLOYEE_FOUND_ROLE": "Alle Angestellten mit der Rolle wurden gefunden",
+    "EMPLOYEE_FOUND_SCHOOL": "Alle Angestellten dieser Schule wurden gefunden",
+    "GENRE_CREATED": "Genre wurde erstellt",
+    "GENRE_EDITED": "Genre wurde hinzugefügt",
+    "GENRE_HAS_BOOKS": "Es gibt noch Bücher mit diesem Genre",
+    "GENRE_DELETED": "Genre wurde gelöscht",
+    "GENRES_FOUND": "Alle Genres wurden gefunden",
+    "GENRE_FOUND": "Genre gefunden",
+    "ROLE_CREATED": "Rolle wurde erstellt",
+    "ROLE_EDITED": "Rolle wurde bearbeitet",
+    "ROLE_HAS_EMPLOYEE": "Es gibt noch einen Angestellten mit dieser Rolle",
+    "ROLE_DELETED": "Rolle wurde gelöscht",
+    "ROLES_FOUND": "Alle Rollen wurde gefunden",
+    "ROLE_FOUND": "Rolle wurde gefunden",
+    "ROLE_NOT_FOUND": "Rolle wurde nicht gefunden",
+    "ROLE_IDENTIFICATION_FAILED": "Die Rolle konnte nicht identifiziert werden",
+    "SCHOOL_CREATED": "Schule wurde erstellt",
+    "SCHOOL_EDITED": "Schule wurde bearbeitet",
+    "SCHOOL_HAS_CLASS": "Die Schule hat noch Klassen",
+    "SCHOOL_DELETED": "Schule wurde gelöscht",
+    "SCHOOLES_FOUND": "Alle Schulen wurden gefunden",
+    "SCHOOL_FOUND": "Schule gefunden",
+    "SCHOOL_NOT_FOUND": "Schule wurde nicht gefunden",
+    "STUDENT_CREATED": "Schüler wurde gefunden",
+    "STUDENT_EDITED": "Schüler wurde bearbeitet",
+    "STUDENT_NEED_CLASS": "Ein Schüler muss einer Klasse zugewiesen sein",
+    "STUDENT_ASSIGNED_CLASS": "Schüler wurde einer Klasse hinzugefügt",
+    "STUDENT_ASSIGNED_BOOK": "Dem Schüler wurde ein Buch hinzugefügt",
+    "STUDENT_HAS_BOOK": "Schüler hat noch ein Buch ausgeliehen",
+    "STUDENT_DELETED": "Schüler wurde gelöscht",
+    "STUDENT_FOUND": "Schüler gefunden",
+    "STUDENTS_FOUND": "Alle Schüller gefunden",
+    "STUDENT_FOUND_CLASS": "Alle Schüler einer Klasse gefunden",
+    "STUDENT_FOUND_EMPLOYEE": "Es wurden alle ihrer Schüller gefunden"
+  }
+}

@@ -16,7 +16,7 @@ classRouter.post(
 
 classRouter.post(
   '/updateEmployeeID',
-  middleware.checkTeacher,
+  middleware.checkDean,
   classController.updateEmployeeID
 )
 
@@ -28,7 +28,7 @@ classRouter.delete(
 
 classRouter.get(
   '/getAllClass',
-  middleware.checkTeacher,
+  middleware.checkAdmin,
   classController.getAllClass
 )
 
@@ -42,6 +42,12 @@ classRouter.get(
   '/getClassByEmployee',
   middleware.checkTeacher,
   classController.getClassByEmployee
+)
+
+classRouter.get(
+  '/getClassBySchool',
+  middleware.checkDean,
+  classController.getClassBySchool
 )
 
 module.exports.default = classRouter

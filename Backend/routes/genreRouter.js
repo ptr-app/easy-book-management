@@ -22,7 +22,7 @@ genreRouter.delete(
 
 genreRouter.get(
   '/getAllGenres',
-  middleware.checkTeacher,
+  middleware.checkStudent,
   genreController.getAllGenres
 )
 

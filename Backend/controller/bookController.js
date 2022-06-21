@@ -1,19 +1,20 @@
-const log = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
 const Book = require('../models/bookModel')
 const Student = require('../models/studentModel')
+const Genre = require('../models/genreModel')
 
 exports.addBook = [
   async (req, res) => {
     log('Controller.bookController.addBook - Start', 'debug')
     const { name, author, releaseDate, comment, genreID, studentID } = req.body
     let book = new Book({
-      name,
-      author,
-      releaseDate,
-      comment,
-      genreID,
-      studentID,
+      name: name,
+      author: author,
+      releaseDate: releaseDate,
+      comment: comment,
+      genreID: genreID,
+      studentID: '',
     })
     let newBook = await book.save().catch((err) => {
       log(
@@ -88,7 +89,7 @@ exports.updateStudentID = [
 exports.deleteBook = [
   async (req, res) => {
     log('Controller.bookController.deleteBook - Start ', 'debug')
-    let book = Book.findById(req.body._id).catch((err) => {
+    let book = await Book.findById(req.body.bookID).catch((err) => {
       log(
         'Controller.bookController.deleteBook - Failed to find book: ' +
           err.message,
@@ -96,14 +97,14 @@ exports.deleteBook = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
-    if (book.studentID.length !== null) {
+    if (book.studentID !== undefined && book.studentID.length !== null) {
       log(
         'Controller.bookController.deleteBook - Failed to delete book with Student attached to it: ',
         'error'
       )
       return apiResponse.errorResponse(res, 'BOOK_HAS_STUDENT')
     }
-    await Book.findByIdAndDelete(req.body._id).catch((err) => {
+    await Book.findByIdAndDelete(req.body.bookID).catch((err) => {
       log(
         'Controller.bookController.deleteBook - Failed to delete book: ' +
           err.message,
@@ -128,8 +129,13 @@ exports.getAllBooks = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    let allBooksGenre = await mergeBooksWithGenre(allBooks)
     log('Controller.bookController.getAllBooks - End', 'debug')
-    return apiResponse.successResponseWithData(res, 'BOOKS_FOUND', allBooks)
+    return apiResponse.successResponseWithData(
+      res,
+      'BOOKS_FOUND',
+      allBooksGenre
+    )
   },
 ]
 
@@ -186,3 +192,130 @@ exports.getAllBooksOfOneGenre = [
     return apiResponse.successResponseWithData(res, 'BOOKS_FOUND_GENRE', books)
   },
 ]
+
+exports.getBooksByStudent = [
+  async (req, res) => {
+    log('Controller.bookController.getBooksByStudent - Start', 'debug')
+    let book = await Book.find({ studentID: req.params.id }).catch((err) => {
+      log(
+        'Controller.bookController.getBooksByStudent - Failed while searching for the book with the name: ' +
+          req.body.name +
+          '. Error Message is' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let returnBook = await mergeBooksWithGenre(book)
+    log('Controller.bookController.getBooksByStudent - END ', 'debug')
+    return apiResponse.successResponseWithData(
+      res,
+      'BOOK_FOUND_STUDENT',
+      returnBook
+    )
+  },
+]
+
+exports.rentBook = [
+  async (req, res) => {
+    log('Controller.bookController.rentBook - Start', 'debug')
+    const { bookID, studentID } = req.body
+    let book = await Book.findById(bookID)
+    if (book.studentID !== '') {
+      log(
+        'Controller.bookController.rentBook - Book is already rented by another person: ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'BOOK_IS_RENTED')
+    }
+    let newBook = await Book.findByIdAndUpdate(bookID, {
+      studentID: studentID,
+    }).catch((err) => {
+      log(
+        'Controller.bookController.rentBook - Failed to update book: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let student = await Student.findById(studentID)
+    student.bookID.push(bookID)
+    let newStudent = await Student.findByIdAndUpdate(studentID, {
+      bookID: student.bookID,
+    }).catch((err) => {
+      log(
+        'Controller.bookController.rentBook - Failed to update Student: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    log('Controller.bookController.rentBook - End', 'debug')
+    return apiResponse.successResponse(res, 'BOOK_RENTED')
+  },
+]
+
+exports.returnBook = [
+  async (req, res) => {
+    log('Controller.bookController.returnBook - Start', 'debug')
+    const { bookID, studentID } = req.body
+    let book = await Book.findById(bookID)
+    if (book.studentID.length === 0) {
+      log(
+        'Controller.bookController.returnBook - Book is not rented by another person: ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'BOOK_IS_NOT_RENTED')
+    }
+    let newBook = await Book.findByIdAndUpdate(bookID, {
+      studentID: '',
+    }).catch((err) => {
+      log(
+        'Controller.bookController.returnBook - Failed to update book: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let student = await Student.findById(studentID)
+    student.bookID.remove(bookID)
+    let newStudent = await Student.findByIdAndUpdate(studentID, {
+      bookID: student.bookID,
+    }).catch((err) => {
+      log(
+        'Controller.bookController.returnBook - Failed to update Student: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    log('Controller.bookController.returnBook - End', 'debug')
+    return apiResponse.successResponse(res, 'BOOK_RETURNED')
+  },
+]
+
+//HELPER FUNCTIONS
+
+async function mergeBooksWithGenre(book) {
+  let books = []
+  for (let i = 0; i < book.length; i++) {
+    let genre = await Genre.findById(book[i].genreID)
+    let student
+    if (book[i].studentID) {
+      student = await Student.findById(book[i].studentID)
+    }
+    books.push({
+      _id: book[i]._id,
+      name: book[i].name,
+      author: book[i].author,
+      releaseDate: book[i].releaseDate,
+      comment: book[i].comment,
+      genreID: book[i].genreID,
+      genreName: genre.name,
+      rented: book[i].studentID ? true : false,
+      studentID: book[i].studentID,
+      studentName: student ? student.name : '',
+    })
+  }
+  return books
+}

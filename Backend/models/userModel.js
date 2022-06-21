@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const userModel = new Schema({
-  loginName: { type: String, trim: true },
+  loginName: { type: String, trim: true, unique: true },
   passwordHash: { type: String, trim: true },
   userID: { type: String, trime: true },
+  isStudent: { type: Boolean },
 })
 
 const User = mongoose.model('User', userModel)

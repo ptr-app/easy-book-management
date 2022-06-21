@@ -1,6 +1,10 @@
-const log = require('../helpers/logger')
+const { log } = require('../helpers/logger')
 const apiResponse = require('../helpers/apiResponse')
-const { Student, Book } = require('../models/bookModel')
+const Student = require('../models/studentModel')
+const Book = require('../models/bookModel')
+const Class = require('../models/classModel')
+const School = require('../models/schoolModel')
+const User = require('../models/userModel')
 
 exports.addStudent = [
   async (req, res) => {
@@ -134,9 +138,9 @@ exports.editStudentBookID = [
 exports.deleteStudent = [
   async (req, res) => {
     log('Controller.studentController.deleteStudent - Start ', 'debug')
-    let book = Book.findById({ studentID: req.body._id }).catch((err) => {
+    let book = Book.find({ studentID: req.body.studentID }).catch((err) => {
       log(
-        'Controller.studentController.deleteStudent - Failed to find class: ' +
+        'Controller.studentController.deleteStudent - Failed to find book: ' +
           err.message,
         'error'
       )
@@ -149,9 +153,41 @@ exports.deleteStudent = [
       )
       return apiResponse.errorResponse(res, 'STUDENT_HAS_BOOK')
     }
-    await Student.findByIdAndDelete(req.body._id).catch((err) => {
+    let studentClass = await Class.findOne({
+      studentsID: req.body.studentID,
+    }).catch((err) => {
+      log(
+        'Controller.studentController.deleteStudent - Failed to find class: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    let newStudents = []
+    studentClass.studentsID.forEach((student) => {
+      if (student !== req.body.studentID) {
+        newStudents.push(student)
+      }
+    })
+    await studentClass.update({ studentsID: newStudents }).catch((err) => {
+      log(
+        'Controller.studentController.deleteStudent - Failed to find class: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    await Student.findByIdAndDelete(req.body.studentID).catch((err) => {
       log(
         'Controller.studentController.deleteStudent - Failed to delete student: ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+    await User.findOneAndDelete({ userID: req.body.studentID }).catch((err) => {
+      log(
+        'Controller.studentController.deleteStudent - Failed to delete user: ' +
           err.message,
         'error'
       )
@@ -204,7 +240,7 @@ exports.getStudentByID = [
 exports.getStudentsByClass = [
   async (req, res) => {
     log('Controller.studentController.getStudentsByClass - Start', 'debug')
-    let students = await Student.find({ classID: req.body._id }).catch(
+    let students = await Student.find({ classID: req.params.id }).catch(
       (err) => {
         log(
           'Controller.studentController.getStudentsByClass - Failed while searching for the students with the classID: ' +
@@ -224,3 +260,42 @@ exports.getStudentsByClass = [
     )
   },
 ]
+
+exports.getStudentsBySchool = [
+  async (req, res) => {
+    log('Controller.studentController.getStudentsByEmployee - Start', 'debug')
+    let school = await School.find({ employeeID: req.headers['x-employeeid'] })
+    let students = await getStudents(school)
+    log('Controller.studentController.getStudentsByEmployee - END ', 'debug')
+    return apiResponse.successResponseWithData(
+      res,
+      'STUDENT_FOUND_EMPLOYEE',
+      students
+    )
+  },
+]
+
+//HELPER FUNCTIONS
+
+async function getStudents(school) {
+  let students = []
+  for (let i = 0; i < school.length; i = i + 1) {
+    let classes = await Class.find({ schoolID: school[i]._id })
+    for (let j = 0; j < classes.length; j = j + 1) {
+      let classStudent = await Student.find({ classID: classes[j]._id })
+      for (let k = 0; k < classStudent.length; k = k + 1) {
+        students.push({
+          _id: classStudent[k]._id,
+          name: classStudent[k].name,
+          bookID: classStudent[k].bookID,
+          birthdate: classStudent[k].birthdate,
+          classID: classes[j]._id,
+          className: classes[j].name,
+          schoolID: school[i]._id,
+          schoolName: school[i].name,
+        })
+      }
+    }
+  }
+  return students
+}

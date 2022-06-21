@@ -1,4 +1,5 @@
 require('dotenv/config')
+const { log } = require('../helpers/logger')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
@@ -10,19 +11,22 @@ passport.use(
   new LocalStrategy(
     { usernameField: 'loginName' },
     async (loginName, password, done) => {
-      const user = User.find({ loginName: loginName }).catch((err) => {
+      log('Helpers.passportConfig.local - Start ', 'debug')
+      const user = await User.findOne({ loginName: loginName }).catch((err) => {
         log(
           'Helpers.passportConfig.local - Failed to find user: ' + err.message,
           'error'
         )
         return done(null, false, { message: err.message })
       })
-      if (user === undefined) {
+      if (user === undefined || user == null) {
         log('Helpers.passportConfig.local - Cannot find user ', 'error')
         return done(null, false, { message: 'USER_NOT_FOUND' })
+      } else {
+        log('Helpers.passportConfig.local - Found User ', 'debug')
       }
       try {
-        if (await bcrypt.compare(password, user.password)) {
+        if (await bcrypt.compare(password, user.passwordHash)) {
           log(
             'Helpers.passportConfig.local - User Password was correct ',
             'debug'
@@ -41,8 +45,17 @@ passport.use(
             err.message,
           'error'
         )
-        return done(error)
+        return done(err)
       }
     }
   )
 )
+
+passport.serializeUser(async (user, done) => {
+  done(null, user._id)
+})
+
+passport.deserializeUser(async (_id, done) => {
+  let user = User.findById(_id)
+  return done(null, user[0])
+})

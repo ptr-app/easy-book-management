@@ -38,7 +38,7 @@ studentRouter.delete(
 
 studentRouter.get(
   '/getAllStudents',
-  middleware.checkTeacher,
+  middleware.checkAdmin,
   studentController.getAllStudents
 )
 
@@ -49,9 +49,15 @@ studentRouter.get(
 )
 
 studentRouter.get(
-  '/getStudentsByClass',
+  '/getStudentsByClass/:id',
   middleware.checkTeacher,
   studentController.getStudentsByClass
+)
+
+studentRouter.get(
+  '/getStudentsBySchool',
+  middleware.checkDean,
+  studentController.getStudentsBySchool
 )
 
 module.exports.default = studentRouter

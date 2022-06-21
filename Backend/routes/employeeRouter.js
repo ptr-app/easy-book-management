@@ -38,7 +38,7 @@ employeeRouter.delete(
 
 employeeRouter.get(
   '/getAllEmployee',
-  middleware.checkDean,
+  middleware.checkAdmin,
   employeeController.getAllEmployee
 )
 
@@ -49,7 +49,7 @@ employeeRouter.get(
 )
 
 employeeRouter.get(
-  '/getEmployeeByRole',
+  '/getEmployeeByRole/:role',
   middleware.checkDean,
   employeeController.getEmployeeByRole
 )
