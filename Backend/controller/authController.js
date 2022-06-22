@@ -123,9 +123,18 @@ exports.registerEmployee = [
       birthdate,
       schoolID,
       roleName,
+      deanKey,
       classID,
     } = req.body
     let role = await Role.findOne({ name: roleName })
+    if (role._id.toString() === process.env.DEAN_ID && role._id !== deanKey) {
+      log(
+        'Controller.authController.registerEmployee - Dean Key is wrong: ' +
+          deanKey,
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'DEAN_KEY_WRONG')
+    }
     let newEmployeeModel = new Employee({
       name: name,
       birthdate: birthdate,
@@ -293,6 +302,7 @@ async function userData(user) {
       throw new Error()
     }
     loggedUser.name = employee.name
+    loggedUser.roleID = employee.roleID
     loggedUser.role = await Role.findById(employee.roleID)
       .then((resp) => {
         return resp.name

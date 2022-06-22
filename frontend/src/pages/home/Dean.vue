@@ -19,6 +19,31 @@
               v-model="filteredRole"
             />
           </v-col>
+          <v-spacer />
+          <template>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  @click="copyDeanKey"
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mb-7"
+                >
+                  mdi-content-copy
+                </v-icon>
+              </template>
+              <span v-text="$t('Buttons.copyDeanKey')" />
+            </v-tooltip>
+          </template>
+
+          <v-col cols="2" sm="2">
+            <v-text-field
+              readonly
+              filled
+              v-model="currentUser.roleID"
+              prepend-inner-icon="mdi-mdi-content-copy"
+            />
+          </v-col>
         </v-row>
         <custom-table
           :items="employees"
@@ -91,6 +116,7 @@ export default {
   },
   computed: {
     currentUser() {
+      console.log(this.$store.state.auth.user)
       return this.$store.state.auth.user
     },
   },
@@ -176,6 +202,14 @@ export default {
         alertClass: 'success',
       })
       navigator.clipboard.writeText(employee.schoolID)
+    },
+    copyDeanKey() {
+      this.$store.commit('ui/setNotification', {
+        display: true,
+        code: i18n.t('Home.Dean.copyDeanKeyMessage'),
+        alertClass: 'success',
+      })
+      navigator.clipboard.writeText(this.currentUser.roleID)
     },
   },
 }

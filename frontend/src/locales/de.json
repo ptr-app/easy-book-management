@@ -30,6 +30,7 @@
       "header": "Willkommen Schulleiter ",
       "headerTeacher": "Ihre Mitarbeiter",
       "copySchoolIDMessage": "School ID wurde in die Zwischenablage kopiert",
+      "copyDeanKeyMessage": "Schulleiter Key wurde in die Zwischenablage kopiert",
       "deleteEmployee": {
         "header": "Mitarbeiter löschen",
         "content": "Wollen Sie diesen Mitarbeiter wirklich löschen ?"
@@ -120,7 +121,8 @@
     "editTeacher": "Lehrer ändern",
     "assignTeacher": "Lehrer zuweisen",
     "copyClassID": "Klassen ID kopieren",
-    "copySchoolID": "Schul ID kopieren"
+    "copySchoolID": "Schul ID kopieren",
+    "copyDeanKey": "Dean Key kopieren"
   },
   "TableHeaders": {
     "name": "Name",
@@ -162,7 +164,8 @@
     "comment": "Bemerkung",
     "genre": "Genre",
     "validateName": "Namen Validierung fehlgeschlagen",
-    "validatePassword": "Passwort Validierung fehlgeschlagen. Ein Password muss aus 8 Zeichen bestehen. Davon muss mindestens ein Großbuchstabe, eine Zahl und ein Sonderzeichen(!@?#$%^) vorkommen."
+    "validatePassword": "Passwort Validierung fehlgeschlagen. Ein Password muss aus 8 Zeichen bestehen. Davon muss mindestens ein Großbuchstabe, eine Zahl und ein Sonderzeichen(!@?#$%^) vorkommen.",
+    "deanKey": "Schulleiter Schlüssel"
   },
   "Filter": {
     "all": "Alle",
@@ -176,6 +179,7 @@
     "UNKNOWN_STUDENT": "Der angegebene Schüler wurde nicht gefunden",
     "UNKNOWN_EMPLOYEE": "Der angegebene Angestellte wurde nicht gefunden",
     "WRONG_PASSWORD": "Das angegebene Passwort ist falsch",
+    "DEAN_KEY_WRONG": "Der übergebene Dean Schlüssel ist falsch",
     "USER_NOT_FOUND": "Der angegebene Nutzer wurde nicht gefunden",
     "USER_LOGGED_IN": "Sie wurden eingeloggt",
     "USER_LOGGED_OUT": "Sie wurden ausgeloggt",

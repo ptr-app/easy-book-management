@@ -161,6 +161,24 @@
                     </validation-provider>
                   </v-col>
                 </v-row>
+                <v-row v-if="user.roleName === 'dean'">
+                  <v-col cols="12" sm="6">
+                    <validation-provider
+                      v-slot="{ errors }"
+                      rules="required"
+                      :name="$t('Validation.schoolID')"
+                    >
+                      <v-text-field
+                        filled
+                        v-model="user.deanKey"
+                        data-cy="registerDeanKey"
+                        :label="$t('Validation.deanKey')"
+                        :error-messages="errors"
+                        :required="user.roleName === 'dean'"
+                      />
+                    </validation-provider>
+                  </v-col>
+                </v-row>
               </div>
               <div v-if="type === 'school'">
                 <v-row>
