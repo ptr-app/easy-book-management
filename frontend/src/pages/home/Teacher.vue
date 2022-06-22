@@ -89,7 +89,7 @@ export default {
         },
         {
           text: i18n.t('TableHeaders.birthdate'),
-          value: 'birthdate',
+          value: 'birthdateString',
         },
         {
           text: i18n.t('TableHeaders.amountBooks'),
@@ -191,8 +191,11 @@ export default {
         .dispatch('data/getStudentsByClass', Class._id)
         .then(async (resp) => {
           this.students = resp
-          this.students.forEach((Class) => {
-            Class.dropdownItems = [
+          this.students.forEach((student) => {
+            student.birthdateString = moment(String(student.birthdate)).format(
+              'DD.MM.YYYY'
+            )
+            student.dropdownItems = [
               {
                 disabled: false,
                 title: i18n.t('Buttons.viewStudent'),
