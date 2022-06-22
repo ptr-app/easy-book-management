@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center">
-    <v-card class="elevation-12 mt-10 mb-10">
+    <v-card class="elevation-12 mt-10 mb-10" width="800">
       <v-card-title v-text="$t('RegisterPage.header')" />
       <v-card-text>
         <validation-observer ref="observer" v-slot="{ invalid }">

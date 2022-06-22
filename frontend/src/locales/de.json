@@ -162,7 +162,7 @@
     "comment": "Bemerkung",
     "genre": "Genre",
     "validateName": "Namen Validierung fehlgeschlagen",
-    "validatePassword": "Passwort Validierung fehlgeschlagen"
+    "validatePassword": "Passwort Validierung fehlgeschlagen. Ein Password muss aus 8 Zeichen bestehen. Davon muss mindestens ein Großbuchstabe, eine Zahl und ein Sonderzeichen(!@?#$%^) vorkommen."
   },
   "Filter": {
     "all": "Alle",
