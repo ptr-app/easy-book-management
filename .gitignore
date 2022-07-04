@@ -1,0 +1,7 @@
+#Directories
+frontend/node_modules
+Backend/node_modules
+/database/data
+
+# local env files
+.env
