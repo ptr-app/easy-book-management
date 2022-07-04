@@ -9,6 +9,7 @@
           :headers="headersClass"
           :header="$t('Home.Teacher.headerClass')"
           @viewClass="viewClass"
+          @copy="copy"
         />
         <div v-if="viewClassDetails">
           <header-medium
@@ -155,6 +156,13 @@ export default {
             Class.dropdownItems = [
               {
                 disabled: false,
+                title: i18n.t('Buttons.copyClassID'),
+                function: 'copy',
+                icon: 'mdi-content-copy',
+                key: 'copy',
+              },
+              {
+                disabled: false,
                 title: i18n.t('Buttons.viewClass'),
                 function: 'viewClass',
                 icon: 'mdi-magnify',
@@ -231,6 +239,15 @@ export default {
           console.log(err)
         })
       this.viewStudentDetails = true
+    },
+    copy(Class) {
+      console.log(Class)
+      this.$store.commit('ui/setNotification', {
+        display: true,
+        code: i18n.t('ClassPage.copyClassIDMessage'),
+        alertClass: 'success',
+      })
+      navigator.clipboard.writeText(Class._id)
     },
   },
 }
