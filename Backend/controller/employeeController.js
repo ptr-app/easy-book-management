@@ -215,7 +215,7 @@ exports.getEmployeeByRole = [
         return apiResponse.errorResponse(res, err.message)
       })
       roleID = role._id
-    } else if (checkID === new ObjectId(chekcID)) {
+    } else if (checkID === new ObjectId(checkID)) {
       let role = Role.findById(req.params.role).catch((err) => {
         log(
           'Controller.employeeController.getEmployeeByRole - Failed to find Role ' +
