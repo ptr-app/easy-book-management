@@ -235,7 +235,7 @@ exports.getClassBySchool = [
   async (req, res) => {
     log('Controller.classController.getClassBySchool - Start', 'debug')
     let schoolID
-    if (!req.body.schoolID) {
+    if (!req.headers['x-schoolid']) {
       let employee = await Employee.findById(req.headers['x-employeeid'])
       schoolID = employee.schoolID
     } else {
@@ -261,6 +261,14 @@ exports.getClassBySchool = [
       )
       return apiResponse.errorResponse(res, err.message)
     })
+    if (ClassObject.length !== returnClass.length) {
+      log(
+        'Controller.classController.getClassBySchool - Failed while trying to merge EmployeeID with Name Classes length are not the same ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'CLASS_NOT_RIGHT_LENGTH_SCHOOL')
+    }
+    console.log(returnClass)
     log('Controller.classController.getClassBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,
@@ -275,27 +283,23 @@ exports.getClassBySchool = [
 async function mergeEmployeeIDToName(Class) {
   let classes = []
   for (let i = 0; i < Class.length; i++) {
-    if (Class[i].employeeID) {
-      let employee = await Employee.findById(Class[i].employeeID).catch(
-        (err) => {
-          log(
-            'Controller.classController.mergeEmployeeIDToName - Failed to find EmployeeID: ' +
-              Class[i].employeeID +
-              '. Error Message is' +
-              err.message,
-            'error'
-          )
-        }
+    let employee = await Employee.findById(Class[i].employeeID).catch((err) => {
+      log(
+        'Controller.classController.mergeEmployeeIDToName - Failed to find EmployeeID: ' +
+          Class[i].employeeID +
+          '. Error Message is' +
+          err.message,
+        'error'
       )
-      classes.push({
-        _id: Class[i]._id,
-        name: Class[i].name,
-        studentsID: Class[i].studentsID,
-        employeeID: Class[i].employeeID,
-        teacherName: employee ? employee.name : '',
-        schoolID: Class[i].schoolID,
-      })
-    }
+    })
+    classes.push({
+      _id: Class[i]._id,
+      name: Class[i].name,
+      studentsID: Class[i].studentsID,
+      employeeID: Class[i].employeeID,
+      teacherName: employee ? employee.name : '',
+      schoolID: Class[i].schoolID,
+    })
   }
   return classes
 }

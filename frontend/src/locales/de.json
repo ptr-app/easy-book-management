@@ -215,6 +215,7 @@
     "CLASS_NOT_FOUND": "Klasse nicht gefunden",
     "CLASS_HAS_STUDENTS": "Klasse hat noch Schüler zugewiesen",
     "CLASS_NOT_A_TEACHER": "Der ausgewählte Mitarbeiter ist kein Lehrer",
+    "CLASS_NOT_RIGHT_LENGTH_SCHOOL": "Einige Klassen wurden nicht richtig gefunden",
     "EMPLOYEE_CREATED": "Angestelter erstellt",
     "EMPLOYEE_EDITED": "Angesteller bearbeitet",
     "EMPLOYEE_ASSIGNED_CLASS": "Dem Angestellten wurde einer Klasse zugewiesen",
