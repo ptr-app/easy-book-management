@@ -274,7 +274,7 @@ export default {
       user: {
         loginName: '',
         name: '',
-        birthdate: undefined,
+        birthdate: '1970-01-01',
         password: '',
         confirmPassword: '',
         schoolName: '',
