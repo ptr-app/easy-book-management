@@ -37,12 +37,7 @@
           </template>
 
           <v-col cols="2" sm="2">
-            <v-text-field
-              readonly
-              filled
-              v-model="currentUser.roleID"
-              prepend-inner-icon="mdi-mdi-content-copy"
-            />
+            <v-text-field readonly filled v-model="currentUser.roleID" />
           </v-col>
         </v-row>
         <custom-table
