@@ -102,7 +102,7 @@ exports.editStudentBookID = [
     log('Controller.studentController.editStudentBookID - Start', 'debug')
     let bookID
     if (req.body.bookID !== undefined) {
-      Class.findById(req.body.bookID).catch((err) => {
+      Book.findById(req.body.bookID).catch((err) => {
         log(
           'Controller.studentController.editStudentBookID - Failed to find Book ' +
             err.message,
@@ -130,6 +130,78 @@ exports.editStudentBookID = [
     return apiResponse.successResponseWithData(
       res,
       'STUDENT_ASSIGNED_BOOK',
+      student
+    )
+  },
+]
+
+exports.editClassStudent = [
+  async (req, res) => {
+    log('Controller.studentController.editClassStudent - Start', 'debug')
+
+    if (req.body.oldClassName === req.body.newClassName) {
+      log(
+        'Controller.studentController.editClassStudent - New Class same as old Class ',
+        'error'
+      )
+      return apiResponse.errorResponse(res, 'STUDENT_SAME_CLASS')
+    }
+
+    let student = await Student.findById(req.body._id).catch((err) => {
+      log(
+        'Controller.studentController.editClassStudent - Failed to edit Student ' +
+          err.message,
+        'error'
+      )
+      return apiResponse.errorResponse(res, err.message)
+    })
+
+    let newClass = await Class.findOne({ name: req.body.newClassName }).catch(
+      (err) => {
+        log(
+          'Controller.studentController.editClassStudent - Failed to find new Class ' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      }
+    )
+
+    await Student.findByIdAndUpdate(req.body._id, { classID: newClass._id })
+
+    let oldClass = await Class.findOne({ name: req.body.oldClassName }).catch(
+      (err) => {
+        log(
+          'Controller.studentController.editClassStudent - Failed to find old Class ' +
+            err.message,
+          'error'
+        )
+        return apiResponse.errorResponse(res, err.message)
+      }
+    )
+
+    let students = []
+
+    for (let i = 0; oldClass.studentsID.length > i; i++) {
+      if (oldClass.studentsID[i] != student._id) {
+        students.push(oldClass.studentsID[i])
+      }
+    }
+
+    await Class.findByIdAndUpdate(oldClass._id, {
+      studentsID: students,
+    })
+
+    newClass.studentsID.push(student._id)
+
+    await Class.findByIdAndUpdate(newClass._id, {
+      studentsID: newClass.studentsID,
+    })
+
+    log('Controller.studentController.editClassStudent - End', 'debug')
+    return apiResponse.successResponseWithData(
+      res,
+      'STUDENT_CHANGED_CLASS',
       student
     )
   },

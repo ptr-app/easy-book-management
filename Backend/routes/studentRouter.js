@@ -30,6 +30,12 @@ studentRouter.post(
   studentController.editStudentBookID
 )
 
+studentRouter.post(
+  '/editClassStudent',
+  middleware.checkTeacher,
+  studentController.editClassStudent
+)
+
 studentRouter.delete(
   '/deleteStudent',
   middleware.checkTeacher,

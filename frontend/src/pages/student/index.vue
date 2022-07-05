@@ -15,6 +15,13 @@
       :dialog="editStudentD"
       :selectedStudent="selectedStudent"
     />
+    <edit-class-dialog
+      v-if="editClassD"
+      @close="editClassD = false"
+      @done="editedClass"
+      :dialog="editClassD"
+      :selectedStudent="selectedStudent"
+    />
     <v-card class="mt-5 mx-5">
       <v-card-title v-text="$t('StudentPage.header')" />
       <v-col cols="3" sm="3" class="mb-n11">
@@ -31,6 +38,7 @@
           :headers="headerStudent"
           @delete="deleteStudentDialog"
           @edit="editStudentDialog"
+          @editClass="editClassDialog"
           @viewStudent="viewStudent"
         />
         <div v-if="viewStudentDetails">
@@ -62,11 +70,13 @@ import CustomTable from '../../components/data/CustomTable.vue'
 import ValidationDialog from '../../components/data/ValidationDialog.vue'
 import HeaderMedium from '../../components/text/HeaderMedium.vue'
 import editStudentDialog from './EditStudent.vue'
+import editClassDialog from './EditClass.vue'
 export default {
   name: 'student',
   components: {
     CustomTable,
     editStudentDialog,
+    editClassDialog,
     ValidationDialog,
     HeaderMedium,
   },
@@ -75,6 +85,7 @@ export default {
       loading: false,
       deleteStudentD: false,
       editStudentD: false,
+      editClassD: false,
       viewStudentDetails: false,
       search: '',
       searchStudent: '',
@@ -189,6 +200,13 @@ export default {
               },
               {
                 disabled: false,
+                title: i18n.t('Buttons.editStudentClass'),
+                function: 'editClass',
+                icon: 'mdi-google-classroom',
+                key: 'editClass',
+              },
+              {
+                disabled: false,
                 title: i18n.t('Buttons.viewStudent'),
                 function: 'viewStudent',
                 icon: 'mdi-magnify',
@@ -259,6 +277,14 @@ export default {
     },
     editedStudent() {
       this.editStudentD = false
+      window.location.reload()
+    },
+    editClassDialog(student) {
+      this.editClassD = true
+      this.selectedStudent = student
+    },
+    editedClass() {
+      this.editClassD = false
       window.location.reload()
     },
     viewStudent(student) {

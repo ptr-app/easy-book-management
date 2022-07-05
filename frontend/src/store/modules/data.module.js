@@ -136,6 +136,16 @@ export const data = {
         }
       )
     },
+    editClassStudent: async ({ commit }, student) => {
+      return requests.postService('student/editClassStudent', student).then(
+        (resp) => {
+          return Promise.resolve(resp.data.data)
+        },
+        (error) => {
+          return Promise.reject(error)
+        }
+      )
+    },
     //BOOK
     getBooksByStudent: async ({ commit }, id) => {
       return requests.getService('book/getBooksByStudent/' + id).then(
