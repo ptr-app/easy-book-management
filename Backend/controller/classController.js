@@ -268,7 +268,6 @@ exports.getClassBySchool = [
       )
       return apiResponse.errorResponse(res, 'CLASS_NOT_RIGHT_LENGTH_SCHOOL')
     }
-    console.log(returnClass)
     log('Controller.classController.getClassBySchool - END ', 'debug')
     return apiResponse.successResponseWithData(
       res,
