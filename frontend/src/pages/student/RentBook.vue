@@ -113,6 +113,7 @@ export default {
   },
   props: {
     dialog: Boolean,
+    selectedStudent: Object,
   },
   computed: {
     currentUser() {
@@ -177,10 +178,8 @@ export default {
       var book = this.selectedBook
       var rentBookItem = {
         bookID: book._id,
-        studentID: this.currentUser._id,
+        studentID: this.selectedStudent._id,
       }
-      console.log('RENT BOOK')
-      console.log(rentBookItem)
       this.$store
         .dispatch('data/rentBook', rentBookItem)
         .then(() => {

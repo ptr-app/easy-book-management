@@ -8,6 +8,14 @@
       @done="deleteStudent"
       :buttons="[$t('Buttons.cancel'), $t('Buttons.delete')]"
     />
+    <validation-dialog
+      :title="$t('Home.Student.returnBook.header')"
+      :content="$t('Home.Student.returnBook.content')"
+      :dialog="returnBookDialog"
+      @close="returnBookDialog = false"
+      @done="confirmReturnBook"
+      :buttons="[$t('Buttons.cancel'), $t('Buttons.returnBook')]"
+    />
     <edit-student-dialog
       v-if="editStudentD"
       @close="editStudentD = false"
@@ -20,6 +28,13 @@
       @close="editClassD = false"
       @done="editedClass"
       :dialog="editClassD"
+      :selectedStudent="selectedStudent"
+    />
+    <rent-book-dialog
+      v-if="rentBookModal"
+      @close="rentBookModal = false"
+      @done="rentBook"
+      :dialog="rentBookModal"
       :selectedStudent="selectedStudent"
     />
     <v-card class="mt-5 mx-5">
@@ -40,6 +55,7 @@
           @edit="editStudentDialog"
           @editClass="editClassDialog"
           @viewStudent="viewStudent"
+          @rentBook="rentBookM"
         />
         <div v-if="viewStudentDetails">
           <header-medium class="mt-8" :title="selectedStudent.name" />
@@ -56,6 +72,7 @@
             :items="books"
             :search="searchStudent"
             :headers="headerBook"
+            @returnBook="returnBook"
           />
         </div>
       </v-card-text>
@@ -71,12 +88,14 @@ import ValidationDialog from '../../components/data/ValidationDialog.vue'
 import HeaderMedium from '../../components/text/HeaderMedium.vue'
 import editStudentDialog from './EditStudent.vue'
 import editClassDialog from './EditClass.vue'
+import rentBookDialog from '../student/RentBook.vue'
 export default {
   name: 'student',
   components: {
     CustomTable,
     editStudentDialog,
     editClassDialog,
+    rentBookDialog,
     ValidationDialog,
     HeaderMedium,
   },
@@ -87,9 +106,14 @@ export default {
       editStudentD: false,
       editClassD: false,
       viewStudentDetails: false,
+      getNewBook: false,
+      rentBookDialog: false,
+      rentBookModal: false,
+      returnBookDialog: false,
       search: '',
       searchStudent: '',
       selectedStudent: '',
+      selectedBook: {},
       students: [],
       books: [],
       classes: [i18n.t('Filter.all')],
@@ -212,6 +236,13 @@ export default {
                 icon: 'mdi-magnify',
                 key: 'viewStudent',
               },
+              {
+                disabled: false,
+                title: i18n.t('Buttons.rentBook'),
+                function: 'rentBook',
+                icon: 'mdi-book',
+                key: 'rentBook',
+              },
             ]
           })
           this.loading = false
@@ -296,6 +327,15 @@ export default {
             book.releaseDateString = moment(String(book.releaseDate)).format(
               'DD.MM.YYYY'
             )
+            book.dropdownItems = [
+              {
+                disabled: false,
+                title: i18n.t('Buttons.returnBook'),
+                function: 'returnBook',
+                icon: 'mdi-clipboard-arrow-left',
+                key: 'returnBook',
+              },
+            ]
             this.books.push(book)
           })
         })
@@ -304,6 +344,35 @@ export default {
           console.log(err)
         })
       this.viewStudentDetails = true
+    },
+    rentBookM(student) {
+      this.selectedStudent = student
+      this.rentBookModal = true
+    },
+    rentBook() {
+      this.rentBookModal = false
+      window.location.reload()
+    },
+    returnBook(book) {
+      this.returnBookDialog = true
+      this.selectedBook = book
+    },
+    confirmReturnBook() {
+      var rentBookItem = {
+        bookID: this.selectedBook._id,
+        studentID: this.selectedStudent._id,
+      }
+      this.$store
+        .dispatch('data/returnBook', rentBookItem)
+        .then(() => {
+          this.loading = false
+          this.returnBookDialog = false
+          window.location.reload()
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
     },
   },
 }

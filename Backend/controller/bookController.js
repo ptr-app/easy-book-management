@@ -220,6 +220,7 @@ exports.rentBook = [
   async (req, res) => {
     log('Controller.bookController.rentBook - Start', 'debug')
     const { bookID, studentID } = req.body
+    console.log(req.body)
     let book = await Book.findById(bookID)
     if (book.studentID !== '') {
       log(
@@ -228,7 +229,7 @@ exports.rentBook = [
       )
       return apiResponse.errorResponse(res, 'BOOK_IS_RENTED')
     }
-    let newBook = await Book.findByIdAndUpdate(bookID, {
+    await Book.findByIdAndUpdate(bookID, {
       studentID: studentID,
     }).catch((err) => {
       log(
@@ -240,7 +241,7 @@ exports.rentBook = [
     })
     let student = await Student.findById(studentID)
     student.bookID.push(bookID)
-    let newStudent = await Student.findByIdAndUpdate(studentID, {
+    await Student.findByIdAndUpdate(studentID, {
       bookID: student.bookID,
     }).catch((err) => {
       log(
