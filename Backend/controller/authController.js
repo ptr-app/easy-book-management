@@ -330,10 +330,9 @@ async function checkClassID(classID) {
       'error'
     )
     return false
-  } else {
-    log('Controller.employeeController.getEmployeeByRole - Role Found', 'debug')
-    return true
   }
+  log('Controller.employeeController.getEmployeeByRole - Role Found', 'debug')
+  return true
 }
 
 async function checkSchoolID(schoolID) {
@@ -351,11 +350,7 @@ async function checkSchoolID(schoolID) {
       'error'
     )
     return false
-  } else {
-    log(
-      'Controller.employeeController.getEmployeeByRole - School Found',
-      'debug'
-    )
-    return true
   }
+  log('Controller.employeeController.getEmployeeByRole - School Found', 'debug')
+  return true
 }

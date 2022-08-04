@@ -4,34 +4,30 @@ export function notLogged({ next, store }) {
     localStorage.clear()
     sesstionStoreage.clear()
     return next()
-  } else {
-    return next()
   }
+  return next()
 }
 
 export function logged({ next }) {
   const user = localStorage.getItem('user')
   if (user) {
     return next()
-  } else {
-    return next('/login')
   }
+  return next('/login')
 }
 
 export function dean({ next }) {
   const user = JSON.parse(localStorage.getItem('user'))
   if (user.role === 'dean') {
     return next()
-  } else {
-    return next('/home')
   }
+  return next('/home')
 }
 
 export function teacher({ next }) {
   const user = JSON.parse(localStorage.getItem('user'))
   if (user.role === 'teacher' || user.role === 'dean') {
     return next()
-  } else {
-    return next('/home')
   }
+  return next('/home')
 }

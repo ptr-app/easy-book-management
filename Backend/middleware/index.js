@@ -18,10 +18,9 @@ exports.checkLogged = [
           'error'
         )
         return apiResponse.unathorizedResponse(res, 'MISSING_SESSION')
-      } else {
-        log('Middleware.index.checkLogged - End: ', 'debug')
-        next()
       }
+      log('Middleware.index.checkLogged - End: ', 'debug')
+      next()
     })
   },
 ]
@@ -36,10 +35,9 @@ exports.checkNotLogged = [
         'error'
       )
       return res.redirect('/home')
-    } else {
-      log('Middleware.index.checkNotLogged - End: ', 'debug')
-      next()
     }
+    log('Middleware.index.checkNotLogged - End: ', 'debug')
+    next()
   },
 ]
 
@@ -74,19 +72,18 @@ exports.checkTeacher = [
         'error'
       )
       return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
+    }
+    let roleID = employee.roleID
+    if (roleID === process.env.TEACHER_ID || roleID === process.env.DEAN_ID) {
+      log('Middleware.index.checkTeacher - End: ', 'debug')
+      next()
     } else {
-      let roleID = employee.roleID
-      if (roleID === process.env.TEACHER_ID || roleID === process.env.DEAN_ID) {
-        log('Middleware.index.checkTeacher - End: ', 'debug')
-        next()
-      } else {
-        log(
-          'Middleware.index.checkTeacher - The Employee had not an Teacher ID or an Dean ID. The ID was: ' +
-            roleID,
-          'error'
-        )
-        return apiResponse.unathorizedResponse(res, 'NOT_A_TEACHER')
-      }
+      log(
+        'Middleware.index.checkTeacher - The Employee had not an Teacher ID or an Dean ID. The ID was: ' +
+          roleID,
+        'error'
+      )
+      return apiResponse.unathorizedResponse(res, 'NOT_A_TEACHER')
     }
   },
 ]
@@ -103,19 +100,18 @@ exports.checkDean = [
         'error'
       )
       return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
+    }
+    let roleID = employee.roleID
+    if (roleID === process.env.DEAN_ID) {
+      log('Middleware.index.checkDean - End: ', 'debug')
+      next()
     } else {
-      let roleID = employee.roleID
-      if (roleID === process.env.DEAN_ID) {
-        log('Middleware.index.checkDean - End: ', 'debug')
-        next()
-      } else {
-        log(
-          'Middleware.index.checkDean - The Employee had not an Dean ID. The ID was: ' +
-            roleID,
-          'error'
-        )
-        return apiResponse.unathorizedResponse(res, 'NOT_A_DEAN')
-      }
+      log(
+        'Middleware.index.checkDean - The Employee had not an Dean ID. The ID was: ' +
+          roleID,
+        'error'
+      )
+      return apiResponse.unathorizedResponse(res, 'NOT_A_DEAN')
     }
   },
 ]
@@ -132,19 +128,18 @@ exports.checkAdmin = [
         'error'
       )
       return apiResponse.unathorizedResponse(res, 'UNKNOWN_EMPLOYEE')
+    }
+    let roleID = employee.roleID
+    if (roleID === process.env.DEAN_ID) {
+      log('Middleware.index.checkAdmin - End: ', 'debug')
+      next()
     } else {
-      let roleID = employee.roleID
-      if (roleID === process.env.DEAN_ID) {
-        log('Middleware.index.checkAdmin - End: ', 'debug')
-        next()
-      } else {
-        log(
-          'Middleware.index.checkAdmin - The Employee had not an Admin ID. The ID was: ' +
-            roleID,
-          'error'
-        )
-        return apiResponse.unathorizedResponse(res, 'NOT_A_ADMIN')
-      }
+      log(
+        'Middleware.index.checkAdmin - The Employee had not an Admin ID. The ID was: ' +
+          roleID,
+        'error'
+      )
+      return apiResponse.unathorizedResponse(res, 'NOT_A_ADMIN')
     }
   },
 ]

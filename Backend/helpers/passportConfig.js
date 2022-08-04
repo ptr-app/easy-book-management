@@ -32,13 +32,12 @@ passport.use(
             'debug'
           )
           return done(null, user)
-        } else {
-          log(
-            'Helpers.passportConfig.local - User Password was incorrect ',
-            'error'
-          )
-          return done(null, false, 'WRONG_PASSWORD')
         }
+        log(
+          'Helpers.passportConfig.local - User Password was incorrect ',
+          'error'
+        )
+        return done(null, false, 'WRONG_PASSWORD')
       } catch (err) {
         log(
           'Helpers.passportConfig.local - Error occured while checking Password: ' +
