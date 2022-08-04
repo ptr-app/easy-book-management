@@ -32,7 +32,7 @@ export const auth = {
         }
       )
     },
-    registerStudent: async ({ commit }, user) => {
+    registerStudent: async ({}, user) => {
       return requests.postService('auth/registerStudent', user).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -42,7 +42,7 @@ export const auth = {
         }
       )
     },
-    registerEmployee: async ({ commit }, user) => {
+    registerEmployee: async ({}, user) => {
       return requests.postService('auth/registerEmployee', user).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -52,7 +52,7 @@ export const auth = {
         }
       )
     },
-    registerSchool: async ({ commit }, user) => {
+    registerSchool: async ({}, user) => {
       return requests.postService('auth/registerSchool', user).then(
         (resp) => {
           return Promise.resolve(resp.data.data)

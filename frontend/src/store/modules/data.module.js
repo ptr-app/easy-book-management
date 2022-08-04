@@ -4,7 +4,7 @@ export const data = {
   namespaced: true,
   actions: {
     //EMPLOYEE
-    deleteEmployee: async ({ commit }, employee) => {
+    deleteEmployee: async ({}, employee) => {
       return requests.deleteService('employee/deleteEmployee', employee).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -14,7 +14,7 @@ export const data = {
         }
       )
     },
-    getEmployeeBySchool: async ({ commit }) => {
+    getEmployeeBySchool: async ({}) => {
       return requests.getService('employee/getEmployeeBySchool').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -24,7 +24,7 @@ export const data = {
         }
       )
     },
-    getEmployeeByRole: async ({ commit }, role) => {
+    getEmployeeByRole: async ({}, role) => {
       return requests.getService('employee/getEmployeeByRole/' + role).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -35,7 +35,7 @@ export const data = {
       )
     },
     //CLASS
-    getClassBySchool: async ({ commit }) => {
+    getClassBySchool: async ({}) => {
       return requests.getService('class/getClassBySchool').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -45,7 +45,7 @@ export const data = {
         }
       )
     },
-    addClass: async ({ commit }, Class) => {
+    addClass: async ({}, Class) => {
       return requests.postService('class/addClass', Class).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -55,7 +55,7 @@ export const data = {
         }
       )
     },
-    deleteClass: async ({ commit }, Class) => {
+    deleteClass: async ({}, Class) => {
       return requests.deleteService('class/deleteClass', Class).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -65,7 +65,7 @@ export const data = {
         }
       )
     },
-    editClass: async ({ commit }, Class) => {
+    editClass: async ({}, Class) => {
       return requests.postService('class/editClass', Class).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -75,7 +75,7 @@ export const data = {
         }
       )
     },
-    updateEmployeeID: async ({ commit }, employee) => {
+    updateEmployeeID: async ({}, employee) => {
       return requests.postService('class/updateEmployeeID', employee).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -85,7 +85,7 @@ export const data = {
         }
       )
     },
-    getClassByEmployee: async ({ commit }) => {
+    getClassByEmployee: async ({}) => {
       return requests.getService('class/getClassByEmployee').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -96,7 +96,7 @@ export const data = {
       )
     },
     //STUDENT
-    deleteStudent: async ({ commit }, student) => {
+    deleteStudent: async ({}, student) => {
       return requests.deleteService('student/deleteStudent', student).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -106,7 +106,7 @@ export const data = {
         }
       )
     },
-    editStudent: async ({ commit }, student) => {
+    editStudent: async ({}, student) => {
       return requests.postService('student/editStudent', student).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -116,7 +116,7 @@ export const data = {
         }
       )
     },
-    getStudentsByClass: async ({ commit }, id) => {
+    getStudentsByClass: async ({}, id) => {
       return requests.getService('student/getStudentsByClass/' + id).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -126,7 +126,7 @@ export const data = {
         }
       )
     },
-    getStudentsBySchool: async ({ commit }) => {
+    getStudentsBySchool: async ({}) => {
       return requests.getService('student/getStudentsBySchool').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -136,7 +136,7 @@ export const data = {
         }
       )
     },
-    editClassStudent: async ({ commit }, student) => {
+    editClassStudent: async ({}, student) => {
       return requests.postService('student/editClassStudent', student).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -147,7 +147,7 @@ export const data = {
       )
     },
     //BOOK
-    getBooksByStudent: async ({ commit }, id) => {
+    getBooksByStudent: async ({}, id) => {
       return requests.getService('book/getBooksByStudent/' + id).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -157,7 +157,7 @@ export const data = {
         }
       )
     },
-    getAllBooks: async ({ commit }) => {
+    getAllBooks: async ({}) => {
       return requests.getService('book/getAllBooks/').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -167,7 +167,7 @@ export const data = {
         }
       )
     },
-    deleteBook: async ({ commit }, book) => {
+    deleteBook: async ({}, book) => {
       return requests.deleteService('book/deleteBook', book).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -177,7 +177,7 @@ export const data = {
         }
       )
     },
-    addBook: async ({ commit }, book) => {
+    addBook: async ({}, book) => {
       return requests.postService('book/addBook', book).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -187,7 +187,7 @@ export const data = {
         }
       )
     },
-    editBook: async ({ commit }, book) => {
+    editBook: async ({}, book) => {
       return requests.postService('book/editBook', book).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -197,7 +197,7 @@ export const data = {
         }
       )
     },
-    rentBook: async ({ commit }, book) => {
+    rentBook: async ({}, book) => {
       return requests.postService('book/rentBook', book).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -207,7 +207,7 @@ export const data = {
         }
       )
     },
-    returnBook: async ({ commit }, book) => {
+    returnBook: async ({}, book) => {
       return requests.postService('book/returnBook', book).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -218,7 +218,7 @@ export const data = {
       )
     },
     //GENRE
-    addGenre: async ({ commit }, genre) => {
+    addGenre: async ({}, genre) => {
       return requests.postService('genre/addGenre', genre).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -228,7 +228,7 @@ export const data = {
         }
       )
     },
-    editGenre: async ({ commit }, genre) => {
+    editGenre: async ({}, genre) => {
       return requests.postService('genre/editGenre', genre).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -238,7 +238,7 @@ export const data = {
         }
       )
     },
-    deleteGenre: async ({ commit }, genre) => {
+    deleteGenre: async ({}, genre) => {
       return requests.deleteService('genre/deleteGenre', genre).then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -248,7 +248,7 @@ export const data = {
         }
       )
     },
-    getAllGenres: async ({ commit }) => {
+    getAllGenres: async ({}) => {
       return requests.getService('genre/getAllGenres').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
@@ -259,7 +259,7 @@ export const data = {
       )
     },
     //Roles
-    getAllRoles: async ({ commit }) => {
+    getAllRoles: async ({}) => {
       return requests.getService('role/getAllRoles').then(
         (resp) => {
           return Promise.resolve(resp.data.data)
