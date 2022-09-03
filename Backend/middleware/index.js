@@ -46,7 +46,9 @@ exports.checkStudent = [
     log('Middleware.index.checkStudent - Start: ', 'debug')
     let studentID = req.headers['x-studentid']
     let student = await Student.findById(studentID)
-    if (student !== undefined) {
+    let employeeID = req.headers['x-employeeid']
+    let employee = await Employee.findById(employeeID)
+    if (student !== null || employee !== null) {
       log('Middleware.index.checkStudent - End: ', 'debug')
       next()
     } else {
@@ -65,7 +67,7 @@ exports.checkTeacher = [
     log('Middleware.index.checkTeacher - Start: ', 'debug')
     let employeeID = req.headers['x-employeeid']
     let employee = await Employee.findById(employeeID)
-    if (employee === undefined) {
+    if (employee === null) {
       log(
         'Middleware.index.checkTeacher - Could not find Employee with that EmployeeID: ' +
           employeeID,
@@ -93,7 +95,7 @@ exports.checkDean = [
     log('Middleware.index.checkDean - Start: ', 'debug')
     let employeeID = req.headers['x-employeeid']
     let employee = await Employee.findById(employeeID)
-    if (employee === undefined) {
+    if (employee === null) {
       log(
         'Middleware.index.checkDean - Could not find Employee with that EmployeeID: ' +
           employeeID,
@@ -121,7 +123,7 @@ exports.checkAdmin = [
     log('Middleware.index.checkAdmin - Start: ', 'debug')
     let employeeID = req.headers['x-employeeid']
     let employee = await Employee.findById(employeeID)
-    if (employee === undefined) {
+    if (employee === null) {
       log(
         'Middleware.index.checkAdmin - Could not find Employee with that EmployeeID: ' +
           employeeID,
