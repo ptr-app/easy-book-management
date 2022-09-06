@@ -45,7 +45,7 @@ exports.editGenre = [
 exports.deleteGenre = [
   async (req, res) => {
     log('Controller.genreController.deleteGenre - Start ', 'debug')
-    let book = Book.find({ genreID: req.body.genreID }).catch((err) => {
+    let book = await Book.find({ genreID: req.body.genreID }).catch((err) => {
       log(
         'Controller.genreController.deleteGenre - Failed to find book: ' +
           err.message,
